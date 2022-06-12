@@ -98,32 +98,49 @@
 			</li>
 
 			<!-- HORARIOS -->
-			<li class="<?php if ($page_name == 'class_routine_view' || $page_name == 'class_routine_add') echo 'nav-active'; ?> ">
-				 <a href="<?php echo base_url(); ?>index.php?admin/#">
-					<i class="fa fa-clock-o"></i>
-					<span>Horarios</span>
-				 </a>
-			</li>
-
-			<!-- ASISTENCIA DIARIA -->
-			<li class="nav-parent <?php if ($page_name == 'manage_attendance' ||
-									$page_name == 'manage_attendance_view' || $page_name == 'attendance_report' || $page_name == 'attendance_report_view') 
+			<li class="nav-parent <?php if ($page_name == 'tema' ||
+									$page_name == 'tema' || $page_name == 'tema' || $page_name == 'horario') 
 										echo 'nav-expanded nav-active'; ?> ">
 				<a href="#">
-					<i class="fa fa-line-chart"></i>
-					<span>Asistencia Diaria</span>
+				<i class="fa fa-clock-o"></i>
+					Horarios</span>
 				</a>
 				<ul class="nav nav-children">
 
-						<li class="<?php if (($page_name == 'manage_attendance' || $page_name == 'manage_attendance_view')) echo 'nav-active'; ?>">
-							<a href="<?php echo base_url(); ?>index.php?admin/#">
-								<span><i class="fa fa-circle-o"></i> Asistencia Diaria</span>
+						<li class="<?php if (($page_name == 'tema' || $page_name == 'ver_asistencia')) echo 'nav-active'; ?>">
+							<a href="<?php echo base_url(); ?>index.php?admin/tema">
+								<span><i class="fa fa-circle-o"></i>Asignar Horario</span>
 							</a>
 						</li>
 
-						<li class="<?php if (( $page_name == 'attendance_report' || $page_name == 'attendance_report_view')) echo 'nav-active'; ?>">
-							<a href="<?php echo base_url(); ?>index.php?admin/attendance_report">
-								<span><i class="fa fa-circle-o"></i> Reporte de Asistencias</span>
+						<li class="<?php if (( $page_name == 'horario' || $page_name == 'horario')) echo 'nav-active'; ?>">
+							<a href="<?php echo base_url(); ?>index.php?admin/horario">
+								<span><i class="fa fa-circle-o"></i> Horario</span>
+							</a>
+						</li>
+
+				</ul>
+			</li>
+
+			<!-- ASISTENCIA DIARIA -->
+			<li class="nav-parent <?php if ($page_name == 'asistencia' ||
+									$page_name == 'ver_asistencia' || $page_name == 'asistencia_reporte' || $page_name == 'ver_asistencia_reporte') 
+										echo 'nav-expanded nav-active'; ?> ">
+				<a href="#">
+					<i class="fa fa-line-chart"></i>
+					Asistencia Diaria</span>
+				</a>
+				<ul class="nav nav-children">
+
+						<li class="<?php if (($page_name == 'asistencia' || $page_name == 'ver_asistencia')) echo 'nav-active'; ?>">
+							<a href="<?php echo base_url(); ?>index.php?admin/asistencia">
+								<span><i class="fa fa-circle-o"></i>Asistencia</span>
+							</a>
+						</li>
+
+						<li class="<?php if (( $page_name == 'asistencia_reporte' || $page_name == 'ver_asistencia_reporte')) echo 'nav-active'; ?>">
+							<a href="<?php echo base_url(); ?>index.php?admin/asistencia_reporte">
+								<span><i class="fa fa-circle-o"></i> Reporte de Asistencia</span>
 							</a>
 						</li>
 
@@ -178,10 +195,10 @@
 
 		   <!-- CONTABILIDAD -->
 			<li class="nav-parent <?php
-			if ($page_name == 'income' ||
+			if ($page_name == 'ingreso' ||
 					$page_name == 'expense' ||
 						$page_name == 'expense_category' ||
-							$page_name == 'student_payment')
+							$page_name == 'estudiante_pago')
 								echo 'nav-expanded nav-active';
 			?> ">
 				<a href="#">
@@ -189,13 +206,13 @@
 					<span>Contabilidad</span>
 				</a>
 				<ul class="nav nav-children">
-					<li class="<?php if ($page_name == 'student_payment') echo 'nav-active'; ?> ">
-						<a href="<?php echo base_url(); ?>index.php?admin/student_payment">
+					<li class="<?php if ($page_name == 'estudiante_pago') echo 'nav-active'; ?> ">
+						<a href="<?php echo base_url(); ?>index.php?admin/estudiante_pago">
 							<span><i class="fa fa-circle-o"></i>Crear Pago de Estudiante</span>
 						</a>
 					</li>
-					<li class="<?php if ($page_name == 'income') echo 'nav-active'; ?> ">
-						<a href="<?php echo base_url(); ?>index.php?admin/income">
+					<li class="<?php if ($page_name == 'ingreso') echo 'nav-active'; ?> ">
+						<a href="<?php echo base_url(); ?>index.php?admin/ingreso">
 							<span><i class="fa fa-circle-o"></i>Pagos Estudiante</span>
 						</a>
 					</li>

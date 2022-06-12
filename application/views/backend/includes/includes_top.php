@@ -57,8 +57,7 @@
 		<script src="assets/vendor/jquery/jquery.js"></script>
 	
         <!--Web Icon-->
-	    <link rel="shortcut icon" href="assets/images/favicon.png">
-
+	   <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
         <!-- Disable Square Borders -->
         <?php
 	      $borders_style = $this->db->get_where('settings' , array('type'=>'borders_style'))->row()->description;

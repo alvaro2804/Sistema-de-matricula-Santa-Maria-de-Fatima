@@ -10,7 +10,7 @@
 			</div>
 			<div class="panel-body">
 
-				<?php echo form_open(base_url() . 'index.php?admin/estudiante/create/' , array('class' => 'form-horizontal form-bordered','id' => 'form', 'enctype' => 'multipart/form-data'));?>
+				<?php echo form_open(base_url() . 'index.php?admin/estudiantes/create/' , array('class' => 'form-horizontal form-bordered','id' => 'form', 'enctype' => 'multipart/form-data'));?>
 
 				<div class="form-group">
 					<label class="col-sm-3 control-label">
@@ -26,7 +26,7 @@
 							<div>
 								<span class="mr-xs btn btn-default btn-file">
 								<span class="fileinput-new">Selecciona Imagen</span>
-								<span class="fileinput-exists">Cambiar/span>
+								<span class="fileinput-exists">Cambiar</span>
 								<input type="file" name="userfile" accept="image/*">
 								</span>
 								<a href="#" class="btn btn-warning fileinput-exists" data-dismiss="fileinput">Eliminar</a>
@@ -243,10 +243,10 @@
 </div>
 
 <script type="text/javascript">
-	function get_class_sections( class_id ) {
+	function get_class_sections( clase_id ) {
 
 		$.ajax( {
-			url: '<?php echo base_url();?>index.php?admin/get_class_section/' + class_id,
+			url: '<?php echo base_url();?>index.php?admin/get_class_section/' + clase_id,
 			success: function ( response ) {
 				jQuery( '#section_selector_holder' ).html( response );
 			}

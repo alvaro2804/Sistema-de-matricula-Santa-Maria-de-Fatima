@@ -11,10 +11,7 @@
        Agregar Nuevo Estudiante
     </a>
 	
-	<a href="<?php echo base_url(); ?>index.php?admin/estudiante_masiva_add" class="btn btn-primary btn-sm hidden-xs">
-       <i class="fa fa-plus-circle"></i>
-       Agregar Estudiantes Masivamente
-    </a>
+
 
 	</header>
 	<div class="panel-body">
@@ -66,7 +63,7 @@
 							<tr>
 								<th width="80">
 									<div>
-										N°
+										Roll
 									</div>
 								</th>
 								<th width="80">
@@ -142,7 +139,7 @@
                                     </a>
                                     
 									<!-- ESTUDIANTE DELETE LINK -->
-									<a href="#" class="btn btn-danger btn-xs" data-placement="top" data-toggle="tooltip" data-original-title="Borrar" onclick="confirm_modal('<?php echo base_url();?>index.php?admin/estudiante/<?php echo $class_id;?>/delete/<?php echo $row['estudiante_id'];?>');">
+									<a href="#" class="btn btn-danger btn-xs" data-placement="top" data-toggle="tooltip" data-original-title="Borrar" onclick="confirm_modal('<?php echo base_url();?>index.php?admin/estudiantes/<?php echo $class_id;?>/delete/<?php echo $row['estudiante_id'];?>');">
                                     <i class="fa fa-trash"></i>
                                     </a>
 								
@@ -238,7 +235,7 @@
 								
 
 									<!-- ESTUDIANTE ELIMINAR LINK -->
-									<a href="#" class="btn btn-danger btn-xs" data-placement="top" data-toggle="tooltip" data-original-title="Borrar" onclick="confirm_modal('<?php echo base_url();?>index.php?admin/estudiante/<?php echo $class_id;?>/delete/<?php echo $row['estudiante_id'];?>');">
+									<a href="#" class="btn btn-danger btn-xs" data-placement="top" data-toggle="tooltip" data-original-title="Borrar" onclick="confirm_modal('<?php echo base_url();?>index.php?admin/estudiantes/<?php echo $class_id;?>/delete/<?php echo $row['estudiante_id'];?>');">
                                     <i class="fa fa-trash"></i>
                                     </a>
 								
@@ -260,6 +257,6 @@
 
 <script type="text/javascript">
 	function class_section( clase_id ) {
-		window.location.href = '<?php echo base_url(); ?>index.php?admin/estudiante/' + class_id;
+		window.location.href = '<?php echo base_url(); ?>index.php?admin/estudiante/' + clase_id;
 	}
 </script>

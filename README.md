@@ -1,2 +1,2 @@
-# baxter-school-management-system
+# Sistema Colegio Santa María de Fatima
 system codeigniter

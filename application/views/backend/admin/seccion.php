@@ -67,7 +67,7 @@
 										</td>
 										<td>
 											<?php if ($row['profesor_id'] != '' || $row['profesor_id'] != 0)
-											echo $this->db->get_where('profesor' , array('profesor_id' => $row['profesor_id']))->row()->name;
+											echo $this->db->get_where('profesor' , array('profesor_id' => $row['profesor_id']))->row()->nombre;
 										?>
 										</td>
 										<td>
@@ -79,7 +79,7 @@
 										</a>
 
 										<!-- ELIMINAR LINK -->
-										<a href="#" class="btn btn-danger btn-xs" data-placement="top" data-toggle="tooltip" data-original-title="Borrar" onclick="confirm_modal('<?php echo base_url();?>index.php?admin/seccion/delete/<?php echo $row['seccion_id'];?>');">
+										<a href="#" class="btn btn-danger btn-xs" data-placement="top" data-toggle="tooltip" data-original-title="Borrar" onclick="confirm_modal('<?php echo base_url();?>index.php?admin/secciones/delete/<?php echo $row['seccion_id'];?>');">
 										<i class="fa fa-trash"></i>
 										</a>
 
