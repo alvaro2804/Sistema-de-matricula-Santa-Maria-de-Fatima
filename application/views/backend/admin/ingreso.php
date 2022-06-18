@@ -37,8 +37,8 @@
                     		$count = 1;
                     		$this->db->where('year' , $running_year);
                     		$this->db->order_by('creacion_timestamp' , 'desc');
-                    		$invoices = $this->db->get('factura')->result_array();
-                    		foreach($invoices as $row):
+                    		$facturas = $this->db->get('factura')->result_array();
+                    		foreach($facturas as $row):
                     	?>
                         <tr>
                         	<td><?php echo $count++;?></td>
@@ -77,7 +77,7 @@
 								
 
 									<!-- ELIMINAR FACTURA DEL ALUMNO LINK -->
-									<a href="#" class="btn btn-danger btn-xs" data-placement="top" data-toggle="tooltip" data-original-title="Borrar" onclick="confirm_modal('<?php echo base_url();?>index.php?admin/factura/delete/<?php echo $row['factura_id'];?>');">
+									<a href="#" class="btn btn-danger btn-xs" data-placement="top" data-toggle="tooltip" data-original-title="Borrar" onclick="confirm_modal('<?php echo base_url();?>index.php?admin/factura/eliminar/<?php echo $row['factura_id'];?>');">
                                     <i class="fa fa-trash"></i>
                                     </a>
 	
@@ -107,8 +107,8 @@
 					        	$count = 1;
 					        	$this->db->where('pago_tipo' , 'ingreso');
 					        	$this->db->order_by('timestamp' , 'desc');
-					        	$payments = $this->db->get('pago')->result_array();
-					        	foreach ($payments as $row):
+					        	$pagos = $this->db->get('pago')->result_array();
+					        	foreach ($pagos as $row):
 					        ?>
 					        <tr>
 					            <td><?php echo $count++;?></td>

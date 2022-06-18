@@ -56,8 +56,8 @@
 					<div class="col-md-6">
 						<select data-plugin-selectTwo data-width="100%" name="padres_id" class="form-control populate">
 							<option value="">Seleccionar</option>
-							<?php  $parents = $this->db->get('padres')->result_array();
-							foreach($parents as $row): ?>
+							<?php  $padres = $this->db->get('padres')->result_array();
+							foreach($padres as $row): ?>
 							   <option value="<?php echo $row['padres_id'];?>" <?php if (set_value('padres_id') == $row['padres_id']) echo 'selected'; ?>><?php echo $row['nombre'];?></option>
 							<?php
 							endforeach;
@@ -73,8 +73,8 @@
 					<div class="col-md-6">
 						<select name="clase_id" data-plugin-selectTwo data-width="100%" data-minimum-results-for-search="Infinity" class="form-control populate"  required id="clase_id" title="Valor requerido" onchange="return get_class_sections(this.value)">
 							<option value="">Seleccionar</option>
-							<?php $classes = $this->db->get('clase')->result_array();
-								foreach($classes as $row):
+							<?php $clases = $this->db->get('clase')->result_array();
+								foreach($clases as $row):
 							?>
 							<option value="<?php echo $row['clase_id'];?>" <?php if (set_value('clase_id') == $row['clase_id']) echo 'selected'; ?>><?php echo $row['nombre'];?></option>
 							<?php endforeach; ?>
@@ -91,8 +91,8 @@
 							<option value="">Seleccione Primero la Clase</option>
 									<?php
 							         if (set_value('seccion_id') != ''):
-										$sections = $this->db->get_where( 'seccion', array( 'clase_id' => set_value('clase_id') ) )->result_array();
-										foreach ( $sections as $row2 ):
+										$secciones = $this->db->get_where( 'seccion', array( 'clase_id' => set_value('clase_id') ) )->result_array();
+										foreach ( $secciones as $row2 ):
 									?>
 									<option value="<?php echo $row2['seccion_id'];?>" <?php if(set_value('seccion_id') == $row2[ 'seccion_id']) echo 'selected';?>><?php echo $row2['nombre'];?></option>
 									<?php
@@ -136,8 +136,8 @@
 					<div class="col-md-6">
 						<select data-plugin-selectTwo data-width="100%" data-minimum-results-for-search="Infinity" name="sexo" class="form-control populate">
 							<option value="">Seleccionar</option>
-							<option value="male" <?php if (set_value('sexo') == 'masculino') echo 'selected'; ?>>Masculino</option>
-							<option value="female" <?php if (set_value('sexo') == 'femenino') echo 'selected'; ?>>Femenino</option>
+							<option value="masculino" <?php if (set_value('sexo') == 'masculino') echo 'selected'; ?>>Masculino</option>
+							<option value="femenino" <?php if (set_value('sexo') == 'femenino') echo 'selected'; ?>>Femenino</option>
 						</select>
 					</div>
 				</div>

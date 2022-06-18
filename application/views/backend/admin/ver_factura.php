@@ -36,11 +36,11 @@
 								<?php echo $this->db->get_where('estudiante', array('estudiante_id' => $row['estudiante_id']))->row()->nombre; ?><br>
 								
 								<?php 
-									$class_id = $this->db->get_where('inscribirse' , array(
+									$clase_id = $this->db->get_where('inscribirse' , array(
 										'estudiante_id' => $row['estudiante_id'],
 											'year' => $this->db->get_where('settings', array('type' => 'running_year'))->row()->description
 									))->row()->clase_id;
-									echo 'Clase' . ' : ' . $this->db->get_where('clase', array('clase_id' => $class_id))->row()->nombre;
+									echo 'Clase' . ' : ' . $this->db->get_where('clase', array('clase_id' => $clase_id))->row()->nombre;
 								?><br>
 								<?php echo 'Email' . ' : ' . $this->db->get_where('estudiante', array('estudiante_id' => $row['estudiante_id']))->row()->email; ?>
 							</address>
@@ -90,8 +90,8 @@
 					<tbody>
 						<?php
 						$count = 1;
-						$payment_history = $this->db->get_where('pago', array('factura_id' => $row['factura_id']))->result_array();
-						foreach ($payment_history as $row2):
+						$pago_historial = $this->db->get_where('pago', array('factura_id' => $row['factura_id']))->result_array();
+						foreach ($pago_historial as $row2):
 						?>
 						<tr>
 							<td><?php echo $count++;?></td>

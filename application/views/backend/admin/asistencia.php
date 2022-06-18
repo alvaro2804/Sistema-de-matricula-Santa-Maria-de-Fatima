@@ -8,11 +8,11 @@
 					<label class="control-label">
 						Clase <span class="required">*</span>
 					</label>
-					<select name="clase_id" class="form-control mb-sm" data-plugin-selectTwo data-minimum-results-for-search="Infinity" data-width="100%" required title="Valor Requerido" onchange="select_section(this.value)">
+					<select name="clase_id" class="form-control mb-sm" data-plugin-selectTwo data-minimum-results-for-search="Infinity" data-width="100%" required title="Valor Requerido" onchange="select_seccion(this.value)">
 						<option value="">Seleccionar Clase</option>
 						<?php
-						$classes = $this->db->get( 'clase' )->result_array();
-						foreach ( $classes as $row ):
+						$clases = $this->db->get( 'clase' )->result_array();
+						foreach ( $clases as $row ):
 						?>
 						<option value="<?php echo $row['clase_id'];?>"><?php echo $row['nombre'];?></option>
 						<?php endforeach;?>
@@ -59,10 +59,10 @@
 <?php echo form_close();?>
 
 <script type="text/javascript">
-	function select_section( clase_id ) {
+	function select_seccion( clase_id ) {
 
 		$.ajax( {
-			url: '<?php echo base_url(); ?>index.php?admin/get_section/' + clase_id,
+			url: '<?php echo base_url(); ?>index.php?admin/get_seccion/' + clase_id,
 			success: function ( response ) {
 				jQuery( '#section_holder' ).html( response );
 			}

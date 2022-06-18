@@ -2,7 +2,7 @@
 	<div class="panel-body">
 		<div class="tabs">
 
-			<!---CONTROL TABS -->
+			<!--- INICIO CONTROL TABS -->
 			<ul class="nav nav-tabs tabs-primary">
 				<li class="active">
 					<a href="#list" data-toggle="tab"><i class="fa fa-list"></i> 
@@ -16,10 +16,10 @@
 				</li>
 			</ul>
 			
-			<!--CONTROL TABS END-->
+			<!-- FIN CONTROL TABS-->
 			<div class="tab-content">
 			
-				<!--TABLE LISTA INICIO-->
+				<!--TABLA LISTA INICIO-->
 				<div class="tab-pane box active" id="list">
 
 					<table class="table table-bordered table-striped table-condensed mb-none" id="datatable-tabletools">
@@ -51,7 +51,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<?php $count = 1;foreach($classes as $row):?>
+							<?php $count = 1;foreach($clases as $row):?>
 							<tr>
 								<td>
 									<?php echo $count++;?>
@@ -69,13 +69,13 @@
 									?>
 								</td>
 								<td>
-									<!-- EDIT LINK -->
+									<!-- EDITAR LINK -->
 									<a href="#" class="btn btn-primary btn-xs" data-placement="top" data-toggle="tooltip" data-original-title="Editar Clase" onclick="showAjaxModal('<?php echo base_url();?>index.php?modal/popup/modal_edit_clase/<?php echo $row['clase_id'];?>');">
                                     <i class="fa fa-pencil"></i>
 								    </a>
 								
 									<!-- ELIMINAR LINK -->
-									<a href="#" class="btn btn-danger btn-xs" data-placement="top" data-toggle="tooltip" data-original-title="Borrar" onclick="confirm_modal('<?php echo base_url();?>index.php?admin/clase/delete/<?php echo $row['clase_id'];?>');">
+									<a href="#" class="btn btn-danger btn-xs" data-placement="top" data-toggle="tooltip" data-original-title="Borrar" onclick="confirm_modal('<?php echo base_url();?>index.php?admin/clase/eliminar/<?php echo $row['clase_id'];?>');">
                                     <i class="fa fa-trash"></i>
                                     </a>
 								
@@ -117,8 +117,8 @@
 								<div class="col-sm-5">
 									<select data-plugin-selectTwo data-minimum-results-for-search="Infinity" data-width="100%" name="profesor_id" class="form-control populate">
 										<option value="">Seleccione Profesor</option>
-										<?php $teachers = $this->db->get('profesor')->result_array();
-										 foreach($teachers as $row):
+										<?php $profesores = $this->db->get('profesor')->result_array();
+										 foreach($profesores as $row):
 										?>
 										<option value="<?php echo $row['profesor_id'];?>"><?php echo $row['nombre'];?></option>
 										<?php endforeach; ?>

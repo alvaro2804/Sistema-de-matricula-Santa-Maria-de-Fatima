@@ -3,10 +3,10 @@
 	<label class="control-label">Sección <span class="required">*</span></label>
 		<select name="seccion_id" id="section_id" required title="Valor Requerido" class="form-control mb-sm" data-plugin-selectTwo data-minimum-results-for-search="Infinity" data-width="100%">
 			<?php 
-				$sections = $this->db->get_where('seccion' , array(
-					'clase_id' => $class_id 
+				$secciones = $this->db->get_where('seccion' , array(
+					'clase_id' => $clase_id 
 				))->result_array();
-				foreach($sections as $row):
+				foreach($secciones as $row):
 			?>
 			<option value="<?php echo $row['seccion_id'];?>"><?php echo $row['nombre'];?></option>
 			<?php endforeach;?>

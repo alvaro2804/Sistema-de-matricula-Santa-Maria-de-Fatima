@@ -5,15 +5,15 @@
 
     <?php
     $query = $this->db->get('clase');
-        $class = $query->result_array();
+        $clase = $query->result_array();
     ?>
 
         <div class="col-md-4 mb-sm">
             <div class="form-group">
                 <label class="control-label">Clase <span class="required">*</span></label>
-                <select class="form-control" required data-plugin-selectTwo data-width="100%" data-minimum-results-for-search="Infinity" name="clase_id" onchange="select_section(this.value)">
+                <select class="form-control" required data-plugin-selectTwo data-width="100%" data-minimum-results-for-search="Infinity" name="clase_id" onchange="select_seccion(this.value)">
                     <option value="">Seleccionar Clase</option>
-                    <?php foreach ($class as $row): ?>
+                    <?php foreach ($clase as $row): ?>
                     <option value="<?php echo $row['clase_id']; ?>" ><?php echo $row['nombre']; ?></option>
                     <?php endforeach; ?>
                 </select>
@@ -86,10 +86,10 @@
 </section>
 
 <script type="text/javascript">
-    function select_section(clase_id) {
+    function select_seccion(clase_id) {
 
         $.ajax({
-            url: '<?php echo base_url(); ?>index.php?admin/get_section/' + clase_id,
+            url: '<?php echo base_url(); ?>index.php?admin/get_seccion/' + clase_id,
             success: function (response)
             {
 

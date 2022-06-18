@@ -70,7 +70,7 @@ class Email_model extends CI_Model {
 		$this->email->to($to);
 		$this->email->subject($sub);
 		
-		$msg	=	$msg."<br /><br /><br /><br /><br /><br /><br /><hr /><center><a href=\"https://anthoncode.com/codigo-fuente-sistema-escolar-php-mysql/\">&copy; 2020 School Management System</a></center>";
+		$msg	=	$msg."<br /><br /><br /><br /><br /><br /><br /><hr /><center><a href=\"http://localhost/sistemasmf/\">&copy; 2022 Sistema Colegio Santa María de Fátima</a></center>";
 		$this->email->message($msg);
 		
 		$this->email->send();

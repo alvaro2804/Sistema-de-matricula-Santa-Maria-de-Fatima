@@ -1,7 +1,7 @@
 <?php 
-	$class_name		= $this->db->get_where('clase' , array('clase_id' => $class_id))->row()->nombre;
-	$section_name  		= $this->db->get_where('seccion' , array('seccion_id' => $section_id))->row()->nombre;
-	$system_name        =	$this->db->get_where('settings' , array('type'=>'system_name'))->row()->description;
+	$clase_nombre	= $this->db->get_where('clase' , array('clase_id' => $clase_id))->row()->nombre;
+	$seccion_nombre  		= $this->db->get_where('seccion' , array('seccion_id' => $seccion_id))->row()->nombre;
+	$system_nombre        =	$this->db->get_where('settings' , array('type'=>'system_name'))->row()->description;
 	$running_year       =	$this->db->get_where('settings' , array('type'=>'running_year'))->row()->description;
         if($month == 1) $m = 'Enero';
         else if($month == 2) $m='Febrero';
@@ -27,10 +27,10 @@
 
 	<center>
 		<img src="uploads/logo.png" style="max-height : 60px;"><br>
-		<h3 style="font-weight: 100;"><?php echo $system_name;?></h3>
+		<h3 style="font-weight: 100;"><?php echo $system_nombre;?></h3>
 		Hoja de Asistencia<br>
-		<?php echo 'Clase'. ' ' . $class_name;?><br>
-		<?php echo 'Sección'.' '.$section_name;?><br>
+		<?php echo 'Clase'. ' ' . $clase_nombre;?><br>
+		<?php echo 'Sección'.' '.$seccion_nombre;?><br>
 		<?php echo $m.' '.'Mes';?>
 	</center>
 	  <table border="1" style="width:100%; border-collapse:collapse;border: 1px solid #ccc; margin-top: 10px;">
@@ -53,8 +53,8 @@
 
 				<?php
 				$data = array();
-				$students = $this->db->get_where('inscribirse', array('clase_id' => $class_id, 'year' => $running_year, 'seccion_id' => $section_id))->result_array();
-				foreach ($students as $row):
+				$estudiantes = $this->db->get_where('inscribirse', array('clase_id' => $clase_id, 'year' => $running_year, 'seccion_id' => $seccion_id))->result_array();
+				foreach ($estudiantes as $row):
 				?>
 
 				<tr>
@@ -66,10 +66,10 @@
 					for ( $i = 1; $i <= $days; $i++ ) {
 						$timestamp = strtotime( $i . '-' . $month . '-' . $year[ 0 ] );
 						$this->db->group_by( 'timestamp' );
-						$attendance = $this->db->get_where( 'asistencia', array( 'seccion_id' => $section_id, 'clase_id' => $class_id, 'year' => $running_year, 'timestamp' => $timestamp, 'estudiante_id' => $row[ 'estudiante_id' ] ) )->result_array();
+						$asistencia = $this->db->get_where( 'asistencia', array( 'seccion_id' => $seccion_id, 'clase_id' => $clase_id, 'year' => $running_year, 'timestamp' => $timestamp, 'estudiante_id' => $row[ 'estudiante_id' ] ) )->result_array();
 
 
-						foreach ( $attendance as $row1 ):
+						foreach ( $asistencia as $row1 ):
 							$month_dummy = date( 'm', $row1[ 'timestamp' ] );
 						if ( $i == $month_dummy );
 						$status = $row1[ 'status' ];

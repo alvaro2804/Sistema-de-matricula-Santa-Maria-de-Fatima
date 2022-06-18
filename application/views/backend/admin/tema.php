@@ -2,14 +2,14 @@
 	<header class="panel-heading">
 		<a href="javascript:;" onclick="showAjaxModal('<?php echo base_url();?>index.php?modal/popup/modal_tema_add/');" class="btn btn-primary btn-sm">
         <i class="fa fa-plus-circle"></i>
-        Añadir Asunto
+        Añadir Tema / Asignaturas
         </a>
 	</header>
 	<div class="panel-body">
 	
 		<?php
 		$query = $this->db->get( 'clase' );
-		$class = $query->result_array();
+		$clase = $query->result_array();
 		?>
 
 		<div class="form-group">
@@ -21,8 +21,8 @@
 					<option value="">
 						Seleccionar Clase
 					</option>
-					<?php foreach ($class as $row): ?>
-					<option value="<?php echo $row['clase_id']; ?>" <?php if ($class_id == $row[ 'clase_id']) echo 'selected'; ?> >
+					<?php foreach ($clase as $row): ?>
+					<option value="<?php echo $row['clase_id']; ?>" <?php if ($clase_id == $row[ 'clase_id']) echo 'selected'; ?> >
 						<?php echo $row['nombre']; ?>
 					</option>
 					<?php endforeach; ?>
@@ -32,17 +32,17 @@
 
 
 		<?php 
-        $query = $this->db->get_where('seccion' , array('clase_id' => $class_id));
-            if ($query->num_rows() > 0 && $class_id != ''):
-                $sections = $query->result_array();
+        $query = $this->db->get_where('seccion' , array('clase_id' => $clase_id));
+            if ($query->num_rows() > 0 && $clase_id != ''):
+                $secciones = $query->result_array();
         ?>
 
 		<div class="tabs tabs-primary">
-			<!------CONTROL TABS START------>
+			<!------ INICIO CONTROL TABS ------>
 			<ul class="nav nav-tabs">
 				<li class="active">
 					<a href="#list" data-toggle="tab"><i class="entypo-menu"></i> 
-					Lista de Asuntos
+					Lista de Temas
                     	</a>
 				</li>
 			</ul>
@@ -75,7 +75,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<?php $count = 1;foreach($subjects as $row):?>
+							<?php $count = 1;foreach($temas as $row):?>
 							<tr>
 								<td>
 									<?php echo $this->crud_model->get_type_name_by_id('clase',$row['clase_id']);?>
@@ -88,13 +88,13 @@
 								</td>
 								<td>
 
-									<!-- EDITING LINK -->
+									<!-- EDITAR LINK -->
 									<a href="#" class="btn btn-primary btn-xs" data-placement="top" data-toggle="tooltip" data-original-title="Editar" onclick="showAjaxModal('<?php echo base_url();?>index.php?modal/popup/modal_edit_tema/<?php echo $row['tema_id'];?>');">
                                       <i class="fa fa-pencil"></i>
                                     </a>
 								
-									<!-- DELETION LINK -->
-									<a href="#" class="btn btn-danger btn-xs" data-placement="top" data-toggle="tooltip" data-original-title="Borrar" onclick="confirm_modal('<?php echo base_url();?>index.php?admin/tema/delete/<?php echo $row['tema_id'];?>/<?php echo $class_id;?>');">
+									<!-- ELIMINAR LINK -->
+									<a href="#" class="btn btn-danger btn-xs" data-placement="top" data-toggle="tooltip" data-original-title="Borrar" onclick="confirm_modal('<?php echo base_url();?>index.php?admin/tema/eliminar/<?php echo $row['tema_id'];?>/<?php echo $clase_id;?>');">
                                       <i class="fa fa-trash"></i>
                                     </a>
                                     

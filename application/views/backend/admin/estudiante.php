@@ -1,6 +1,6 @@
 <?php
    $query = $this->db->get( 'clase' );
-   $class = $query->result_array();
+   $clase = $query->result_array();
 ?>
 
 <section class="panel panel-featured panel-featured-primary">
@@ -23,17 +23,17 @@
 			<div class="col-sm-6 col-sm-offset-3">
 				<select data-plugin-selectTwo class="form-control populate" name="clase_id" onchange="class_section(this.value)" style="width: 100%">
 					<option value="">Seleccionar Clase</option>
-					<?php foreach ($class as $row): ?>
-					<option value="<?php echo $row['clase_id']; ?>" <?php if ($class_id == $row[ 'clase_id']) echo 'selected'; ?>><?php echo $row['nombre']; ?></option>
+					<?php foreach ($clase as $row): ?>
+					<option value="<?php echo $row['clase_id']; ?>" <?php if ($clase_id == $row[ 'clase_id']) echo 'selected'; ?>><?php echo $row['nombre']; ?></option>
 					<?php endforeach; ?>
 				</select>
 			</div>
 		</div>
 
 		<?php 
-         $query = $this->db->get_where('seccion' , array('clase_id' => $class_id));
-             if ($query->num_rows() > 0 && $class_id != ''):
-                       $sections = $query->result_array();
+         $query = $this->db->get_where('seccion' , array('clase_id' => $clase_id));
+             if ($query->num_rows() > 0 && $clase_id != ''):
+                       $secciones = $query->result_array();
         ?>
 
 		<div class="tabs tabs-primary">
@@ -46,7 +46,7 @@
 				</li>
 
 				<?php 
-                  foreach ($sections as $row):
+                  foreach ($secciones as $row):
                 ?>
 				<li>
 					<a href="#<?php echo $row['seccion_id'];?>" data-toggle="tab">
@@ -95,10 +95,10 @@
 						</thead>
 						<tbody>
 							<?php 
-                                $students   =   $this->db->get_where('inscribirse' , array(
-                                    'clase_id' => $class_id , 'year' => $running_year
+                                $estudiantes   =   $this->db->get_where('inscribirse' , array(
+                                    'clase_id' => $clase_id , 'year' => $running_year
                                 ))->result_array();
-                                foreach($students as $row):?>
+                                foreach($estudiantes as $row):?>
 							<tr>
 								<td>
 									<?php echo $row['roll'];?>
@@ -129,17 +129,17 @@
 								<td>
 
 									<!-- ESTUDIANTE HOJA DE CALIFICACIÓN LINK  -->
-									<a href="<?php echo base_url();?>index.php?admin/estudiante_hoja_cali/<?php echo $row['estudiante_id'];?>" class="btn btn-primary btn-xs" data-placement="top" data-toggle="tooltip" data-original-title="Hoja de Calificación">
+									<a href="<?php echo base_url();?>index.php?admin/estudiante_hoja_calificacion/<?php echo $row['estudiante_id'];?>" class="btn btn-primary btn-xs" data-placement="top" data-toggle="tooltip" data-original-title="Hoja de Calificación">
                                     <i class="fa fa-signal"></i>
                                     </a>
 
-									<!-- ESTUDIANTE EDIT LINK -->
+									<!-- ESTUDIANTE EDITAR LINK -->
 									<a href="<?php echo base_url();?>index.php?admin/estudiante_perfil/<?php echo $row['estudiante_id'];?>" class="btn btn-primary btn-xs" data-placement="top" data-toggle="tooltip" data-original-title="Editar">
                                     <i class="fa fa-pencil"></i>
                                     </a>
                                     
-									<!-- ESTUDIANTE DELETE LINK -->
-									<a href="#" class="btn btn-danger btn-xs" data-placement="top" data-toggle="tooltip" data-original-title="Borrar" onclick="confirm_modal('<?php echo base_url();?>index.php?admin/estudiantes/<?php echo $class_id;?>/delete/<?php echo $row['estudiante_id'];?>');">
+									<!-- ESTUDIANTE ELIMINAR LINK -->
+									<a href="#" class="btn btn-danger btn-xs" data-placement="top" data-toggle="tooltip" data-original-title="Borrar" onclick="confirm_modal('<?php echo base_url();?>index.php?admin/estudiantes/<?php echo $clase_id;?>/eliminar/<?php echo $row['estudiante_id'];?>');">
                                     <i class="fa fa-trash"></i>
                                     </a>
 								
@@ -151,10 +151,10 @@
 				</div>
 
 				<?php 
-                    $query = $this->db->get_where('seccion' , array('clase_id' => $class_id));
+                    $query = $this->db->get_where('seccion' , array('clase_id' => $clase_id));
                     if ($query->num_rows() > 0):
-                        $sections = $query->result_array();
-                        foreach ($sections as $row):
+                        $secciones = $query->result_array();
+                        foreach ($secciones as $row):
                 ?>
 
 				<div id="<?php echo $row['seccion_id'];?>" class="tab-pane">
@@ -195,10 +195,10 @@
 						</thead>
 						<tbody>
 							<?php 
-                                $students   =   $this->db->get_where('inscribirse' , array(
-                                    'clase_id'=>$class_id , 'seccion_id' => $row['seccion_id'] , 'year' => $running_year
+                                $estudiantes   =   $this->db->get_where('inscribirse' , array(
+                                    'clase_id'=>$clase_id , 'seccion_id' => $row['seccion_id'] , 'year' => $running_year
                                 ))->result_array();
-                                foreach($students as $row):?>
+                                foreach($estudiantes as $row):?>
 							<tr>
 								<td>
 									<?php echo $row['roll'];?>
@@ -228,14 +228,14 @@
 								</td>
 								<td>
 
-									<!-- ESTUDIANT EDIT LINK -->
+									<!-- ESTUDIANTE EDITAR LINK -->
 									<a href="<?php echo base_url();?>index.php?admin/estudiante_perfil/<?php echo $row['estudiante_id'];?>" class="btn btn-primary btn-xs" data-placement="top" data-toggle="tooltip" data-original-title="Perfil">
                                     <i class="fa fa-user"></i>
                                     </a>
 								
 
 									<!-- ESTUDIANTE ELIMINAR LINK -->
-									<a href="#" class="btn btn-danger btn-xs" data-placement="top" data-toggle="tooltip" data-original-title="Borrar" onclick="confirm_modal('<?php echo base_url();?>index.php?admin/estudiantes/<?php echo $class_id;?>/delete/<?php echo $row['estudiante_id'];?>');">
+									<a href="#" class="btn btn-danger btn-xs" data-placement="top" data-toggle="tooltip" data-original-title="Borrar" onclick="confirm_modal('<?php echo base_url();?>index.php?admin/estudiantes/<?php echo $clase_id;?>/eliminar/<?php echo $row['estudiante_id'];?>');">
                                     <i class="fa fa-trash"></i>
                                     </a>
 								

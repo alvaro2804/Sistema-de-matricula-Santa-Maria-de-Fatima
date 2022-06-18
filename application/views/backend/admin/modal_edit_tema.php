@@ -5,11 +5,11 @@
 	<div class="row">
 		<div class="col-md-12">
 			<section class="panel">
-				<?php echo form_open(base_url() . 'index.php?admin/tema/do_update/'.$row['tema_id'] , array('class' => 'form-horizontal form-bordered', 'id' => 'form', 'target'=>'_top'));?>
+				<?php echo form_open(base_url() . 'index.php?admin/tema/actualizar/'.$row['tema_id'] , array('class' => 'form-horizontal form-bordered', 'id' => 'form', 'target'=>'_top'));?>
 				<div class="panel-heading">
 					<h4 class="panel-title">
             		<i class="fa fa-plus-circle"></i>
-					Editar Asunto
+					Editar Tema / Asignatura
             	</h4>
 				
 				</div>
@@ -29,8 +29,8 @@
 						</label>
 						<div class="col-md-7">
 							<select data-plugin-selectTwo name="clase_id" required class="form-control populate" style="width: 100%">
-							<?php $classes = $this->db->get('clase')->result_array();
-                            foreach($classes as $row2):
+							<?php $clases = $this->db->get('clase')->result_array();
+                            foreach($clases as $row2):
                             ?>
 								<option value="<?php echo $row2['clase_id'];?>" <?php if($row[ 'clase_id'] == $row2[ 'clase_id'])echo 'selected';?>><?php echo $row2['nombre'];?></option>
 								<?php
@@ -46,8 +46,8 @@
 						<div class="col-md-7">
 							<select data-plugin-selectTwo name="profesor_id" class="form-control populate" style="width: 100%">
 								<option value=""></option>
-							<?php $teachers = $this->db->get('profesor')->result_array();
-                            foreach($teachers as $row2):
+							<?php $profesores = $this->db->get('profesor')->result_array();
+                            foreach($profesores as $row2):
                             ?>
 								<option value="<?php echo $row2['profesor_id'];?>" <?php if($row[ 'profesor_id'] == $row2[ 'profesor_id'])echo 'selected';?>><?php echo $row2['nombre'];?></option>
 								<?php
@@ -62,7 +62,7 @@
 					<div class="row">
 						<div class="col-sm-9 col-sm-offset-3">
 							<button type="submit" class="btn btn-primary">
-								Editar Asunto
+								Editar Tema / Asignatura
 							</button>
 						</div>
 					</div>

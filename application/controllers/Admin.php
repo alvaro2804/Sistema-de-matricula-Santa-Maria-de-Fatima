@@ -55,13 +55,13 @@ class Admin extends CI_Controller
  
              //validar aquí, si la cuenta de correo electrónico
            
-             $sea_vemail = $this->db->get_where('profesor', array('email' => $data['email']))->row()->name;
+             $sea_vemail = $this->db->get_where('profesor', array('email' => $data['email']))->row()->nombre;
           
              if ($stu_vemail == null && $tea_vemail == null && $par_vemail == null) {
  
              $this->db->insert('profesor', $data);
-             $teacher_id = $this->db->insert_id();
-             move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/teacher_image/' . $teacher_id . '.jpg');
+             $profesor_id = $this->db->insert_id();
+             move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/profesor_image/' . $profesor_id . '.jpg');
              $this->session->set_flashdata('flash_message' , 'Datos añadidos satisfactoriamente');
              $this->email_model->account_opening_email('profesor', $data['email']); //SEND EMAIL
               } else {
@@ -69,7 +69,7 @@ class Admin extends CI_Controller
              }
              redirect(base_url() . 'index.php?admin/profesor/', 'refresh');
          }
-         if ($param1 == 'do_update') {
+         if ($param1 == 'actualizar') {
              $data['nombre']        = $this->input->post('nombre');
              $data['cumpleanos']    = $this->input->post('cumpleanos');
              $data['sexo']         = $this->input->post('sexo');
@@ -79,7 +79,7 @@ class Admin extends CI_Controller
              
              $this->db->where('profesor_id', $param2);
              $this->db->update('profesor', $data);
-             move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/teacher_image/' . $param2 . '.jpg');
+             move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/profesor_image/' . $param2 . '.jpg');
              $this->session->set_flashdata('flash_message' , 'Datos Actualizados');
              redirect(base_url() . 'index.php?admin/profesor/', 'refresh');
          } else if ($param1 == 'personal_profile') {
@@ -90,7 +90,7 @@ class Admin extends CI_Controller
                  'profesor_id' => $param2
              ))->result_array();
          }
-         if ($param1 == 'change_password') {
+         if ($param1 == 'cambiar_password') {
              $data['password']         = sha1($this->input->post('new_password'));
              $data['confirmar_new_password'] = sha1($this->input->post('confirmar_new_password'));
  
@@ -105,13 +105,13 @@ class Admin extends CI_Controller
              }
              redirect(base_url() . 'index.php?admin/profesor/', 'refresh');
          }
-         if ($param1 == 'delete') {
+         if ($param1 == 'eliminar') {
              $this->db->where('profesor_id', $param2);
              $this->db->delete('profesor');
              $this->session->set_flashdata('flash_message' , 'Datos Eliminados');
              redirect(base_url() . 'index.php?admin/profesor/', 'refresh');
          }
-         $page_data['teachers']   = $this->db->get('profesor')->result_array();
+         $page_data['profesores']   = $this->db->get('profesor')->result_array();
          $page_data['page_name']  = 'profesor';
          $page_data['page_title'] = 'Administrador Profesor';
          $this->load->view('backend/index', $page_data);
@@ -128,16 +128,16 @@ class Admin extends CI_Controller
             $data['nombre_numerico'] = $this->input->post('nombre_numerico');
             $data['profesor_id']   = $this->input->post('profesor_id');
             $this->db->insert('clase', $data);
-            $class_id = $this->db->insert_id();
+            $clase_id = $this->db->insert_id();
             //CREAR SECCION POR DEFECTO
-            $data2['clase_id']  =   $class_id;
+            $data2['clase_id']  =   $clase_id;
             $data2['nombre']      =   'A';
             $this->db->insert('seccion' , $data2);
 
             $this->session->set_flashdata('flash_message' ,'Datos añadidos satisfactoriamente');
             redirect(base_url() . 'index.php?admin/clase/', 'refresh');
         }
-        if ($param1 == 'do_update') {
+        if ($param1 == 'actualizar') {
             $data['nombre']         = $this->input->post('nombre');
             $data['nombre_numerico'] = $this->input->post('nombre_numerico');
             $data['profesor_id']   = $this->input->post('profesor_id');
@@ -151,13 +151,13 @@ class Admin extends CI_Controller
                 'clase_id' => $param2
             ))->result_array();
         }
-        if ($param1 == 'delete') {
+        if ($param1 == 'eliminar') {
             $this->db->where('clase_id', $param2);
             $this->db->delete('clase');
             $this->session->set_flashdata('flash_message' , 'Datos Eliminados');
             redirect(base_url() . 'index.php?admin/clase/', 'refresh');
         }
-        $page_data['classes']    = $this->db->get('clase')->result_array();
+        $page_data['clases']    = $this->db->get('clase')->result_array();
         $page_data['page_name']  = 'clase';
         $page_data['page_title'] = 'Administrador Clase';
         $this->load->view('backend/index', $page_data);
@@ -173,19 +173,19 @@ class Admin extends CI_Controller
     }
         
  /****ADMIN SECCIONES*****/
- function seccion($class_id = '')
+ function seccion($clase_id = '')
  {
      if ($this->session->userdata('admin_login') != 1)
          redirect(base_url(), 'refresh');
      // DETECTA LA PRIMERA CLASE
-     if ($class_id == '')
+     if ($clase_id == '')
          if($this->db->count_all('clase') !== 0 ){
-         $class_id  =  $this->db->get('clase')->first_row()->clase_id;
+         $clase_id  =  $this->db->get('clase')->first_row()->clase_id;
          }
 
      $page_data['page_name']  = 'seccion';
      $page_data['page_title'] = 'Administración Sección';
-     $page_data['class_id']   = $class_id;
+     $page_data['clase_id']   = $clase_id;
      $this->load->view('backend/index', $page_data);    
  }
 
@@ -214,7 +214,7 @@ class Admin extends CI_Controller
          redirect(base_url() . 'index.php?admin/seccion/' . $data['clase_id'] , 'refresh');
      }
 
-     if ($param1 == 'delete') {
+     if ($param1 == 'eliminar') {
          $this->db->where('seccion_id' , $param2);
          $this->db->delete('seccion');
          $this->session->set_flashdata('flash_message' , 'Datos Eliminados');
@@ -232,11 +232,11 @@ class Admin extends CI_Controller
      }
  }
 
- //VALIDANDO EL EMAIL PARA EL ESTUDIANTE, DOCENTE Y PADRES
+ //VALIDANDO EL EMAIL PARA EL ESTUDIANTE, PROFESOR Y PADRES
  function get_valid_email()
     {
         $email = $_POST["email"];
-            //validate here, if the Check email account
+            //validando aquí, si la cuenta de correo electrónico
             $stu_vemail = $this->db->get_where('estudiante', array('email' => $email))->row()->nombre;
             $sea_vemail = $this->db->get_where('profesor', array('email' => $email))->row()->nombre;
             $par_vmail = $this->db->get_where('padres', array('email' => $email))->row()->nombre;
@@ -250,39 +250,19 @@ class Admin extends CI_Controller
     }
 
     
-    function get_class_students($class_id)
+    function get_clase_estudiantes($clase_id)
     {
-        $students = $this->db->get_where('inscribirse' , array(
-            'clase_id' => $class_id , 'year' => $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description
+        $estudiantes = $this->db->get_where('inscribirse' , array(
+            'clase_id' => $clase_id , 'year' => $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description
         ))->result_array();
-        foreach ($students as $row) {
-            $name = $this->db->get_where('estudiante' , array('estudiante_id' => $row['estudiante_id']))->row()->nombre;
-            echo '<option value="' . $row['estudiante_id'] . '">' . $name . '</option>';
+        foreach ($estudiantes as $row) {
+            $nombre = $this->db->get_where('estudiante' , array('estudiante_id' => $row['estudiante_id']))->row()->nombre;
+            echo '<option value="' . $row['estudiante_id'] . '">' . $nombre . '</option>';
         }
     }
 
 
-    function get_class_students_mass($class_id)
-    {
-        $students = $this->db->get_where('inscribirse' , array(
-            'clase_id' => $class_id , 'year' => $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description
-        ))->result_array();
-        echo '<div class="form-group">
-                <label class="col-sm-3 control-label">' . 'Estudiante' . '</label>
-                <div class="col-sm-9">';
-        foreach ($students as $row) {
-             $name = $this->db->get_where('estudiante' , array('estudiante_id' => $row['estudiante_id']))->row()->nombre;
-            echo '<div class="checkbox">
-                    <label><input type="checkbox" class="check" name="estudiante_id[]" value="' . $row['estudiante_id'] . '">' . $name .'</label>
-                </div>';
-        }
-        echo '<br><button type="button" class="btn btn-default" onClick="select()">'.get_phrase('select_all').'</button>';
-        echo '<button style="margin-left: 5px;" type="button" class="btn btn-default" onClick="unselect()"> '.get_phrase('select_none').' </button>';
-        echo '</div></div>';
-    }
-
-
-     /****MANAGE STUDENTS CLASSWISE*****/
+         /****ADMINISTRAR A LOS ESTUDIANTES EN CLASE*****/
      function estudiante_add()
      {
          if ($this->session->userdata('admin_login') != 1)
@@ -294,23 +274,58 @@ class Admin extends CI_Controller
      }
 
 
-    
-    function get_sections($class_id)
-    {
-        $page_data['clase_id'] = $class_id;  
-        $this->load->view('backend/admin/estudiante_masiva_add_secciones' , $page_data);
+//CALIFICAION POR ALUMNO
+    function estudiante_hoja_calificacion($estudiante_id = '') {
+        if ($this->session->userdata('admin_login') != 1)
+            redirect('login', 'refresh');
+        $clase_id     = $this->db->get_where('inscribirse' , array(
+            'estudiante_id' => $estudiante_id , 'year' => $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description
+        ))->row()->clase_id;
+        $estudiante_nombre = $this->db->get_where('estudiante' , array('estudiante_id' => $estudiante_id))->row()->nombre;
+        $clase_nombre   = $this->db->get_where('clase' , array('clase_id' => $clase_id))->row()->nombre;
+        $page_data['page_name']  =   'estudiante_hoja_calificacion';
+        $page_data['page_title'] =   'Calificaciones para' . ' ' . $estudiante_nombre . ' (' . 'Clase' . ' ' . $clase_nombre . ')';
+        $page_data['estudiante_id'] =   $estudiante_id;
+        $page_data['clase_id']   =   $clase_id;
+        $this->load->view('backend/index', $page_data);
     }
 
 
- function estudiante($class_id = '')
+    function estudiante_perfil($estudiante_id = '') {
+        if ($this->session->userdata('admin_login') != 1)
+            redirect('login', 'refresh');
+        $page_data['page_name']  =   'estudiante_perfil';
+        $page_data['page_title'] =   'Administrar Perfil Estudiante';
+        $page_data['estudiante_id'] =   $estudiante_id;
+        $this->load->view('backend/index', $page_data);
+    }
+
+
+
+    function ver_imprimir_estud_hoja_cali($estudiante_id , $examen_id) {
+        if ($this->session->userdata('admin_login') != 1)
+            redirect('login', 'refresh');
+        $clase_id     = $this->db->get_where('inscribirse' , array(
+            'estudiante_id' => $estudiante_id , 'year' => $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description
+        ))->row()->clase_id;
+        $clase_nombre   = $this->db->get_where('clase' , array('clase_id' => $clase_id))->row()->nombre;
+
+        $page_data['estudiante_id'] =   $estudiante_id;
+        $page_data['clase_id']   =   $clase_id;
+        $page_data['examen_id']    =   $examen_id;
+        $this->load->view('backend/admin/ver_imprimir_estud_hoja_cali', $page_data);
+    }
+
+
+ function estudiante($clase_id = '')
 {
     if ($this->session->userdata('admin_login') != 1)
         redirect('login', 'refresh');
         
     $page_data['page_name']     = 'estudiante';
     $page_data['page_title']    = 'Información del Estudiante'. " - ".'Clase'." : ".
-                                        $this->crud_model->get_class_name($class_id);
-    $page_data['class_id']  = $class_id;
+                                        $this->crud_model->get_class_name($clase_id);
+    $page_data['clase_id']  = $clase_id;
     $this->load->view('backend/index', $page_data);
 }
 
@@ -347,9 +362,9 @@ function estudiantes($param1 = '', $param2 = '', $param3 = '')
 
 
         $this->db->insert('estudiante', $data);
-        $student_id = $this->db->insert_id();
+        $estudiante_id = $this->db->insert_id();
 
-        $data2['estudiante_id']     = $student_id;
+        $data2['estudiante_id']     = $estudiante_id;
         $data2['inscribirse_code']    = substr(md5(rand(0, 1000000)), 0, 7);
         $data2['clase_id']       = $this->input->post('clase_id');
         if ($this->input->post('seccion_id') != '') {
@@ -360,7 +375,7 @@ function estudiantes($param1 = '', $param2 = '', $param3 = '')
         $data2['date_added']     = strtotime(date("Y-m-d H:i:s"));
         $data2['year']           = $running_year;
         $this->db->insert('inscribirse', $data2);
-        move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/estudiante_image/' . $student_id . '.jpg');
+        move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/estudiante_image/' . $estudiante_id . '.jpg');
         $this->session->set_flashdata('flash_message' , 'Datos Añadidos Satisfactoriamente');
         $this->email_model->account_opening_email('estudiante', $data['email'], $this->input->post('password')); //SEND EMAIL 
         redirect(base_url() . 'index.php?admin/estudiante_add/', 'refresh');
@@ -368,7 +383,7 @@ function estudiantes($param1 = '', $param2 = '', $param3 = '')
         }
 
     }
-    if ($param1 == 'do_update') {
+    if ($param1 == 'actualizar') {
         $data['nombre']           = $this->input->post('nombre');
         $data['cumpleanos']       = $this->input->post('cumpleanos');
         $data['sexo']            = $this->input->post('sexo');
@@ -399,7 +414,7 @@ function estudiantes($param1 = '', $param2 = '', $param3 = '')
         
     } 
 
-    if ($param1 == 'change_password') {
+    if ($param1 == 'cambiar_password') {
         $data['password']         = sha1($this->input->post('new_password'));
         $data['confirm_new_password'] = sha1($this->input->post('confirm_new_password'));
 
@@ -415,7 +430,7 @@ function estudiantes($param1 = '', $param2 = '', $param3 = '')
         redirect(base_url() . 'index.php?admin/estudiante/' . $param3, 'refresh');
     }
     
-    if ($param2 == 'delete') {
+    if ($param2 == 'eliminar') {
         $this->db->where('estudiante_id', $param3);
         $this->db->delete('estudiante');
         $this->db->where('estudiante_id', $param3);
@@ -426,7 +441,7 @@ function estudiantes($param1 = '', $param2 = '', $param3 = '')
 }
  
     
-   /****MANAGE PARENTS CLASSWISE*****/
+   /****ADMINISTRAR A LOS PADRES EN CLASE*****/
    function padres($param1 = '', $param2 = '', $param3 = '')
    {
        if ($this->session->userdata('admin_login') != 1)
@@ -439,7 +454,7 @@ function estudiantes($param1 = '', $param2 = '', $param3 = '')
            $data['direccion']     			= $this->input->post('direccion');
            $data['profesion']  			= $this->input->post('profesion');
            
-           //validate here, if the Check email account
+           //validación aquí, si la cuenta de correo electrónico existe
            $Stu_Vemail = $this->db->get_where('estudiante', array('email' => $data['email']))->row()->nombre;
            $Tea_Vemail = $this->db->get_where('profesor', array('email' => $data['email']))->row()->nombre;
            $Par_Vemail = $this->db->get_where('padres', array('email' => $data['email']))->row()->nombre;
@@ -447,7 +462,7 @@ function estudiantes($param1 = '', $param2 = '', $param3 = '')
                
            $this->db->insert('padres', $data);
            $this->session->set_flashdata('flash_message' , 'Datos Añadidos Satisfactoriamente');
-           $this->email_model->account_opening_email('padres', $data['email']); //SEND EMAIL ACCOUNT OPENING EMAIL
+           $this->email_model->account_opening_email('padres', $data['email']); //ENVIAR CORREO ELECTRÓNICO DE APERTURA DE CUENTA DE CORREO ELECTRÓNICO
             } else {
                $this->session->set_flashdata('flash_message_error' , 'Uso de la cuenta de correo electrónico');
            }
@@ -464,7 +479,7 @@ function estudiantes($param1 = '', $param2 = '', $param3 = '')
            $this->session->set_flashdata('flash_message' , get_phrase('Datos Actualizados'));
            redirect(base_url() . 'index.php?admin/padres/', 'refresh');
        }
-       if ($param1 == 'change_password') {
+       if ($param1 == 'cambiar_password') {
            $data['password']         = sha1($this->input->post('new_password'));
            $data['confirm_new_password'] = sha1($this->input->post('confirm_new_password'));
 
@@ -479,7 +494,7 @@ function estudiantes($param1 = '', $param2 = '', $param3 = '')
            }
            redirect(base_url() . 'index.php?admin/padres/', 'refresh');
        }
-       if ($param1 == 'delete') {
+       if ($param1 == 'eliminar') {
            $this->db->where('padres_id' , $param2);
            $this->db->delete('padres');
            $this->session->set_flashdata('flash_message' , 'Datos Eliminados');
@@ -490,7 +505,7 @@ function estudiantes($param1 = '', $param2 = '', $param3 = '')
        $this->load->view('backend/index', $page_data);
    }
 
-/****MANAGE TEMA*****/
+/****ADMINISTRAR TEMA*****/
 function tema($param1 = '', $param2 = '' , $param3 = '')
 {
     if ($this->session->userdata('admin_login') != 1)
@@ -504,7 +519,7 @@ function tema($param1 = '', $param2 = '' , $param3 = '')
         $this->session->set_flashdata('flash_message' , get_phrase('Datos Añadidos Satisfactoriamente'));
         redirect(base_url() . 'index.php?admin/tema/'.$data['clase_id'], 'refresh');
     }
-    if ($param1 == 'do_update') {
+    if ($param1 == 'actualizar') {
         $data['nombre']       = $this->input->post('nombre');
         $data['clase_id']   = $this->input->post('clase_id');
         $data['profesor_id'] = $this->input->post('profesor_id');
@@ -519,21 +534,21 @@ function tema($param1 = '', $param2 = '' , $param3 = '')
             'tema_id' => $param2
         ))->result_array();
     }
-    if ($param1 == 'delete') {
+    if ($param1 == 'eliminar') {
         $this->db->where('tema_id', $param2);
         $this->db->delete('tema');
         $this->session->set_flashdata('flash_message' , 'Datos Eliminados');
         redirect(base_url() . 'index.php?admin/tema/'.$param3, 'refresh');
     }
-    $page_data['class_id']   = $param1;
-    $page_data['subjects']   = $this->db->get_where('tema' , array('clase_id' => $param1))->result_array();
+    $page_data['clase_id']   = $param1;
+    $page_data['temas']   = $this->db->get_where('tema' , array('clase_id' => $param1))->result_array();
     $page_data['page_name']  = 'tema';
     $page_data['page_title'] = 'Administrar Asunto';
     $this->load->view('backend/index', $page_data);
 }
 
 
-/**********MANAGING CLASE RUTINA HORARIO******************/
+/**********ADMINISTRAR CLASE RUTINA HORARIO******************/
 function clase_rutina($param1 = '', $param2 = '', $param3 = '')
 {
     if ($this->session->userdata('admin_login') != 1)
@@ -552,7 +567,7 @@ function clase_rutina($param1 = '', $param2 = '', $param3 = '')
         $this->session->set_flashdata('flash_message' , 'Datos Añadidos Satisfactoriamente');
         redirect(base_url() . 'index.php?admin/horario_add/', 'refresh');
     }
-    if ($param1 == 'do_update') {
+    if ($param1 == 'actualizar') {
         $data['clase_id']       = $this->input->post('clase_id');
         if($this->input->post('seccion_id') != '') {
             $data['seccion_id'] = $this->input->post('seccion_id');
@@ -572,7 +587,7 @@ function clase_rutina($param1 = '', $param2 = '', $param3 = '')
             'clase_rutina_id' => $param2
         ))->result_array();
     }
-    if ($param1 == 'delete') {
+    if ($param1 == 'eliminar') {
         $class_id = $this->db->get_where('clase_rutina' , array('clase_rutina_id' => $param2))->row()->clase_id;
         $this->db->where('clase_rutina_id', $param2);
         $this->db->delete('clase_rutina');
@@ -591,41 +606,37 @@ function horario_add()
     $this->load->view('backend/index', $page_data);
 }
 
-function horario($class_id = '')
+function horario($clase_id = '')
 {
     if ($this->session->userdata('admin_login') != 1)
         redirect(base_url(), 'refresh');
     $page_data['page_name']  = 'horario';
-    $page_data['class_id']  =   $class_id;
+    $page_data['clase_id']  =   $clase_id;
     $page_data['page_title'] = 'Horarios';
     $this->load->view('backend/index', $page_data);
 }
 
-function horario_imprimir($class_id , $section_id)
+function horario_imprimir($clase_id , $seccion_id)
 {
     if ($this->session->userdata('admin_login') != 1)
         redirect('login', 'refresh');
-    $page_data['class_id']   =   $class_id;
-    $page_data['section_id'] =   $section_id;
+    $page_data['clase_id']   =   $clase_id;
+    $page_data['seccion_id'] =   $seccion_id;
     $this->load->view('backend/admin/horario_imprimir' , $page_data);
 }
 
-function get_class_section_subject($class_id)
+function get_clase_seccion_tema($clase_id)
 {
-    $page_data['class_id'] = $class_id;
+    $page_data['clase_id'] = $clase_id;
     $this->load->view('backend/admin/horario_seccion_tema_seleccionador' , $page_data);
 }
 
-function section_subject_edit($class_id , $class_routine_id)
+function seccion_tema_edit($clase_id , $clase_rutina_id)
 {
-    $page_data['class_id']          =   $class_id;
-    $page_data['class_routine_id']  =   $class_routine_id;
+    $page_data['clase_id']          =   $clase_id;
+    $page_data['clase_rutina_id']  =   $clase_rutina_id;
     $this->load->view('backend/admin/horario_seccion_tema_edit' , $page_data);
 }
-
-
-
-
 
 
 
@@ -641,27 +652,27 @@ function section_subject_edit($class_id , $class_routine_id)
        $this->load->view('backend/index', $page_data);
    }
 
-   function ver_asistencia($class_id = '' , $section_id = '' , $timestamp = '')
+   function ver_asistencia($clase_id = '' , $seccion_id = '' , $timestamp = '')
    {
        if($this->session->userdata('admin_login')!=1)
            redirect(base_url() , 'refresh');
-       $class_name = $this->db->get_where('clase' , array(
-           'clase_id' => $class_id
+       $clase_nombre = $this->db->get_where('clase' , array(
+           'clase_id' => $clase_id
        ))->row()->nombre;
-       $page_data['class_id'] = $class_id;
+       $page_data['clase_id'] = $clase_id;
        $page_data['timestamp'] = $timestamp;
        $page_data['page_name'] = 'ver_asistencia';
-       $section_name = $this->db->get_where('seccion' , array(
-           'seccion_id' => $section_id
+       $seccion_nombre = $this->db->get_where('seccion' , array(
+           'seccion_id' => $seccion_id
        ))->row()->nombre;
-       $page_data['section_id'] = $section_id;
-       $page_data['page_title'] = 'Gestionar Asistencia de clase' . ' ' . $class_name . ' : ' . 'Sección' . ' ' . $section_name;
+       $page_data['seccion_id'] = $seccion_id;
+       $page_data['page_title'] = 'Gestionar Asistencia de clase' . ' ' . $clase_nombre . ' : ' . 'Sección' . ' ' . $seccion_nombre;
        $this->load->view('backend/index', $page_data);
    }
 
    /*PARA QUE CARGE EL LISTADO DE SECCIÓN -*/
-   function get_section($class_id) {
-    $page_data['class_id'] = $class_id; 
+   function get_seccion($clase_id) {
+    $page_data['clase_id'] = $clase_id; 
     $this->load->view('backend/admin/administrar_titular_asistencia' , $page_data);
 }
 
@@ -678,11 +689,11 @@ function seleccionador_asistencia()
                     'timestamp'=>$data['timestamp']
     ));
     if($query->num_rows() < 1) {
-        $students = $this->db->get_where('inscribirse' , array(
+        $estudiantes = $this->db->get_where('inscribirse' , array(
             'clase_id' => $data['clase_id'] , 'seccion_id' => $data['seccion_id'] , 'year' => $data['year']
         ))->result_array();
       
-        foreach($students as $row) {
+        foreach($estudiantes as $row) {
             $attn_data['clase_id']   = $data['clase_id'];
             $attn_data['year']       = $data['year'];
             $attn_data['timestamp']  = $data['timestamp'];
@@ -724,8 +735,8 @@ function actualizar_asistencia($class_id = '' , $section_id = '' , $timestamp = 
     }
 
 
-/****** DAILY ATTENDANCE *****************/
-function asistencia_diaria2($date='',$month='',$year='',$class_id='' , $section_id = '' , $session = '')
+/****** ASISTENCIA DIARIA*****************/
+function asistencia_diaria2($date='',$month='',$year='',$clase_id='' , $seccion_id = '' , $session = '')
 {
     if($this->session->userdata('admin_login')!=1)
         redirect(base_url() , 'refresh');
@@ -736,17 +747,17 @@ function asistencia_diaria2($date='',$month='',$year='',$class_id='' , $section_
     
     if($_POST)
     {
-        // Loop all the students of $class_id
-        $this->db->where('clase_id' , $class_id);
-        if($section_id != '') {
-            $this->db->where('seccion_id' , $section_id);
+        // Bucle de todos los estudiantes de $clase_id
+        $this->db->where('clase_id' , $clase_id);
+        if($seccion_id != '') {
+            $this->db->where('seccion_id' , $seccion_id);
         }
         //$session = base64_decode( urldecode( $session ) );
         $this->db->where('year' , $session);
-        $students = $this->db->get('inscribirse')->result_array();
-        foreach ($students as $row)
+        $estudiantes = $this->db->get('inscribirse')->result_array();
+        foreach ($estudiantes as $row)
         {
-            $attendance_status  =   $this->input->post('status_' . $row['estudiante_id']);
+            $asistencia_status  =   $this->input->post('status_' . $row['estudiante_id']);
 
             $this->db->where('estudiante_id' , $row['estudiante_id']);
             $this->db->where('date' , $date);
@@ -757,29 +768,29 @@ function asistencia_diaria2($date='',$month='',$year='',$class_id='' , $section_
             }
             $this->db->where('session' , $session);
 
-            $this->db->update('asistencia' , array('status' => $attendance_status));
+            $this->db->update('asistencia' , array('status' => $asistencia_status));
 
-            if ($attendance_status == 2) {
+            if ($asistencia_status == 2) {
 
                 if ($active_sms_service != '' || $active_sms_service != 'disabled') {
-                    $student_name   = $this->db->get_where('estudiante' , array('estudiante_id' => $row['estudiante_id']))->row()->nombre;
-                    $parent_id      = $this->db->get_where('estudiante' , array('estudiante_id' => $row['estudiante_id']))->row()->padres_id;
-                    $receiver_phone = $this->db->get_where('padres' , array('padres_id' => $parent_id))->row()->telefono;
-                    $message        = 'Tu Hijo(a)' . ' ' . $student_name . 'está ausente hoy.';
-                    $this->sms_model->send_sms($message,$receiver_phone);
+                    $estudiante_nombre   = $this->db->get_where('estudiante' , array('estudiante_id' => $row['estudiante_id']))->row()->nombre;
+                    $padres_id      = $this->db->get_where('estudiante' , array('estudiante_id' => $row['estudiante_id']))->row()->padres_id;
+                    $telefono_receptor = $this->db->get_where('padres' , array('padres_id' => $padres_id))->row()->telefono;
+                    $message        = 'Tu Hijo(a)' . ' ' . $estudiante_nombre . 'está ausente hoy.';
+                    $this->sms_model->send_sms($message,$telefono_receptor);
                 }
             }
 
         }
 
         $this->session->set_flashdata('flash_message' , 'Datos Actualizados');
-        redirect(base_url() . 'index.php?admin/asistencia/'.$date.'/'.$month.'/'.$year.'/'.$class_id.'/'.$section_id.'/'.$session , 'refresh');
+        redirect(base_url() . 'index.php?admin/asistencia/'.$date.'/'.$month.'/'.$year.'/'.$clase_id.'/'.$seccion_id.'/'.$session , 'refresh');
     }
     $page_data['date']       =	$date;
     $page_data['month']      =	$month;
     $page_data['year']       =	$year;
-    $page_data['clase_id']   =  $class_id;
-    $page_data['seccion_id'] =  $section_id;
+    $page_data['clase_id']   =  $clase_id;
+    $page_data['seccion_id'] =  $seccion_id;
     $page_data['session']    =  $session;
     
     $page_data['page_name']  =	'asistencia';
@@ -800,35 +811,35 @@ function asistencia_selector2()
 
 
 
-///////ATTENDANCE REPORT /////
+///////ASISTENCIA REPORTE /////
 function asistencia_reporte() {
     $page_data['month']        = date('m');
     $page_data['page_name']    = 'asistencia_reporte';
     $page_data['page_title']   = 'Reporte de Asistencia';
     $this->load->view('backend/index',$page_data);
 }
-function ver_asistencia_reporte($class_id = '' , $section_id = '', $month = '') {
+function ver_asistencia_reporte($clase_id = '' , $seccion_id = '', $month = '') {
     if($this->session->userdata('admin_login')!=1)
        redirect(base_url() , 'refresh');
-   $class_name = $this->db->get_where('clase' , array(
-       'clase_id' => $class_id
+   $clase_nombre = $this->db->get_where('clase' , array(
+       'clase_id' => $clase_id
    ))->row()->nombre;
-   $page_data['class_id'] = $class_id;
+   $page_data['clase_id'] = $clase_id;
    $page_data['month']    = $month;
    $page_data['page_name'] = 'ver_asistencia_reporte';
-   $section_name = $this->db->get_where('seccion' , array(
-       'seccion_id' => $section_id
+   $seccion_nombre = $this->db->get_where('seccion' , array(
+       'seccion_id' => $seccion_id
    ))->row()->nombre;
    //para ver el reprte de la asistencia segun la sección
-   $page_data['section_id'] = $section_id;
-   $page_data['page_title'] = 'Asistencia Reporte de Clase' . ' ' . $class_name . ' : ' . 'Sección' . ' ' . $section_name;
+   $page_data['seccion_id'] = $seccion_id;
+   $page_data['page_title'] = 'Asistencia Reporte de Clase' . ' ' . $clase_nombre . ' : ' . 'Sección' . ' ' . $seccion_nombre;
    $this->load->view('backend/index', $page_data);
 }
-function ver_asistencia_reporte_imprimir($class_id ='' , $section_id = '' , $month = '') {
+function ver_asistencia_reporte_imprimir($clase_id ='' , $seccion_id = '' , $month = '') {
      if ($this->session->userdata('admin_login') != 1)
        redirect(base_url(), 'refresh');
-   $page_data['class_id'] = $class_id;
-   $page_data['section_id']  = $section_id;
+   $page_data['clase_id'] = $clase_id;
+   $page_data['seccion_id']  = $seccion_id;
    $page_data['month'] = $month;
    $this->load->view('backend/admin/ver_asistencia_reporte_imprimir' , $page_data);
 }
@@ -862,9 +873,9 @@ function factura($param1 = '', $param2 = '', $param3 = '')
         $data['year']               = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
         
         $this->db->insert('factura', $data);
-        $invoice_id = $this->db->insert_id();
+        $factura_id = $this->db->insert_id();
 
-        $data2['factura_id']        =   $invoice_id;
+        $data2['factura_id']        =   $factura_id;
         $data2['estudiante_id']        =   $this->input->post('estudiante_id');
         $data2['titulo']             =   $this->input->post('titulo');
         $data2['descripcion']       =   $this->input->post('descripcion');
@@ -880,7 +891,7 @@ function factura($param1 = '', $param2 = '', $param3 = '')
         redirect(base_url() . 'index.php?admin/estudiante_pago', 'refresh');
     }
 
-    if ($param1 == 'do_update') {
+    if ($param1 == 'actualizar') {
         $data['estudiante_id']         = $this->input->post('estudiante_id');
         $data['titulo']              = $this->input->post('titulo');
         $data['descripcion']        = $this->input->post('descripcion');
@@ -925,16 +936,16 @@ function factura($param1 = '', $param2 = '', $param3 = '')
         redirect(base_url() . 'index.php?admin/ingreso/', 'refresh');
     }
 
-    if ($param1 == 'delete') {
+    if ($param1 == 'eliminar') {
         $this->db->where('factura_id', $param2);
         $this->db->delete('factura');
         $this->session->set_flashdata('flash_message' , 'Datos Eliminados');
         redirect(base_url() . 'index.php?admin/ingreso', 'refresh');
     }
     $page_data['page_name']  = 'factura';
-    $page_data['page_title'] = get_phrase('manage_invoice/payment');
+    $page_data['page_title'] = 'Gestionar Factura/Pago';
     $this->db->order_by('creacion_timestamp', 'desc');
-    $page_data['invoices'] = $this->db->get('factura')->result_array();
+    $page_data['facturas'] = $this->db->get('factura')->result_array();
     $this->load->view('backend/index', $page_data);
 }
 
@@ -948,7 +959,7 @@ function factura($param1 = '', $param2 = '', $param3 = '')
      $page_data['page_name']  = 'ingreso';
      $page_data['page_title'] = 'Pagos de los Estudiantes';
      $this->db->order_by('creacion_timestamp', 'desc');
-     $page_data['invoices'] = $this->db->get('factura')->result_array();
+     $page_data['facturas'] = $this->db->get('factura')->result_array();
      $this->load->view('backend/index', $page_data); 
  }
 
@@ -961,77 +972,77 @@ function factura($param1 = '', $param2 = '', $param3 = '')
      $this->load->view('backend/index', $page_data); 
  }
 
- function expense($param1 = '' , $param2 = '')
+ function gasto($param1 = '' , $param2 = '')
  {
      if ($this->session->userdata('admin_login') != 1)
          redirect('login', 'refresh');
      if ($param1 == 'create') {
-         $data['title']               =   $this->input->post('title');
-         $data['expense_category_id'] =   $this->input->post('expense_category_id');
-         $data['description']         =   $this->input->post('description');
-         $data['payment_type']        =   'expense';
-         $data['method']              =   $this->input->post('method');
-         $data['amount']              =   $this->input->post('amount');
+         $data['titulo']               =   $this->input->post('titulo');
+         $data['gastos_categoria_id'] =   $this->input->post('gastos_categoria_id');
+         $data['descripcion']         =   $this->input->post('descripcion');
+         $data['pago_tipo']        =   'gasto';
+         $data['metodo']              =   $this->input->post('metodo');
+         $data['monto']              =   $this->input->post('monto');
          $data['timestamp']           =   strtotime($this->input->post('timestamp'));
          $data['year']                =   $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
-         $this->db->insert('payment' , $data);
-         $this->session->set_flashdata('flash_message' , get_phrase('data_added_successfully'));
-         redirect(base_url() . 'index.php?admin/expense', 'refresh');
+         $this->db->insert('pago' , $data);
+         $this->session->set_flashdata('flash_message' , 'Datos Añadidos Satisfactoriamente');
+         redirect(base_url() . 'index.php?admin/gasto', 'refresh');
      }
 
      if ($param1 == 'edit') {
-         $data['title']               =   $this->input->post('title');
-         $data['expense_category_id'] =   $this->input->post('expense_category_id');
-         $data['description']         =   $this->input->post('description');
-         $data['payment_type']        =   'expense';
-         $data['method']              =   $this->input->post('method');
-         $data['amount']              =   $this->input->post('amount');
+         $data['titulo']               =   $this->input->post('titulo');
+         $data['gastos_categoria_id'] =   $this->input->post('gastos_categoria_id');
+         $data['descripcion']         =   $this->input->post('descripcion');
+         $data['pago_tipo']        =   'gasto';
+         $data['metodo']              =   $this->input->post('metodo');
+         $data['monto']              =   $this->input->post('monto');
          $data['timestamp']           =   strtotime($this->input->post('timestamp'));
          $data['year']                =   $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
-         $this->db->where('payment_id' , $param2);
-         $this->db->update('payment' , $data);
-         $this->session->set_flashdata('flash_message' , get_phrase('data_updated'));
-         redirect(base_url() . 'index.php?admin/expense', 'refresh');
+         $this->db->where('pago_id' , $param2);
+         $this->db->update('pago' , $data);
+         $this->session->set_flashdata('flash_message' , 'Datos Actualizados');
+         redirect(base_url() . 'index.php?admin/gasto', 'refresh');
      }
 
-     if ($param1 == 'delete') {
-         $this->db->where('payment_id' , $param2);
-         $this->db->delete('payment');
-         $this->session->set_flashdata('flash_message' , get_phrase('data_deleted'));
-         redirect(base_url() . 'index.php?admin/expense', 'refresh');
+     if ($param1 == 'eliminar') {
+         $this->db->where('pago_id' , $param2);
+         $this->db->delete('pago');
+         $this->session->set_flashdata('flash_message' , 'Datos Eliminados');
+         redirect(base_url() . 'index.php?admin/gasto', 'refresh');
      }
 
-     $page_data['page_name']  = 'expense';
-     $page_data['page_title'] = get_phrase('expenses');
+     $page_data['page_name']  = 'gasto';
+     $page_data['page_title'] = 'Gastos';
      $this->load->view('backend/index', $page_data); 
  }
 
- function expense_category($param1 = '' , $param2 = '')
+ function gasto_categoria($param1 = '' , $param2 = '')
  {
      if ($this->session->userdata('admin_login') != 1)
          redirect('login', 'refresh');
      if ($param1 == 'create') {
-         $data['name']   =   $this->input->post('name');
-         $this->db->insert('expense_category' , $data);
-         $this->session->set_flashdata('flash_message' , get_phrase('data_added_successfully'));
-         redirect(base_url() . 'index.php?admin/expense_category');
+         $data['nombre']   =   $this->input->post('nombre');
+         $this->db->insert('gastos_categoria' , $data);
+         $this->session->set_flashdata('flash_message' , 'Datos Añadidos Satisfactoriamente');
+         redirect(base_url() . 'index.php?admin/gasto_categoria');
      }
      if ($param1 == 'edit') {
-         $data['name']   =   $this->input->post('name');
-         $this->db->where('expense_category_id' , $param2);
-         $this->db->update('expense_category' , $data);
-         $this->session->set_flashdata('flash_message' , get_phrase('data_updated'));
-         redirect(base_url() . 'index.php?admin/expense_category');
+         $data['nombre']   =   $this->input->post('nombre');
+         $this->db->where('gastos_categoria_id' , $param2);
+         $this->db->update('gastos_categoria' , $data);
+         $this->session->set_flashdata('flash_message' , 'Datos Actualizados');
+         redirect(base_url() . 'index.php?admin/gasto_categoria');
      }
-     if ($param1 == 'delete') {
-         $this->db->where('expense_category_id' , $param2);
-         $this->db->delete('expense_category');
-         $this->session->set_flashdata('flash_message' , get_phrase('data_deleted'));
-         redirect(base_url() . 'index.php?admin/expense_category');
+     if ($param1 == 'eliminar') {
+         $this->db->where('gastos_categoria_id' , $param2);
+         $this->db->delete('gastos_categoria');
+         $this->session->set_flashdata('flash_message' , 'Datos Eliminados');
+         redirect(base_url() . 'index.php?admin/gasto_categoria');
      }
 
-     $page_data['page_name']  = 'expense_category';
-     $page_data['page_title'] = get_phrase('expense_category');
+     $page_data['page_name']  = 'gasto_categoria';
+     $page_data['page_title'] = 'Gastos por Categoria';
      $this->load->view('backend/index', $page_data);
  }
 
@@ -1044,6 +1055,335 @@ function factura($param1 = '', $param2 = '', $param3 = '')
      $page_data['param1'] = $param1;
      $this->load->view('backend/index', $page_data); 
  }
+
+
+
+/**********ADMIN BIBLIOTECA/LIBROS********************/
+function biblioteca($param1 = '', $param2 = '', $param3 = '')
+{
+    if ($this->session->userdata('admin_login') != 1)
+        redirect('login', 'refresh');
+    if ($param1 == 'create') {
+        $data['nombre']        = $this->input->post('nombre');
+        $data['descripcion'] = $this->input->post('descripcion');
+        $data['precio']       = $this->input->post('precio');
+        $data['autor']      = $this->input->post('autor');
+        $data['clase_id']    = $this->input->post('clase_id');
+        $data['status']      = $this->input->post('status');
+        $this->db->insert('biblioteca', $data);
+        $this->session->set_flashdata('flash_message' , 'Datos Añadidos Satisfactoriamente');
+        redirect(base_url() . 'index.php?admin/biblioteca', 'refresh');
+    }
+    if ($param1 == 'actualizar') {
+        $data['nombre']        = $this->input->post('nombre');
+        $data['descripcion'] = $this->input->post('descripcion');
+        $data['precio']       = $this->input->post('precio');
+        $data['autor']      = $this->input->post('autor');
+        $data['clase_id']    = $this->input->post('clase_id');
+        $data['status']      = $this->input->post('status');
+        
+        $this->db->where('libro_id', $param2);
+        $this->db->update('biblioteca', $data);
+        $this->session->set_flashdata('flash_message' ,'Datos Actualizados');
+        redirect(base_url() . 'index.php?admin/biblioteca', 'refresh');
+    } else if ($param1 == 'edit') {
+        $page_data['edit_data'] = $this->db->get_where('biblioteca', array(
+            'libro_id' => $param2
+        ))->result_array();
+    }
+    if ($param1 == 'eliminar') {
+        $this->db->where('libro_id', $param2);
+        $this->db->delete('biblioteca');
+        $this->session->set_flashdata('flash_message' , 'Datos Eliminados');
+        redirect(base_url() . 'index.php?admin/biblioteca', 'refresh');
+    }
+    $page_data['libros']      = $this->db->get('biblioteca')->result_array();
+    $page_data['page_name']  = 'biblioteca';
+    $page_data['page_title'] = 'Manejo de Libros de la Biblioteca';
+    $this->load->view('backend/index', $page_data);
+    
+}
+
+
+
+ /****ADMIN EXAMEN*****/
+ function lista_examen($param1 = '', $param2 = '' , $param3 = '')
+ {
+     if ($this->session->userdata('admin_login') != 1)
+         redirect(base_url(), 'refresh');
+     if ($param1 == 'create') {
+         $data['nombre']    = $this->input->post('nombre');
+         $data['date']    = $this->input->post('date');
+         $data['comentario'] = $this->input->post('comentario');
+         $data['year']    = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
+         $this->db->insert('examen', $data);
+         $this->session->set_flashdata('flash_message' , 'Datos Añadidos Satisfactoriamente');
+         redirect(base_url() . 'index.php?admin/lista_examen/', 'refresh');
+     }
+     if ($param1 == 'edit' && $param2 == 'actualizar') {
+         $data['nombre']    = $this->input->post('nombre');
+         $data['date']    = $this->input->post('date');
+         $data['comentario'] = $this->input->post('comentario');
+         $data['year']    = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
+         
+         $this->db->where('examen_id', $param3);
+         $this->db->update('examen', $data);
+         $this->session->set_flashdata('flash_message' , 'Datos Actualizados');
+         redirect(base_url() . 'index.php?admin/lista_examen/', 'refresh');
+     } else if ($param1 == 'edit') {
+         $page_data['edit_data'] = $this->db->get_where('examen', array(
+             'examen_id' => $param2
+         ))->result_array();
+     }
+     if ($param1 == 'eliminar') {
+         $this->db->where('examen_id', $param2);
+         $this->db->delete('examen');
+         $this->session->set_flashdata('flash_message' , 'Datos Eliminados');
+         redirect(base_url() . 'index.php?admin/lista_examen/', 'refresh');
+     }
+     $page_data['examenes']      = $this->db->get('examen')->result_array();
+     $page_data['page_name']  = 'lista_examen';
+     $page_data['page_title'] = 'Listas de Exámenes ';
+     $this->load->view('backend/index', $page_data);
+ }
+
+
+
+  /****ADMIN GRADOS*****/
+  function grado($param1 = '', $param2 = '')
+  {
+      if ($this->session->userdata('admin_login') != 1)
+          redirect(base_url(), 'refresh');
+      if ($param1 == 'create') {
+          $data['nombre']        = $this->input->post('nombre');
+          $data['grado_punto'] = $this->input->post('grado_punto');
+          $data['calificacion_desde']   = $this->input->post('calificacion_desde');
+          $data['calificacion_hasta']   = $this->input->post('calificacion_hasta');
+          $data['comentario']     = $this->input->post('comentario');
+          $this->db->insert('grado', $data);
+          $this->session->set_flashdata('flash_message' , 'Datos Añadidos Satisfactoriamente');
+          redirect(base_url() . 'index.php?admin/grado/', 'refresh');
+      }
+      if ($param1 == 'actualizar') {
+          $data['nombre']        = $this->input->post('nombre');
+          $data['grado_punto'] = $this->input->post('grado_punto');
+          $data['calificacion_desde']   = $this->input->post('calificacion_desde');
+          $data['calificacion_hasta']   = $this->input->post('calificacion_hasta');
+          $data['comentario']     = $this->input->post('comentario');
+          
+          $this->db->where('grado_id', $param2);
+          $this->db->update('grado', $data);
+          $this->session->set_flashdata('flash_message' , 'Datos Actualizados');
+          redirect(base_url() . 'index.php?admin/grado/', 'refresh');
+      } else if ($param1 == 'edit') {
+          $page_data['edit_data'] = $this->db->get_where('grado', array(
+              'grado_id' => $param2
+          ))->result_array();
+      }
+      if ($param1 == 'eliminar') {
+          $this->db->where('grado_id', $param2);
+          $this->db->delete('grado');
+          $this->session->set_flashdata('flash_message' , 'Datos Eliminados');
+          redirect(base_url() . 'index.php?admin/grado/', 'refresh');
+      }
+      $page_data['grados']     = $this->db->get('grado')->result_array();
+      $page_data['page_name']  = 'grado';
+      $page_data['page_title'] = 'Manejo de Grados';
+      $this->load->view('backend/index', $page_data);
+  }
+
+
+   /****ADMIN EXAM CALIFICACION*****/
+  
+   function ingreso_calificacion()
+   {
+       if ($this->session->userdata('admin_login') != 1)
+           redirect(base_url(), 'refresh');
+       $page_data['page_name']  =   'ingreso_calificacion';
+       $page_data['page_title'] = 'Manejo de Calificaciones';
+       $this->load->view('backend/index', $page_data);
+   }
+
+   function ver_manejo_calificacion($examen_id = '' , $clase_id = '' , $seccion_id = '' , $tema_id = '')
+   {
+       if ($this->session->userdata('admin_login') != 1)
+           redirect(base_url(), 'refresh');
+       $page_data['examen_id']    =   $examen_id;
+       $page_data['clase_id']   =   $clase_id;
+       $page_data['tema_id'] =   $tema_id;
+       $page_data['seccion_id'] =   $seccion_id;
+       $page_data['page_name']  =   'ver_manejo_calificacion';
+       $page_data['page_title'] = 'Manejo de Calificaciones';
+       $this->load->view('backend/index', $page_data);
+   }
+
+   function selector_calificacion()
+   {
+       if ($this->session->userdata('admin_login') != 1)
+           redirect(base_url(), 'refresh');
+
+       $data['examen_id']    = $this->input->post('examen_id');
+       $data['clase_id']   = $this->input->post('clase_id');
+       $data['seccion_id'] = $this->input->post('seccion_id');
+       $data['tema_id'] = $this->input->post('tema_id');
+       $data['year']       = $this->db->get_where('settings' , array('type'=>'running_year'))->row()->description;
+       $query = $this->db->get_where('calificacion' , array(
+                   'examen_id' => $data['examen_id'],
+                       'clase_id' => $data['clase_id'],
+                           'seccion_id' => $data['seccion_id'],
+                               'tema_id' => $data['tema_id'],
+                                   'year' => $data['year']
+               ));
+       if($query->num_rows() < 1) {
+           $estudiantes = $this->db->get_where('inscribirse' , array(
+               'clase_id' => $data['clase_id'] , 'seccion_id' => $data['seccion_id'] , 'year' => $data['year']
+           ))->result_array();
+           foreach($estudiantes as $row) {
+               $data['estudiante_id'] = $row['estudiante_id'];
+               $this->db->insert('calificacion' , $data);
+           }
+       }
+       redirect(base_url() . 'index.php?admin/ver_manejo_calificacion/' . $data['examen_id'] . '/' . $data['clase_id'] . '/' . $data['seccion_id'] . '/' . $data['tema_id'] , 'refresh');
+       
+   }
+
+   function actualizar_calificacion($examen_id = '' , $clase_id = '' , $seccion_id = '' , $tema_id = '')
+   {
+       $running_year = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
+       $calif_estu = $this->db->get_where('calificacion' , array(
+           'examen_id' => $examen_id,
+               'clase_id' => $clase_id,
+                   'seccion_id' => $seccion_id,
+                       'year' => $running_year,
+                           'tema_id' => $tema_id
+       ))->result_array();
+       foreach($calif_estu as $row) {
+           $calificacion_obtenida = $this->input->post('calificacion_obtenida_'.$row['calificacion_id']);
+           $comentario = $this->input->post('comentario_'.$row['calificacion_id']);
+           $this->db->where('calificacion_id' , $row['calificacion_id']);
+           $this->db->update('calificacion' , array('calificacion_obtenida' => $calificacion_obtenida , 'comentario' => $comentario));
+       }
+       $this->session->set_flashdata('flash_message' , 'Calificación Actualizada');
+       redirect(base_url().'index.php?admin/ver_manejo_calificacion/'.$examen_id.'/'.$clase_id.'/'.$seccion_id.'/'.$tema_id , 'refresh');
+   }
+
+   function calificacion_get_tema($clase_id)
+   {
+       $page_data['clase_id'] = $clase_id;
+       $this->load->view('backend/admin/calificacion_get_tema' , $page_data);
+   }
+
+   // REPORTE
+   function calificacion_reporte($clase_id = '' , $examen_id = '') {
+       if ($this->session->userdata('admin_login') != 1)
+           redirect(base_url(), 'refresh');
+       
+       if ($this->input->post('operacion') == 'seleccion') {
+           $page_data['examen_id']    = $this->input->post('examen_id');
+           $page_data['clase_id']   = $this->input->post('clase_id');
+           
+           if ($page_data['examen_id'] > 0 && $page_data['clase_id'] > 0) {
+               redirect(base_url() . 'index.php?admin/calificacion_reporte/' . $page_data['clase_id'] . '/' . $page_data['examen_id'] , 'refresh');
+           } else {
+               $this->session->set_flashdata('mark_message', 'Elige clase y examen');
+               redirect(base_url() . 'index.php?admin/calificacion_reporte/', 'refresh');
+           }
+       }
+       $page_data['examen_id']    = $examen_id;
+       $page_data['clase_id']   = $clase_id;
+       
+       $page_data['page_info'] = 'Notas del Examen';
+       
+       $page_data['page_name']  = 'calificacion_reporte';
+       $page_data['page_title'] = 'Reporte de Calificaciones';
+       $this->load->view('backend/index', $page_data);
+   
+   }
+
+   function ver_imprimir_calificacion($clase_id , $examen_id) {
+       if ($this->session->userdata('admin_login') != 1)
+           redirect(base_url(), 'refresh');
+       $page_data['clase_id'] = $clase_id;
+       $page_data['examen_id']  = $examen_id;
+       $this->load->view('backend/admin/ver_imprimir_calificacion' , $page_data);
+   }
+   
+
+
+
+ /****ADMINISTRADOR*****/
+ function registrar_admin($param1 = '', $param2 = '', $param3 = '')
+ {
+     if ($this->session->userdata('admin_login') != 1)
+         redirect(base_url(), 'refresh');
+     if ($param1 == 'create') {
+         $data['name']        = $this->input->post('name');
+         $data['email']       = $this->input->post('email');
+         
+         $data['password']    = sha1($this->input->post('password'));
+
+         //validar aquí, si la cuenta de correo electrónico
+       
+         $sea_vemail = $this->db->get_where('admin', array('email' => $data['email']))->row()->name;
+      
+         if ($stu_vemail == null && $tea_vemail == null && $par_vemail == null) {
+
+         $this->db->insert('admin', $data);
+         $admin_id = $this->db->insert_id();
+         move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/admin_image/' . $admin_id . '.jpg');
+         $this->session->set_flashdata('flash_message' , 'Datos añadidos satisfactoriamente');
+         $this->email_model->account_opening_email('admin', $data['email']); //SEND EMAIL
+          } else {
+             $this->session->set_flashdata('flash_message_error' , 'Uso de la cuenta de correo electrónico');
+         }
+         redirect(base_url() . 'index.php?admin/registrar_admin/', 'refresh');
+     }
+     if ($param1 == 'actualizar') {
+         $data['name']        = $this->input->post('name');
+         $data['email']       = $this->input->post('email');
+         
+         $this->db->where('admin_id', $param2);
+         $this->db->update('admin', $data);
+         move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/admin_image/' . $param2 . '.jpg');
+         $this->session->set_flashdata('flash_message' , 'Datos Actualizados');
+         redirect(base_url() . 'index.php?admin/registrar_admin/', 'refresh');
+     } else if ($param1 == 'personal_profile') {
+         $page_data['personal_profile']   = true;
+         $page_data['current_admin_id'] = $param2;
+     } else if ($param1 == 'edit') {
+         $page_data['edit_data'] = $this->db->get_where('admin', array(
+             'admin_id' => $param2
+         ))->result_array();
+     }
+     if ($param1 == 'cambiar_password') {
+         $data['password']         = sha1($this->input->post('new_password'));
+         $data['confirmar_new_password'] = sha1($this->input->post('confirmar_new_password'));
+
+         if ($data['password'] == $data['confirmar_new_password']) {  
+         $this->db->where('admin_id', $param2);
+         $this->db->update('admin', array(
+                 'password' => $data['password']
+             ));
+             $this->session->set_flashdata('flash_message', 'Actualizar contraseña');
+         } else {
+             $this->session->set_flashdata('flash_message_error', 'Falta de coincidencia de contraseña');
+         }
+         redirect(base_url() . 'index.php?admin/registrar_admin/', 'refresh');
+     }
+     if ($param1 == 'eliminar') {
+         $this->db->where('admin_id', $param2);
+         $this->db->delete('admin');
+         $this->session->set_flashdata('flash_message' , 'Datos Eliminados');
+         redirect(base_url() . 'index.php?admin/registrar_admin/', 'refresh');
+     }
+     $page_data['administradores']   = $this->db->get('admin')->result_array();
+     $page_data['page_name']  = 'registrar_admin';
+     $page_data['page_title'] = 'Registrar Administradores';
+     $this->load->view('backend/index', $page_data);
+ }
+
+
+
 
     
     /*****SITE/SYSTEM SETTINGS*********/
@@ -1219,7 +1559,7 @@ function factura($param1 = '', $param2 = '', $param3 = '')
     
     
 
-    /******MANAGE OWN PROFILE AND CHANGE PASSWORD***/
+    /******ADMINISTRADOR PROFILE AND CAMBIO DE PASSWOORD***/
     function manage_profile($param1 = '', $param2 = '', $param3 = '')
     {
         if ($this->session->userdata('admin_login') != 1)

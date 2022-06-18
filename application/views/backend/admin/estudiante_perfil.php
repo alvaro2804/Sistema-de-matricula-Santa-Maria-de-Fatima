@@ -1,7 +1,7 @@
 <div class="row appear-animation fadeInRight" data-appear-animation="fadeInRight">
 <?php
 $edit_data = $this->db->get_where( 'inscribirse', array(
-	'estudiante_id' => $student_id, 'year' => $this->db->get_where( 'settings', array( 'type' => 'running_year' ) )->row()->description
+	'estudiante_id' => $estudiante_id, 'year' => $this->db->get_where( 'settings', array( 'type' => 'running_year' ) )->row()->description
 ) )->result_array();
 foreach ( $edit_data as $row ):
 ?>
@@ -56,7 +56,7 @@ foreach ( $edit_data as $row ):
 								<td align="right"><?php echo $this->db->get_where('estudiante' , array('estudiante_id' => $row['estudiante_id']))->row()->sexo;?></td>
 							</tr>
 							<tr>
-								<td><?php echo get_phrase('religion');?></td>
+								<td>Religión</td>
 								<td align="right"><?php echo $this->db->get_where('estudiante' , array('estudiante_id' => $row['estudiante_id']))->row()->religion;?></td>
 							</tr>
 							<tr>
@@ -78,13 +78,13 @@ foreach ( $edit_data as $row ):
 							<tr>
 							<td>Padres</td>
 							<td align="right">
-								<?php $parent_id = $this->db->get_where('estudiante' , array('estudiante_id' => $row['estudiante_id']))->row()->padres_id;
-								echo $this->db->get_where('padres' , array('padres_id' => $parent_id))->row()->nombre; ?>
+								<?php $padres_id = $this->db->get_where('estudiante' , array('estudiante_id' => $row['estudiante_id']))->row()->padres_id;
+								echo $this->db->get_where('padres' , array('padres_id' => $padres_id))->row()->nombre; ?>
 						   </td>
 							</tr>
 							<tr>
 								<td>Teléfono de los Padres</td>
-								<td align="right"><?php echo $this->db->get_where('padres' , array('padres_id' => $parent_id))->row()->telefono;?></td>
+								<td align="right"><?php echo $this->db->get_where('padres' , array('padres_id' => $padres_id))->row()->telefono;?></td>
 							</tr> 
 						</table>
 					</div>	
@@ -108,7 +108,7 @@ foreach ( $edit_data as $row ):
 			
 			<div class="tab-content">
 				<div id="edit" class="tab-pane active">
-				   <?php echo form_open(base_url() . 'index.php?admin/estudiante/do_update/'.$row['estudiante_id'].'/'.$row['clase_id'], array('class' => 'form-wizard form-bordered','id' => 'form', 'enctype' => 'multipart/form-data'));?>
+				   <?php echo form_open(base_url() . 'index.php?admin/estudiantes/actualizar/'.$row['estudiante_id'].'/'.$row['clase_id'], array('class' => 'form-wizard form-bordered','id' => 'form', 'enctype' => 'multipart/form-data'));?>
 					<fieldset class="mb-xl mt-lg">
 
 						<div class="form-group">
@@ -140,7 +140,7 @@ foreach ( $edit_data as $row ):
 								Nombre
 							</label>
 							<div class="col-md-8">
-								<input type="text" class="form-control" name="nombre" required title="Valor requerido" value="<?php echo $this->db->get_where('estudiante' , array('student_id' => $row['estudiante_id']))->row()->nombre; ?>">
+								<input type="text" class="form-control" name="nombre" required title="Valor requerido" value="<?php echo $this->db->get_where('estudiante' , array('estudiante_id' => $row['estudiante_id']))->row()->nombre; ?>">
 							</div>
 						</div>
 						
@@ -161,8 +161,8 @@ foreach ( $edit_data as $row ):
 								<select name="seccion_id" class="form-control" data-plugin-selectTwo data-width="100%" data-minimum-results-for-search="Infinity">
 									<option value="">Seleccionar Sección</option>
 									<?php
-										$sections = $this->db->get_where( 'seccion', array( 'clase_id' => $row[ 'clase_id' ] ) )->result_array();
-										foreach ( $sections as $row2 ):
+										$secciones = $this->db->get_where( 'seccion', array( 'clase_id' => $row[ 'clase_id' ] ) )->result_array();
+										foreach ( $secciones as $row2 ):
 									?>
 									<option value="<?php echo $row2['seccion_id'];?>" <?php if($row[ 'seccion_id'] == $row2[ 'seccion_id']) echo 'selected';?>><?php echo $row2['nombre'];?></option>
 									<?php endforeach;?>
@@ -187,11 +187,11 @@ foreach ( $edit_data as $row ):
 								<select name="padres_id" class="form-control" data-plugin-selectTwo data-width="100%" data-minimum-results-for-search="Infinity" required title="Valor requerido">
 									<option value="">Seleccionar</option>
 									<?php 
-									$parents = $this->db->get('padres')->result_array();
-									$parent_id = $this->db->get_where('estudiante' , array('estudiante_id' => $row['estudiante_id']))->row()->padres_id;
-									foreach($parents as $row3):
+									$padres = $this->db->get('padres')->result_array();
+									$padres_id = $this->db->get_where('estudiante' , array('estudiante_id' => $row['estudiante_id']))->row()->padres_id;
+									foreach($padres as $row3):
 										?>
-									<option value="<?php echo $row3['padres_id'];?>" <?php if($row3[ 'padres_id'] == $parent_id)echo 'selected';?>><?php echo $row3['nombre'];?></option>
+									<option value="<?php echo $row3['padres_id'];?>" <?php if($row3[ 'padres_id'] == $padres_id)echo 'selected';?>><?php echo $row3['nombre'];?></option>
 									<?php
 									endforeach;
 									?>
@@ -215,11 +215,11 @@ foreach ( $edit_data as $row ):
 							<div class="col-md-8">
 								<select name="sexo" class="form-control" data-plugin-selectTwo data-width="100%" data-minimum-results-for-search="Infinity">
 									<?php
-									$gender = $this->db->get_where( 'estudiante', array( 'estudiante_id' => $row[ 'estudiante_id' ] ) )->row()->sexo;
+									$genero = $this->db->get_where( 'estudiante', array( 'estudiante_id' => $row[ 'estudiante_id' ] ) )->row()->sexo;
 									?>
 									<option value="">Seleccionar</option>
-									<option value="masculino" <?php if($gender=='masculino' )echo 'selected';?>>Masculino</option>
-									<option value="femenino" <?php if($gender=='femenino' )echo 'selected';?>>Femenino</option>
+									<option value="masculino" <?php if($genero=='masculino' )echo 'selected';?>>Masculino</option>
+									<option value="femenino" <?php if($genero=='femenino' )echo 'selected';?>>Femenino</option>
 								</select>
 							</div>
 						</div>
@@ -282,7 +282,7 @@ foreach ( $edit_data as $row ):
 				</div>
             
 	            <div id="resetpass" class="tab-pane">
-					<?php echo form_open(base_url() . 'index.php?admin/estudiante/change_password/'.$row['estudiante_id'].'/'.$row['clase_id'] , array('class' => 'form-horizontal form-bordered validate', 'enctype' => 'multipart/form-data'));?>
+					<?php echo form_open(base_url() . 'index.php?admin/estudiantes/cambiar_password/'.$row['estudiante_id'].'/'.$row['clase_id'] , array('class' => 'form-horizontal form-bordered validate', 'enctype' => 'multipart/form-data'));?>
 						<fieldset class="mb-xl mt-lg">
 							<div class="form-group">
 								<label class="col-sm-3 control-label">

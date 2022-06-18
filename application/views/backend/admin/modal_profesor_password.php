@@ -19,7 +19,7 @@
 
 					<div class="tab-pane box active" id="list" style="padding: 5px">
 						<div class="box-content padded">
-							<?php echo form_open(base_url() . 'index.php?admin/profesor/change_password/'.$row['profesor_id'] , array('class' => 'form-horizontal form-bordered validate', 'enctype' => 'multipart/form-data'));?>
+							<?php echo form_open(base_url() . 'index.php?admin/profesor/cambiar_password/'.$row['profesor_id'] , array('class' => 'form-horizontal form-bordered validate', 'enctype' => 'multipart/form-data'));?>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">
 									Nueva Contraseña

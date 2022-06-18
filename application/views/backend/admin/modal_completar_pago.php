@@ -23,10 +23,10 @@ foreach ($edit_data as $row):
                 	<tbody>
                 	<?php 
                 		$count = 1;
-                		$payments = $this->db->get_where('pago' , array(
+                		$pagos = $this->db->get_where('pago' , array(
                 			'factura_id' => $row['factura_id']
                 		))->result_array();
-                		foreach ($payments as $row2):
+                		foreach ($pagos as $row2):
                 	?>
                 		<tr>
                 			<td><?php echo $count++;?></td>

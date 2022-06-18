@@ -4,7 +4,7 @@ $edit_data = $this->db->get_where('clase_rutina' , array('clase_rutina_id' => $p
 <section class="panel">
 
  <?php foreach($edit_data as $row):?>
-   <?php echo form_open(base_url() . 'index.php?admin/clase_rutina/do_update/'.$row['clase_rutina_id'] , array('class' => 'form-horizontal form-bordered', 'id' => 'form'));?>
+   <?php echo form_open(base_url() . 'index.php?admin/clase_rutina/actualizar/'.$row['clase_rutina_id'] , array('class' => 'form-horizontal form-bordered', 'id' => 'form'));?>
 
  <header class="panel-heading">
    <h4 class="panel-title">
@@ -17,10 +17,10 @@ $edit_data = $this->db->get_where('clase_rutina' , array('clase_rutina_id' => $p
 			<div class="form-group">
 				<label class="col-sm-3 control-label">Clase</label>
              <div class="col-md-6">
-					<select data-plugin-selectTwo id="class_id" name="clase_id" class="form-control populate" onchange="section_subject_select(this.value , <?php echo $param2;?>)" style="width: 100%">
+					<select data-plugin-selectTwo id="clase_id" name="clase_id" class="form-control populate" onchange="section_subject_select(this.value , <?php echo $param2;?>)" style="width: 100%">
 						<?php 
-						$classes = $this->db->get('clase')->result_array();
-						foreach($classes as $row2):
+						$clases = $this->db->get('clase')->result_array();
+						foreach($clases as $row2):
 						?>
 							<option value="<?php echo $row2['clase_id'];?>" <?php if($row['clase_id']==$row2['clase_id'])echo 'selected';?>><?php echo $row2['nombre'];?></option>
 						<?php
@@ -29,7 +29,7 @@ $edit_data = $this->db->get_where('clase_rutina' , array('clase_rutina_id' => $p
 					</select>
 				</div>
 			</div>
-			<div id="section_subject_edit_holder"></div>
+			<div id="seccion_tema_edit_holder"></div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label">Día</label>
 				<div class="col-md-6">
@@ -92,10 +92,10 @@ $edit_data = $this->db->get_where('clase_rutina' , array('clase_rutina_id' => $p
 <script type="text/javascript">
     function section_subject_select(clase_id , clase_rutina_id) {
         $.ajax({
-            url: '<?php echo base_url();?>index.php?admin/section_subject_edit/' + clase_id + '/' + clase_rutina_id ,
+            url: '<?php echo base_url();?>index.php?admin/seccion_tema_edit/' + clase_id + '/' + clase_rutina_id ,
             success: function(response)
             {
-                jQuery('#section_subject_edit_holder').html(response);
+                jQuery('#seccion_tema_edit_holder').html(response);
             }
         });
     }
@@ -103,7 +103,7 @@ $edit_data = $this->db->get_where('clase_rutina' , array('clase_rutina_id' => $p
 
 <script type="text/javascript">
     $(document).ready(function() {
-        var clase_id = $('#class_id').val();
+        var clase_id = $('#clase_id').val();
         var clase_rutina_id = '<?php echo $param2;?>';
         section_subject_select(clase_id,clase_rutina_id);
         

@@ -82,11 +82,28 @@
 			</li>
 
 			<!-- USUARIO-->
-			<li class="<?php if ($page_name == 'teacher_suggestion') echo 'nav-active'; ?> ">
-				 <a href="<?php echo base_url(); ?>index.php?admin/#">
-					 <i class="fa fa-download"></i>
-					 <span>Usuario</span>
-				 </a>
+			
+			<li class="nav-parent <?php
+			if ($page_name == 'registrar_admin' ||
+					$page_name == '#')
+				echo 'nav-expanded nav-active';
+			?> ">
+				<a href="#">
+				<i class="fa fa-user-secret" aria-hidden="true"></i>
+					<span>Usuario</span>
+				</a>
+				<ul class="nav nav-children">
+					<li class="<?php if ($page_name == 'registrar_admin') echo 'nav-active'; ?> ">
+						<a href="<?php echo base_url(); ?>index.php?admin/registrar_admin">
+							<span><i class="fa fa-circle-o"></i>Administrador del Sistema</span>
+						</a>
+					</li>
+					<li class="<?php if ($page_name == '#') echo 'nav-active'; ?> ">
+						<a href="<?php echo base_url(); ?>index.php?admin/#">
+							<span><i class="fa fa-circle-o"></i> Usuario</span>
+						</a>
+					</li>
+				</ul>
 			</li>
 
 		   <!-- PLAN DE ESTUDIOS-->
@@ -149,41 +166,45 @@
 
 			<!-- EXAMEN -->
 			<li class="nav-parent <?php
-			if ($page_name == 'exam' ||
-					$page_name == 'grade' ||
-					$page_name == 'marks_manage' ||
-						$page_name == 'exam_marks_sms' ||
-							$page_name == 'tabulation_sheet' ||
-								$page_name == 'marks_manage_view')
-									echo 'nav-expanded nav-active';
+			if ($page_name == 'lista_examen' ||
+					$page_name == 'grado' ||
+					$page_name == 'ingreso_calificacion' ||
+						$page_name == 'calificacion_reporte' ||
+											$page_name == 'ver_manejo_calificacion')
+						echo 'nav-expanded nav-active';
 			?> ">
 				<a href="#">
 					<i class="fa fa-graduation-cap"></i>
 					<span>Examen</span>
 				</a>
 				<ul class="nav nav-children">
-					<li class="<?php if ($page_name == 'exam') echo 'nav-active'; ?> ">
-						<a href="<?php echo base_url(); ?>index.php?admin/exam">
+					<li class="<?php if ($page_name == 'lista_examen') echo 'nav-active'; ?> ">
+						<a href="<?php echo base_url(); ?>index.php?admin/lista_examen">
 							<span><i class="fa fa-circle-o"></i>Lista de Examen</span>
 						</a>
 					</li>
-					<li class="<?php if ($page_name == 'grade') echo 'nav-active'; ?> ">
-						<a href="<?php echo base_url(); ?>index.php?admin/grade">
+					<li class="<?php if ($page_name == 'grado') echo 'nav-active'; ?> ">
+						<a href="<?php echo base_url(); ?>index.php?admin/grado">
 							<span><i class="fa fa-circle-o"></i> Niveles de Examen</span>
 						</a>
 					</li>
 
-					<li class="<?php if ($page_name == 'tabulation_sheet') echo 'nav-active'; ?> ">
-						<a href="<?php echo base_url(); ?>index.php?admin/tabulation_sheet">
-							<span><i class="fa fa-circle-o"></i> Promedios de Calificaciones</span>
+					<li class="<?php if ($page_name == 'ingreso_calificacion' || $page_name == 'ver_manejo_calificacion') echo 'nav-active'; ?> ">
+						<a href="<?php echo base_url(); ?>index.php?admin/ingreso_calificacion">
+							<span><i class="fa fa-circle-o"></i> Ingreso de Calificación</span>
+						</a>
+					</li>
+					<li class="<?php if ($page_name == 'calificacion_reporte') echo 'nav-active'; ?> ">
+						<a href="<?php echo base_url(); ?>index.php?admin/calificacion_reporte">
+							<span><i class="fa fa-circle-o"></i> Reporte</span>
 						</a>
 					</li>
 				</ul>
 			</li>
 
 			<!-- BIBLIOTECA -->
-			<li class="<?php if ($page_name == 'book') echo 'nav-active'; ?> ">
-				<a href="<?php echo base_url(); ?>index.php?admin/#">
+			<li class="<?php if ($page_name == 'biblioteca') echo 'nav-active'; ?> ">
+				<a href="<?php echo base_url(); ?>index.php?admin/biblioteca">
 					<i class="fa fa-fax"></i>
 					<span>Biblioteca</span>
 				</a>
@@ -196,8 +217,8 @@
 		   <!-- CONTABILIDAD -->
 			<li class="nav-parent <?php
 			if ($page_name == 'ingreso' ||
-					$page_name == 'expense' ||
-						$page_name == 'expense_category' ||
+					$page_name == 'gasto' ||
+						$page_name == 'gasto_categoria' ||
 							$page_name == 'estudiante_pago')
 								echo 'nav-expanded nav-active';
 			?> ">
@@ -216,13 +237,13 @@
 							<span><i class="fa fa-circle-o"></i>Pagos Estudiante</span>
 						</a>
 					</li>
-					<li class="<?php if ($page_name == 'expense') echo 'nav-active'; ?> ">
-						<a href="<?php echo base_url(); ?>index.php?admin/expense">
+					<li class="<?php if ($page_name == 'gasto') echo 'nav-active'; ?> ">
+						<a href="<?php echo base_url(); ?>index.php?admin/gasto">
 							<span><i class="fa fa-circle-o"></i>Gastos</span>
 						</a>
 					</li>
-					<li class="<?php if ($page_name == 'expense_category') echo 'nav-active'; ?> ">
-						<a href="<?php echo base_url(); ?>index.php?admin/expense_category">
+					<li class="<?php if ($page_name == 'gasto_categoria') echo 'nav-active'; ?> ">
+						<a href="<?php echo base_url(); ?>index.php?admin/gasto_categoria">
 							<span><i class="fa fa-circle-o"></i>Gastos por categoria</span>
 						</a>
 					</li>

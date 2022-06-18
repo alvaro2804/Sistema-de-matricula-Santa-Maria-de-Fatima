@@ -6,7 +6,7 @@
 			<?php
 			$query = $this->db->get( 'clase' );
 			if ( $query->num_rows() > 0 ):
-				$class = $query->result_array();
+				$clase = $query->result_array();
 			?>
 
 			<div class="col-md-4 mb-sm">
@@ -14,10 +14,10 @@
 					<label class="control-label">
 						Clase <span class="required">*</span>
 					</label>
-					<select class="form-control" data-plugin-selectTwo data-width="100%" data-minimum-results-for-search="Infinity" required name="clase_id" onchange="select_section(this.value)">
+					<select class="form-control" data-plugin-selectTwo data-width="100%" data-minimum-results-for-search="Infinity" required name="clase_id" onchange="select_seccion(this.value)">
 						<option value="">Seleccionar Clase</option>
-						<?php foreach ($class as $row): ?>
-						<option value="<?php echo $row['clase_id']; ?>" <?php if ($class_id == $row[ 'clase_id']) echo 'selected'; ?> ><?php echo $row['nombre']; ?></option>
+						<?php foreach ($clase as $row): ?>
+						<option value="<?php echo $row['clase_id']; ?>" <?php if ($clase_id == $row[ 'clase_id']) echo 'selected'; ?> ><?php echo $row['nombre']; ?></option>
 						<?php endforeach; ?>
 					</select>
 				</div>
@@ -25,9 +25,9 @@
 			<?php endif; ?>
 
 			<?php
-			$query = $this->db->get_where( 'seccion', array( 'clase_id' => $class_id ) );
+			$query = $this->db->get_where( 'seccion', array( 'clase_id' => $clase_id ) );
 			if ( $query->num_rows() > 0 ):
-				$sections = $query->result_array();
+				$secciones = $query->result_array();
 			?>
 			<div id="section_holder">
 				<div class="col-md-4 mb-sm">
@@ -36,8 +36,8 @@
 							Sección
 						</label>
 						<select class="form-control" data-plugin-selectTwo data-width="100%" data-minimum-results-for-search="Infinity" required name="seccion_id">
-							<?php foreach ($sections as $row): ?>
-							<option value="<?php echo $row['seccion_id']; ?>" <?php if ($section_id == $row[ 'seccion_id']) echo 'selected'; ?>><?php echo $row['nombre']; ?></option>
+							<?php foreach ($secciones as $row): ?>
+							<option value="<?php echo $row['seccion_id']; ?>" <?php if ($seccion_id == $row[ 'seccion_id']) echo 'selected'; ?>><?php echo $row['nombre']; ?></option>
 							<?php endforeach; ?>
 						</select>
 					</div>
@@ -97,7 +97,7 @@
 
 		
 
-		<?php if ($class_id != '' && $section_id != '' && $month != ''): ?>
+		<?php if ($clase_id != '' && $seccion_id != '' && $month != ''): ?>
 
 		<hr class="dotted short mb-lg">
 
@@ -115,8 +115,8 @@
 							<div class="widget-summary-col">
 								<div class="summary">
 									<?php
-									$section_name = $this->db->get_where( 'seccion', array( 'seccion_id' => $section_id ) )->row()->nombre;
-									$class_name = $this->db->get_where( 'clase', array( 'clase_id' => $class_id ) )->row()->nombre;
+									$seccion_nombre = $this->db->get_where( 'seccion', array( 'seccion_id' => $seccion_id ) )->row()->nombre;
+									$clase_nombre = $this->db->get_where( 'clase', array( 'clase_id' => $clase_id ) )->row()->nombre;
 									if ( $month == 1 )
 										$m = 'Enero';
 									else if ( $month == 2 )
@@ -148,9 +148,9 @@
 									</h4>
 										<hr class="solid short">
 										<span>
-											<?php echo 'Clase' . ' ' . $class_name; ?> :
+											<?php echo 'Clase' . ' ' . $clase_nombre; ?> :
 											Sección
-											<?php echo $section_name; ?>
+											<?php echo $seccion_nombre; ?>
 										</span><br>
 										<span>
 											<?php echo $m;?>
@@ -190,9 +190,9 @@
 						<?php
 						$data = array();
 
-						$students = $this->db->get_where( 'inscribirse', array( 'clase_id' => $class_id, 'year' => $running_year, 'seccion_id' => $section_id ) )->result_array();
+						$estudiantes = $this->db->get_where( 'inscribirse', array( 'clase_id' => $clase_id, 'year' => $running_year, 'seccion_id' => $seccion_id ) )->result_array();
 
-						foreach ( $students as $row ):
+						foreach ( $estudiantes as $row ):
 							?>
 						<tr>
 							<td style="text-align: center;">
@@ -203,10 +203,10 @@
 							for ( $i = 1; $i <= $days; $i++ ) {
 								$timestamp = strtotime( $i . '-' . $month . '-' . $year[ 0 ] );
 								$this->db->group_by( 'timestamp' );
-								$attendance = $this->db->get_where( 'asistencia', array( 'seccion_id' => $section_id, 'clase_id' => $class_id, 'year' => $running_year, 'timestamp' => $timestamp, 'estudiante_id' => $row[ 'estudiante_id' ] ) )->result_array();
+								$asistencia = $this->db->get_where( 'asistencia', array( 'seccion_id' => $seccion_id, 'clase_id' => $clase_id, 'year' => $running_year, 'timestamp' => $timestamp, 'estudiante_id' => $row[ 'estudiante_id' ] ) )->result_array();
 
 
-								foreach ( $attendance as $row1 ):
+								foreach ( $asistencia as $row1 ):
 									$month_dummy = date( 'd', $row1[ 'timestamp' ] );
 
 								if ( $i == $month_dummy )
@@ -239,7 +239,7 @@
 
 	<div class="panel-footer">
 		<center>
-			<a href="<?php echo base_url(); ?>index.php?admin/ver_asistencia_reporte_imprimir/<?php echo $class_id; ?>/<?php echo $section_id; ?>/<?php echo $month; ?>" class="btn btn-sm btn-primary " target="_blank">
+			<a href="<?php echo base_url(); ?>index.php?admin/ver_asistencia_reporte_imprimir/<?php echo $clase_id; ?>/<?php echo $seccion_id; ?>/<?php echo $month; ?>" class="btn btn-sm btn-primary " target="_blank">
 				<i class="glyphicon glyphicon-print"></i>Imprimir Hoja de Asistencia
 			</a>
 		</center>
@@ -248,10 +248,10 @@
 </section>
 
 <script type="text/javascript">
-	function select_section( clase_id ) {
+	function select_seccion( clase_id ) {
 
 		$.ajax( {
-			url: '<?php echo base_url(); ?>index.php?admin/get_section/' + clase_id,
+			url: '<?php echo base_url(); ?>index.php?admin/get_seccion/' + clase_id,
 			success: function ( response ) {
 				jQuery( '#section_holder' ).html( response );
 			}

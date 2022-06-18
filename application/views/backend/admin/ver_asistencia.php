@@ -9,15 +9,15 @@
 					<label class="control-label">
 						Clase
 					</label>
-					<select name="clase_id" data-plugin-selectTwo data-minimum-results-for-search="Infinity" data-width="100%" class="form-control mb-sm" onchange="select_section(this.value)">
+					<select name="clase_id" data-plugin-selectTwo data-minimum-results-for-search="Infinity" data-width="100%" class="form-control mb-sm" onchange="select_seccion(this.value)">
 						<option value="">
 							Seleccionar Clase
 						</option>
 						<?php
-							$classes = $this->db->get('clase')->result_array();
-							foreach ( $classes as $row ):
+							$clases = $this->db->get('clase')->result_array();
+							foreach ( $clases as $row ):
 						?>
-						<option value="<?php echo $row['clase_id']; ?>" <?php if ($class_id == $row['clase_id']) echo 'selected'; ?>><?php echo $row['nombre']; ?></option>
+						<option value="<?php echo $row['clase_id']; ?>" <?php if ($clase_id == $row['clase_id']) echo 'selected'; ?>><?php echo $row['nombre']; ?></option>
 						<?php endforeach; ?>
 					</select>
 				</div>
@@ -32,10 +32,10 @@
 						</label>
 						<select data-plugin-selectTwo data-minimum-results-for-search="Infinity" data-width="100%" name="seccion_id" id="section_id" class="form-control mb-sm">
 							<?php
-								$sections = $this->db->get_where( 'seccion', array('clase_id' => $class_id) )->result_array();
-								foreach ( $sections as $row ):
+								$secciones = $this->db->get_where( 'seccion', array('clase_id' => $clase_id) )->result_array();
+								foreach ( $secciones as $row ):
 							?>
-							<option value="<?php echo $row['seccion_id']; ?>" <?php if ($section_id == $row[ 'seccion_id']) echo 'selected'; ?>><?php echo $row['nombre']; ?></option>
+							<option value="<?php echo $row['seccion_id']; ?>" <?php if ($seccion_id == $row[ 'seccion_id']) echo 'selected'; ?>><?php echo $row['nombre']; ?></option>
 							<?php endforeach; ?>
 						</select>
 					</div>
@@ -79,12 +79,12 @@
 							<div class="summary">
 								<h4 class="title">
 									Asistencia de la Clase :
-									<?php echo $this->db->get_where('clase', array('clase_id' => $class_id))->row()->nombre; ?>
+									<?php echo $this->db->get_where('clase', array('clase_id' => $clase_id))->row()->nombre; ?>
 								</h4>
 								<hr class="solid short">
 								<span>
 									Sección
-									<?php echo $this->db->get_where('seccion', array('seccion_id' => $section_id))->row()->nombre; ?>
+									<?php echo $this->db->get_where('seccion', array('seccion_id' => $seccion_id))->row()->nombre; ?>
 								</span><br>
 								<span>
 									<?php echo date("d M Y", $timestamp); ?>
@@ -103,7 +103,7 @@
 		</style>
 
 		<div class="col-md-12">
-			<?php echo form_open(base_url() . 'index.php?admin/actualizar_asistencia/' . $class_id . '/' . $section_id . '/' . $timestamp); ?>
+			<?php echo form_open(base_url() . 'index.php?admin/actualizar_asistencia/' . $clase_id . '/' . $seccion_id . '/' . $timestamp); ?>
 			<div id="attendance_update">
 				<div class="table-responsive">
 
@@ -125,8 +125,8 @@
 					<tbody>
 						<?php
 						$count = 1;
-						$attendance_of_students = $this->db->get_where( 'asistencia', array('clase_id' => $class_id, 'seccion_id' => $section_id, 'year' => $running_year, 'timestamp' => $timestamp) )->result_array();
-						foreach ( $attendance_of_students as $row ):
+						$asistencia_de_estudiantes = $this->db->get_where( 'asistencia', array('clase_id' => $clase_id, 'seccion_id' => $seccion_id, 'year' => $running_year, 'timestamp' => $timestamp) )->result_array();
+						foreach ( $asistencia_de_estudiantes as $row ):
 						?>
 						<tr>
 						    <td><?php echo $count++; ?></td>
@@ -165,10 +165,10 @@
 </section>
 	
 <script type="text/javascript">
-    function select_section(clase_id) {
+    function select_seccion(clase_id) {
 
         $.ajax({
-            url: '<?php echo base_url(); ?>index.php?admin/get_section/' + clase_id,
+            url: '<?php echo base_url(); ?>index.php?admin/get_seccion/' + clase_id,
             success:function (response)
             {
                 jQuery('#section_holder').html(response);

@@ -12,10 +12,10 @@
 				<div class="tabs tabs-success">
 					<ul class="nav nav-tabs text-right">
 			<?php 
-				$classes = $this->db->get('clase')->result_array();
-				foreach ($classes as $row):
+				$clases = $this->db->get('clase')->result_array();
+				foreach ($clases as $row):
 			?>
-						<li class="<?php if ($row['clase_id'] == $class_id) echo 'active';?>">
+						<li class="<?php if ($row['clase_id'] == $clase_id) echo 'active';?>">
 							<a href="<?php echo base_url();?>index.php?admin/seccion/<?php echo $row['clase_id'];?>">
 						<i class="fa fa-star"></i>
 						Clase<?php echo $row['nombre'];?>
@@ -50,10 +50,10 @@
 
 									<?php
 									$count = 1;
-									$sections = $this->db->get_where( 'seccion', array(
-										'clase_id' => $class_id
+									$secciones = $this->db->get_where( 'seccion', array(
+										'clase_id' => $clase_id
 									) )->result_array();
-									foreach ( $sections as $row ):
+									foreach ( $secciones as $row ):
 										?>
 									<tr>
 										<td>
@@ -73,13 +73,13 @@
 										<td>
 										
 										
-										<!-- EDIT LINK -->
+										<!-- EDITAR LINK -->
 										<a href="#" class="btn btn-primary btn-xs" data-placement="top" data-toggle="tooltip" data-original-title="Editar" onclick="showAjaxModal('<?php echo base_url();?>index.php?modal/popup/seccion_edit/<?php echo $row['seccion_id'];?>');">
 										<i class="fa fa-pencil"></i>
 										</a>
 
 										<!-- ELIMINAR LINK -->
-										<a href="#" class="btn btn-danger btn-xs" data-placement="top" data-toggle="tooltip" data-original-title="Borrar" onclick="confirm_modal('<?php echo base_url();?>index.php?admin/secciones/delete/<?php echo $row['seccion_id'];?>');">
+										<a href="#" class="btn btn-danger btn-xs" data-placement="top" data-toggle="tooltip" data-original-title="Borrar" onclick="confirm_modal('<?php echo base_url();?>index.php?admin/secciones/eliminar/<?php echo $row['seccion_id'];?>');">
 										<i class="fa fa-trash"></i>
 										</a>
 

@@ -31,11 +31,11 @@
 	                                    <label class="col-sm-3 control-label">Clase<span class="required">*</span></label>
 	                                    <div class="col-sm-6">
 	                                        <select name="clase_id" class="form-control" data-plugin-selectTwo data-width="100%" data-minimum-results-for-search="Infinity" required title="Valor Requerido"
-	                                        	onchange="return get_class_students(this.value)">
+	                                        	onchange="return get_clase_estudiantes(this.value)">
 	                                        	<option value="">Seleccionar Clase</option>
 	                                        	<?php 
-	                                        		$classes = $this->db->get('clase')->result_array();
-	                                        		foreach ($classes as $row):
+	                                        		$clases = $this->db->get('clase')->result_array();
+	                                        		foreach ($clases as $row):
 	                                        	?>
 	                                        	<option value="<?php echo $row['clase_id'];?>"><?php echo $row['nombre'];?></option>
 	                                        	<?php endforeach;?>
@@ -130,16 +130,10 @@
 	                </div>
 	              	<?php echo form_close();?>
 
-				<!-- creation of single invoice -->
-					
+							
 				</div>
 				
 				<div class="tab-pane" id="paid">
-
-				<!-- creation of multi invoice -->
-
-
-				<!-- creation of mass invoice -->
 
 				</div>
 				
@@ -173,9 +167,9 @@
 </script>
 
 <script type="text/javascript">
-    function get_class_students(clase_id) {
+    function get_clase_estudiantes(clase_id) {
         $.ajax({
-            url: '<?php echo base_url();?>index.php?admin/get_class_students/' + clase_id ,
+            url: '<?php echo base_url();?>index.php?admin/get_clase_estudiantes/' + clase_id ,
             success: function(response)
             {
                 jQuery('#student_selection_holder').html(response);
@@ -184,17 +178,3 @@
     }
 </script>
 
-<script type="text/javascript">
-    function get_class_students_mass(class_id) {
-    	
-        $.ajax({
-            url: '<?php echo base_url();?>index.php?admin/get_class_students_mass/' + class_id ,
-            success: function(response)
-            {
-                jQuery('#student_selection_holder_mass').html(response);
-            }
-        });
-
-        
-    }
-</script>

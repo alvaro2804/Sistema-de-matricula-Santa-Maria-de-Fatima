@@ -9,7 +9,7 @@
 	<div class="col-md-12">
 		<section class="panel">
 
-			<?php echo form_open(base_url() . 'index.php?admin/seccion/edit/' . $row['seccion_id'] , array('class' => 'form-horizontal form-bordered', 'id' => 'form', 'enctype' => 'multipart/form-data'));?>
+			<?php echo form_open(base_url() . 'index.php?admin/secciones/edit/' . $row['seccion_id'] , array('class' => 'form-horizontal form-bordered', 'id' => 'form', 'enctype' => 'multipart/form-data'));?>
 
 			<div class="panel-heading">
 				<h4 class="panel-title">
@@ -46,13 +46,13 @@
 					</label>
 
 					<div class="col-sm-5">
-						<select name="class_id" class="form-control" data-plugin-selectTwo data-width="100%" data-minimum-results-for-search="Infinity" required title="Valor requerido">
+						<select name="clase_id" class="form-control" data-plugin-selectTwo data-width="100%" data-minimum-results-for-search="Infinity" required title="Valor requerido">
 							<option value="">
 								Seleccionar
 							</option>
 							<?php 
-									$classes = $this->db->get('clase')->result_array();
-									foreach($classes as $row2):
+									$clases = $this->db->get('clase')->result_array();
+									foreach($clases as $row2):
 										?>
 							<option value="<?php echo $row2['clase_id'];?>" <?php if ($row[ 'clase_id'] == $row2[ 'clase_id']) echo 'selected';?>>
 								<?php echo $row2['nombre'];?>
@@ -73,8 +73,8 @@
 						<select name="profesor_id" class="form-control" data-plugin-selectTwo data-width="100%" data-minimum-results-for-search="Infinity">
 							<option value="">Seleccionar</option>
 							<?php 
-								$teachers = $this->db->get('profesor')->result_array();
-								foreach($teachers as $row3):
+								$profesores = $this->db->get('profesor')->result_array();
+								foreach($profesores as $row3):
 							?>
 							<option value="<?php echo $row3['profesor_id'];?>" <?php if ($row[ 'profesor_id'] == $row3[ 'profesor_id']) echo 'selected';?>><?php echo $row3['nombre'];?></option>
 							<?php

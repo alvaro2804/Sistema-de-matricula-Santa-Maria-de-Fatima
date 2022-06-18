@@ -19,7 +19,7 @@ class Crud_model extends CI_Model {
     }
 
     
-    ////////IMAGE URL//////////
+    ////////IMAGEN URL//////////
     function get_image_url($type = '', $id = '') {
         if (file_exists('uploads/' . $type . '_image/' . $id . '.jpg'))
             $image_url = base_url() . 'uploads/' . $type . '_image/' . $id . '.jpg';
@@ -31,44 +31,44 @@ class Crud_model extends CI_Model {
 
 
       /////////PROFESOR/////////////
-      function get_teachers() {
+      function get_profesores() {
         $query = $this->db->get('profesor');
         return $query->result_array();
     }
 
-    function get_teacher_name($teacher_id) {
-        $query = $this->db->get_where('profesor', array('profesor_id' => $teacher_id));
+    function get_profesor_nombre($profesor_id) {
+        $query = $this->db->get_where('profesor', array('profesor_id' => $profesor_id));
         $res = $query->result_array();
         foreach ($res as $row)
             return $row['nombre'];
     }
 
-    function get_teacher_info($teacher_id) {
-        $query = $this->db->get_where('profesor', array('profesor_id' => $teacher_id));
+    function get_profesor_info($profesor_id) {
+        $query = $this->db->get_where('profesor', array('profesor_id' => $profesor_id));
         return $query->result_array();
     }
 
      ////////ESTUDIANTE/////////////
-     function get_students($class_id) {
-        $query = $this->db->get_where('estudiante', array('clase_id' => $class_id));
+     function get_students($clase_id) {
+        $query = $this->db->get_where('estudiante', array('clase_id' => $clase_id));
         return $query->result_array();
     }
 
-    function get_student_info($student_id) {
-        $query = $this->db->get_where('estudiante', array('estudiante_id' => $student_id));
+    function get_estudiante_info($estudiante_id) {
+        $query = $this->db->get_where('estudiante', array('estudiante_id' => $estudiante_id));
         return $query->result_array();
     }
 
-    ////////////CLASS///////////
-    function get_class_name($class_id) {
-        $query = $this->db->get_where('clase', array('clase_id' => $class_id));
+    ////////////CLASE///////////
+    function get_class_name($clase_id) {
+        $query = $this->db->get_where('clase', array('clase_id' => $clase_id));
         $res = $query->result_array();
         foreach ($res as $row)
             return $row['nombre'];
     }
 
-    function get_class_name_numeric($class_id) {
-        $query = $this->db->get_where('clase', array('clase_id' => $class_id));
+    function get_class_name_numeric($clase_id) {
+        $query = $this->db->get_where('clase', array('clase_id' => $clase_id));
         $res = $query->result_array();
         foreach ($res as $row)
             return $row['nombre_numerico'];
@@ -79,8 +79,8 @@ class Crud_model extends CI_Model {
         return $query->result_array();
     }
 
-    function get_class_info($class_id) {
-        $query = $this->db->get_where('clase', array('clase_id' => $class_id));
+    function get_class_info($clase_id) {
+        $query = $this->db->get_where('clase', array('clase_id' => $clase_id));
         return $query->result_array();
     }
   
@@ -106,5 +106,66 @@ function get_subject_name_by_id($subject_id) {
     return $query->nombre;
 }
 
+
+//////////EXAMENES/////////////
+function get_exams() {
+    $query = $this->db->get_where('examen' , array(
+        'year' => $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description
+    ));
+    return $query->result_array();
+}
+
+function get_exam_info($examen_id) {
+    $query = $this->db->get_where('examen', array('examen_id' => $examen_id));
+    return $query->result_array();
+}
+
+//////////GRADOS////////////
+function get_grades() {
+    $query = $this->db->get('grado');
+    return $query->result_array();
+}
+
+function get_grade_info($grado_id) {
+    $query = $this->db->get_where('grado', array('grado_id' => $grado_id));
+    return $query->result_array();
+}
+
+function get_calificacion_obtenida( $examen_id , $clase_id , $tema_id , $estudiante_id) {
+    $calificaciones = $this->db->get_where('calificacion' , array(
+                                'tema_id' => $tema_id,
+                                    'examen_id' => $examen_id,
+                                        'clase_id' => $clase_id,
+                                            'estudiante_id' => $estudiante_id))->result_array();
+                                    
+    foreach ($calificaciones as $row) {
+        echo $row['calificacion_obtenida'];
+    }
+}
+
+function get_calificacion_alta( $examen_id , $clase_id , $tema_id ) {
+    $this->db->where('examen_id' , $examen_id);
+    $this->db->where('clase_id' , $clase_id);
+    $this->db->where('tema_id' , $tema_id);
+    $this->db->select_max('calificacion_obtenida');
+    $calificacion_alta = $this->db->get('calificacion')->result_array();
+    foreach($calificacion_alta as $row) {
+        echo $row['calificacion_obtenida'];
+    }
+}
+
+function get_grado($calificacion_obtenida) {
+    $query = $this->db->get('grado');
+    $grados = $query->result_array();
+    foreach ($grados as $row) {
+        if ($calificacion_obtenida >= $row['calificacion_desde'] && $calificacion_obtenida <= $row['calificacion_hasta'])
+            return $row;
+    }
+}
+
+function get_system_settings() {
+    $query = $this->db->get('settings');
+    return $query->result_array();
+}
 
 }

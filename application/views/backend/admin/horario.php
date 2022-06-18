@@ -10,7 +10,7 @@
 	<div class="panel-body">
 		<?php
 		$query = $this->db->get( 'clase' );
-		$class = $query->result_array();
+		$clase = $query->result_array();
 		?>
 
 		<div class="form-group">
@@ -20,8 +20,8 @@
 			<div class="col-sm-6 col-sm-offset-3">
 				<select data-plugin-selectTwo class="form-control populate" name="clase_id" onchange="class_section(this.value)" style="width: 100%">
 					<option value="">Seleccionar Clase</option>
-					<?php foreach ($class as $row): ?>
-					<option value="<?php echo $row['clase_id']; ?>" <?php if ($class_id == $row[ 'clase_id']) echo 'selected'; ?> ><?php echo $row['nombre']; ?></option>
+					<?php foreach ($clase as $row): ?>
+					<option value="<?php echo $row['clase_id']; ?>" <?php if ($clase_id == $row[ 'clase_id']) echo 'selected'; ?> ><?php echo $row['nombre']; ?></option>
 					<?php endforeach; ?>
 				</select>
 			</div>
@@ -29,16 +29,16 @@
 		<br>
 
 		<?php
-		$query = $this->db->get_where( 'seccion', array( 'clase_id' => $class_id ) );
-		if ( $query->num_rows() > 0 && $class_id != '' ):
-			$sections = $query->result_array();
-		foreach ( $sections as $row ):
+		$query = $this->db->get_where( 'seccion', array( 'clase_id' => $clase_id ) );
+		if ( $query->num_rows() > 0 && $clase_id != '' ):
+			$secciones = $query->result_array();
+		foreach ( $secciones as $row ):
 			?>
 		<div class="row">
 			<div class="col-md-12">
 				<div class="panel panel-border panel-primary">
 					<header class="panel-heading">
-						<a href="<?php echo base_url();?>index.php?admin/horario_imprimir/<?php echo $class_id;?>/<?php echo $row['seccion_id'];?>" class="btn btn-danger btn-xs pull-right" target="_blank">
+						<a href="<?php echo base_url();?>index.php?admin/horario_imprimir/<?php echo $clase_id;?>/<?php echo $row['seccion_id'];?>" class="btn btn-danger btn-xs pull-right" target="_blank">
 						  <i class="glyphicon glyphicon-print"></i>Impresión
 						 </a>
 						<div style="font-size: 16px; text-align: center;">
@@ -69,11 +69,11 @@
 										<?php
 										$this->db->order_by( "time_inicio", "asc" );
 										$this->db->where( 'dia', $day );
-										$this->db->where( 'clase_id', $class_id );
+										$this->db->where( 'clase_id', $clase_id );
 										$this->db->where( 'seccion_id', $row[ 'seccion_id' ] );
 										$this->db->where( 'year', $running_year );
-										$routines = $this->db->get( 'clase_rutina' )->result_array();
-										foreach ( $routines as $row2 ):
+										$rutinas = $this->db->get( 'clase_rutina' )->result_array();
+										foreach ( $rutinas as $row2 ):
 										?>
 										<div class="btn-group">
 											<button class="mb-xs mt-xs mr-xs btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
@@ -93,7 +93,7 @@
 												</li>
 
 												<li>
-													<a href="#" onclick="confirm_modal('<?php echo base_url();?>index.php?admin/clase_rutina/delete/<?php echo $row2['clase_rutina_id'];?>');">
+													<a href="#" onclick="confirm_modal('<?php echo base_url();?>index.php?admin/clase_rutina/eliminar/<?php echo $row2['clase_rutina_id'];?>');">
 														<i class="fa fa-trash"></i>
 														Borrar
 													</a>

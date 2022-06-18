@@ -43,8 +43,8 @@
 			<tbody>
 				<?php
 				$count = 1;
-				$parents = $this->db->get( 'padres' )->result_array();
-				foreach ( $parents as $row ): ?>
+				$padres = $this->db->get( 'padres' )->result_array();
+				foreach ( $padres as $row ): ?>
 				<tr>
 					<td>
 						<?php echo $count++;?>
@@ -62,18 +62,18 @@
 						<?php echo $row['profesion'];?>
 					</td>
 					<td>
-					    <!-- PARENT EDITING LINK -->
+					    <!-- PADRE EDITAR LINK -->
 						<a href="#" class="btn btn-primary btn-xs" data-placement="top" data-toggle="tooltip" data-original-title="Editar" onclick="showAjaxModal('<?php echo base_url();?>index.php?modal/popup/modal_padre_edit/<?php echo $row['padres_id'];?>');">
 								<i class="fa fa-pencil"></i>
 								</a>
                                     
-					    <!-- PARENT RESET PASSWORD LINK -->
+					    <!-- PADRE CAMBIAR PASSWORD LINK -->
 						<a href="#" class="btn btn-primary btn-xs" data-placement="top" data-toggle="tooltip" data-original-title="Restablecer la Contraseña" onclick="showAjaxModal('<?php echo base_url();?>index.php?modal/popup/modal_padre_password/<?php echo $row['padres_id'];?>');">
                                     <i class="fa fa-unlock-alt"></i>
                                     </a>
 
-					    <!-- PARENT DELETE LINK -->
-						<a href="#" class="btn btn-danger btn-xs" data-placement="top" data-toggle="tooltip" data-original-title="Borrar" onclick="confirm_modal('<?php echo base_url();?>index.php?admin/padres/delete/<?php echo $row['padres_id'];?>');">
+					    <!-- PADRE ELIMINARLINK -->
+						<a href="#" class="btn btn-danger btn-xs" data-placement="top" data-toggle="tooltip" data-original-title="Borrar" onclick="confirm_modal('<?php echo base_url();?>index.php?admin/padres/eliminar/<?php echo $row['padres_id'];?>');">
                                     <i class="fa fa-trash"></i>
                                     </a>
 					

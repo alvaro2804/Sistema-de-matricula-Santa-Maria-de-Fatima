@@ -37,8 +37,8 @@
 			<tbody>
 			
 				<?php
-				$teachers = $this->db->get( 'profesor' )->result_array();
-				foreach ( $teachers as $row ): ?>
+				$profesores = $this->db->get( 'profesor' )->result_array();
+				foreach ( $profesores as $row ): ?>
 				<tr>
 					<td class="center"><img src="<?php echo $this->crud_model->get_image_url('profesor',$row['profesor_id']);?>" width="30"/>
 					</td>
@@ -62,7 +62,7 @@
                         </a>
 
 						<!-- PROFESOR BOORAR LINK -->
-						<a href="#" class="btn btn-xs btn-danger" data-placement="top" data-toggle="tooltip" data-original-title="Borrar" onclick="confirm_modal('<?php echo base_url();?>index.php?admin/profesor/delete/<?php echo $row['profesor_id'];?>');">
+						<a href="#" class="btn btn-xs btn-danger" data-placement="top" data-toggle="tooltip" data-original-title="Borrar" onclick="confirm_modal('<?php echo base_url();?>index.php?admin/profesor/eliminar/<?php echo $row['profesor_id'];?>');">
                         <i class="fa fa-trash"></i>
                         </a>	
 					</td>

@@ -10,10 +10,10 @@
 					Clase<span class="required">*</span>
 				</label>
 				<div class="col-sm-5">
-					<select name="clase_id" data-plugin-selectTwo data-minimum-results-for-search="Infinity" data-width="100%" required title="Valor Requerido" class="form-control populate" onchange="return get_class_section_subject(this.value)">
+					<select name="clase_id" data-plugin-selectTwo data-minimum-results-for-search="Infinity" data-width="100%" required title="Valor Requerido" class="form-control populate" onchange="return get_clase_seccion_tema(this.value)">
 						<option value="">Seleccionar Clase</option>
-						<?php $classes = $this->db->get('clase')->result_array();
-                         foreach($classes as $row):
+						<?php $clases = $this->db->get('clase')->result_array();
+                         foreach($clases as $row):
                         ?>
 						<option value="<?php echo $row['clase_id'];?>"><?php echo $row['nombre'];?></option>
 						<?php
@@ -23,7 +23,7 @@
 				</div>
 			</div>
 
-			<div id="section_subject_selection_holder"></div>
+			<div id="seccion_tema_seleccion_holder"></div>
 
 			<div class="form-group">
 				<label class="col-sm-3 control-label">
@@ -86,11 +86,11 @@
 </section>
 
 	<script type="text/javascript">
-		function get_class_section_subject( clase_id ) {
+		function get_clase_seccion_tema( clase_id ) {
 			$.ajax( {
-				url: '<?php echo base_url();?>index.php?admin/get_class_section_subject/' + clase_id,
+				url: '<?php echo base_url();?>index.php?admin/get_clase_seccion_tema/' + clase_id,
 				success: function ( response ) {
-					jQuery( '#section_subject_selection_holder' ).html( response );
+					jQuery( '#seccion_tema_seleccion_holder' ).html( response );
 				}
 			} );
 		}

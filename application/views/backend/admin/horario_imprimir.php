@@ -1,7 +1,7 @@
 <?php
-    $class_name    =   $this->db->get_where('clase' , array('clase_id' => $class_id))->row()->nombre;
-    $section_name  =   $this->db->get_where('seccion' , array('seccion_id' => $section_id))->row()->nombre;
-    $system_name   =   $this->db->get_where('settings' , array('type'=>'system_name'))->row()->description;
+    $clase_nombre    =   $this->db->get_where('clase' , array('clase_id' => $clase_id))->row()->nombre;
+    $seccion_nombre  =   $this->db->get_where('seccion' , array('seccion_id' => $seccion_id))->row()->nombre;
+    $system_nombre   =   $this->db->get_where('settings' , array('type'=>'system_name'))->row()->description;
     $running_year  =   $this->db->get_where('settings' , array('type'=>'running_year'))->row()->description;
 ?>
 
@@ -15,9 +15,9 @@
 
 	<center>
 		<img src="uploads/logo.png" style="max-height : 60px;"><br>
-		<h3 style="font-weight: 100;"><?php echo $system_name;?></h3>
+		<h3 style="font-weight: 100;"><?php echo $system_nombre;?></h3>
 		Horarios<br>
-		<?php echo 'Clase' . ' ' . $class_name;?> : <?php echo 'Sección';?> <?php echo $section_name;?><br>
+		<?php echo 'Clase' . ' ' . $clase_nombre;?> : <?php echo 'Sección';?> <?php echo $seccion_nombre;?><br>
 	</center>
     <br>
 	<table style="width:100%; border-collapse:collapse;border: 1px solid #eee; margin-top: 10px;" border="1">
@@ -41,11 +41,11 @@
 							<?php
 							$this->db->order_by("time_inicio", "asc");
 							$this->db->where('dia' , $day);
-							$this->db->where('clase_id' , $class_id);
-							$this->db->where('seccion_id' , $section_id);
+							$this->db->where('clase_id' , $clase_id);
+							$this->db->where('seccion_id' , $seccion_id);
 							$this->db->where('year' , $running_year);
-							$routines   =   $this->db->get('clase_rutina')->result_array();
-							foreach($routines as $row):
+							$rutinas   =   $this->db->get('clase_rutina')->result_array();
+							foreach($rutinas as $row):
 							?>
 								<div style="float:left; padding:8px; margin:5px; background-color:#ccc;">
 									<?php echo $this->crud_model->get_subject_name_by_id($row['tema_id']);?>

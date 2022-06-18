@@ -14,7 +14,7 @@ foreach ( $edit_data as $row ):
 				</div>
 				<div class="panel-body">
 
-					<?php echo form_open(base_url() . 'index.php?admin/clase/do_update/'.$row['clase_id'] , array('class' => 'form-horizontal form-bordered','target'=>'_top'));?>
+					<?php echo form_open(base_url() . 'index.php?admin/clase/actualizar/'.$row['clase_id'] , array('class' => 'form-horizontal form-bordered','target'=>'_top'));?>
 					<div class="form-group">
 						<label class="col-md-3 control-label">
 							Nombre
@@ -38,8 +38,8 @@ foreach ( $edit_data as $row ):
 						<div class="col-md-7">
 							<select data-plugin-selectTwo data-minimum-results-for-search="Infinity" data-width="100%" name="profesor_id" class="form-control populate">
                                 <option value="">Seleccionar</option>
-                                <?php $teachers = $this->db->get('profesor')->result_array();
-                                foreach($teachers as $row2):
+                                <?php $profesores= $this->db->get('profesor')->result_array();
+                                foreach($profesores as $row2):
                                 ?>
                                     <option value="<?php echo $row2[ 'profesor_id'];?>" <?php if($row['profesor_id'] == $row2['profesor_id'])echo 'selected';?>><?php echo $row2['nombre'];?></option>
                                 <?php endforeach; ?>

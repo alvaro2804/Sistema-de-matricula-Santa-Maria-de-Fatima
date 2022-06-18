@@ -27,10 +27,10 @@ CREATE TABLE `admin` (
   `name` longtext COLLATE utf8_unicode_ci NOT NULL,
   `email` longtext COLLATE utf8_unicode_ci NOT NULL,
   `password` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `level` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `level` longtext COLLATE utf8_unicode_ci NOT NULL DEFAULT '1',
   `authentication_key` longtext COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`admin_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `admin` (
 
 LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES (1,'Admin','admin@admin.com','d033e22ae348aeb5660fc2140aec35850c4da997','1',''),(2,'Carlos Soplin','carlos.soplin@gmail.com','cedcae5e358ddbfdc96e674f921b51781adaf38b','1',''),(3,'carlos','carlos.soplinj@gmail.com','admin2','1','');
+INSERT INTO `admin` VALUES (1,'Admin','admin@admin.com','d033e22ae348aeb5660fc2140aec35850c4da997','1',''),(2,'Carlos Soplin','carlos.soplin@gmail.com','cedcae5e358ddbfdc96e674f921b51781adaf38b','1',''),(3,'carlos','carlos.soplinj@gmail.com','admin2','1',''),(5,'Marcos Dávila','marcos@gmail.com','40bd001563085fc35165329ea1ff5c5ecbdbbeef','',''),(6,'Maria Matos','maria@gmail.com','40bd001563085fc35165329ea1ff5c5ecbdbbeef','1','');
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,7 +86,7 @@ CREATE TABLE `asistencia` (
   `clase_rutina_id` int(11) NOT NULL,
   `status` int(11) NOT NULL DEFAULT 0 COMMENT '0(indefinido)\r\n1(presente)\r\n2(ausente)',
   PRIMARY KEY (`asistencia_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,7 +95,7 @@ CREATE TABLE `asistencia` (
 
 LOCK TABLES `asistencia` WRITE;
 /*!40000 ALTER TABLE `asistencia` DISABLE KEYS */;
-INSERT INTO `asistencia` VALUES (1,'1654552800','2022-2023',1,4,1,0,0),(2,'1654639200','2022-2023',1,4,1,0,1),(3,'1654466400','2022-2023',1,4,1,0,0),(4,'1654664400','2022-2023',1,4,1,0,1),(5,'1654578000','2022-2023',1,4,1,0,1);
+INSERT INTO `asistencia` VALUES (1,'1654552800','2022-2023',1,4,1,0,0),(2,'1654639200','2022-2023',1,4,1,0,1),(3,'1654466400','2022-2023',1,4,1,0,0),(4,'1654664400','2022-2023',1,4,1,0,1),(5,'1654578000','2022-2023',1,4,1,0,1),(6,'1655528400','2022-2023',1,1,2,0,1),(7,'1655442000','2022-2023',1,1,2,0,1),(8,'1655355600','2022-2023',1,1,2,0,1);
 /*!40000 ALTER TABLE `asistencia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -129,6 +129,67 @@ LOCK TABLES `asistencia_backup` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `biblioteca`
+--
+
+DROP TABLE IF EXISTS `biblioteca`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `biblioteca` (
+  `libro_id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` longtext COLLATE utf8_spanish2_ci NOT NULL,
+  `descripcion` longtext COLLATE utf8_spanish2_ci NOT NULL,
+  `autor` longtext COLLATE utf8_spanish2_ci NOT NULL,
+  `clase_id` int(11) NOT NULL,
+  `status` longtext COLLATE utf8_spanish2_ci NOT NULL,
+  `precio` decimal(7,2) NOT NULL,
+  PRIMARY KEY (`libro_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `biblioteca`
+--
+
+LOCK TABLES `biblioteca` WRITE;
+/*!40000 ALTER TABLE `biblioteca` DISABLE KEYS */;
+INSERT INTO `biblioteca` VALUES (2,'Libros de 3 Años','Libro Didáctico para 3 años','Editorial Navarrete',1,'disponible',300.00);
+/*!40000 ALTER TABLE `biblioteca` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `calificacion`
+--
+
+DROP TABLE IF EXISTS `calificacion`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `calificacion` (
+  `calificacion_id` int(11) NOT NULL AUTO_INCREMENT,
+  `estudiante_id` int(11) NOT NULL,
+  `tema_id` int(11) NOT NULL,
+  `clase_id` int(11) NOT NULL,
+  `seccion_id` int(11) NOT NULL,
+  `examen_id` int(11) NOT NULL,
+  `calificacion_obtenida` longtext COLLATE utf8_spanish2_ci NOT NULL,
+  `calificacion_total` longtext COLLATE utf8_spanish2_ci NOT NULL,
+  `comentario` longtext COLLATE utf8_spanish2_ci NOT NULL,
+  `year` longtext COLLATE utf8_spanish2_ci NOT NULL,
+  PRIMARY KEY (`calificacion_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `calificacion`
+--
+
+LOCK TABLES `calificacion` WRITE;
+/*!40000 ALTER TABLE `calificacion` DISABLE KEYS */;
+INSERT INTO `calificacion` VALUES (2,1,4,1,4,2,'AD','','Nota','2022-2023'),(3,1,5,1,4,2,'A','','Referente a 17','2022-2023'),(4,1,4,1,4,3,'A','','Sobre 19','2022-2023'),(5,2,4,1,1,2,'AD','','Desde 19 - 20','2022-2023'),(6,2,5,1,1,2,'B','','Desde 10-15','2022-2023'),(7,2,4,1,1,3,'A','','','2022-2023');
+/*!40000 ALTER TABLE `calificacion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `ci_sessions`
 --
 
@@ -151,7 +212,7 @@ CREATE TABLE `ci_sessions` (
 
 LOCK TABLES `ci_sessions` WRITE;
 /*!40000 ALTER TABLE `ci_sessions` DISABLE KEYS */;
-INSERT INTO `ci_sessions` VALUES ('2ehgjmggqfjk6652155jpsjhm6m8rksv','::1',1654911934,'__ci_last_regenerate|i:1654911730;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";'),('3kairoa8p38boedbshthgn4jmaq0snh3','::1',1654987240,'__ci_last_regenerate|i:1654987240;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";'),('3kempqus5v31jr01ojefea38r4q45aki','::1',1654914497,'__ci_last_regenerate|i:1654914497;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:12:\"Pago Exitoso\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('48nsnp0go3pj0ouqclbgtgced5amcl0a','::1',1654906635,'__ci_last_regenerate|i:1654906569;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";'),('75ib5rdleeoqe52epbbm6llfsm3a2o8o','::1',1654987872,'__ci_last_regenerate|i:1654987872;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";'),('7d6rvg0ck88k0l48tdp0duicgmh5apaf','::1',1654978327,'__ci_last_regenerate|i:1654978065;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";'),('7sikf34n01gamdbc2sv24madvoftck8k','::1',1654983986,'__ci_last_regenerate|i:1654983986;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";'),('ahibbb7optok7fkhv8fensajsqll4klh','::1',1654915165,'__ci_last_regenerate|i:1654915165;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:12:\"Pago Exitoso\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('g7gt9nlgtmpajp7mavipa3olvpcob03f','::1',1654985218,'__ci_last_regenerate|i:1654985218;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";'),('ge18elur1me5umsdq1lcipd9piausan9','::1',1654984268,'__ci_last_regenerate|i:1654983986;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";'),('h19vf1jbqq2pbhn2c1k46d1jpr1n75n3','::1',1654987563,'__ci_last_regenerate|i:1654987563;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";'),('jrlj9q5bh3b2bu0arja6m9dn0mqktljm','::1',1654986876,'__ci_last_regenerate|i:1654986876;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";'),('k2vjhr4t9fcqt531h8dmtuq2gtje5ndo','::1',1654911157,'__ci_last_regenerate|i:1654911157;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";'),('qupo20iog0fb4qqbk8dpv7lm43tl3bnd','::1',1654983659,'__ci_last_regenerate|i:1654983659;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";'),('s1erg0749die75nerm1mahi2rvsdne20','::1',1654914859,'__ci_last_regenerate|i:1654914859;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:12:\"Pago Exitoso\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('s4ueqdh2seal4n2c5ssbub603pg0tqd1','::1',1654913564,'__ci_last_regenerate|i:1654913564;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";'),('sn97vkr343jv1ts4fou5r2ng5jf3mn9q','::1',1654911730,'__ci_last_regenerate|i:1654911730;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";'),('tkt6f149a4hn5uu9702i6ecmp4q7dkfp','::1',1654988070,'__ci_last_regenerate|i:1654987872;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";'),('va7jmrre033ol9ldp434s4cg5oa6jao8','::1',1654915247,'__ci_last_regenerate|i:1654915165;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:12:\"Data Updated\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}');
+INSERT INTO `ci_sessions` VALUES ('0aai7q1gkqcj4e9pi2eqjgvhkcgpbii6','::1',1655582367,'__ci_last_regenerate|i:1655582367;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:25:\"Calificación Actualizada\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('0ktr4h8f26ekttbkc8idoaqetd351qcj','::1',1655572378,'__ci_last_regenerate|i:1655572378;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:19:\"Asistencia Guardada\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('0r2re47l1jtpdvk856jv401rarnj7920','::1',1655573891,'__ci_last_regenerate|i:1655573891;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:19:\"Asistencia Guardada\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('1c5du8c0hsvssho4vsjc0tqmj38710q7','::1',1655575379,'__ci_last_regenerate|i:1655575379;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:19:\"Asistencia Guardada\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('1j2rbl8ub2a412j0dsgjvjsb4rvbsssv','::1',1655530465,'__ci_last_regenerate|i:1655530465;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:34:\"Datos Añadidos Satisfactoriamente\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('244u5qk8inrfo4qfa65viifqalr01vdf','::1',1655575683,'__ci_last_regenerate|i:1655575683;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:19:\"Asistencia Guardada\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('2lb6rr2t7969c171768bofhanrc36rot','::1',1655572888,'__ci_last_regenerate|i:1655572888;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:19:\"Asistencia Guardada\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('38ro08ubf6brob4hfiiuom6506lojbnk','::1',1655579305,'__ci_last_regenerate|i:1655579305;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:18:\"Datos Actualizados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('391pgp4m4ivsolusukjil4ucia9pdk3m','::1',1655535333,'__ci_last_regenerate|i:1655535333;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:18:\"Datos Actualizados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('3b5ojae19vai95f0abs616387t75kfuf','::1',1655529470,'__ci_last_regenerate|i:1655529470;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:16:\"Datos Eliminados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('3dq01qe37dh2cdr6mr9fnarottpjf4ne','::1',1655528840,'__ci_last_regenerate|i:1655528840;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:16:\"Datos Eliminados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('3eamtksu0akges33g6obvn77o5ue24ug','::1',1655578964,'__ci_last_regenerate|i:1655578964;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:16:\"Datos Eliminados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('446gl41ttnvlqjg6q7lt0jos47asvfqr','::1',1655534963,'__ci_last_regenerate|i:1655534963;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:18:\"Datos Actualizados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('68f9ida3r9k0dl8n8cof9ho4gsj12tb6','::1',1655574427,'__ci_last_regenerate|i:1655574427;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:19:\"Asistencia Guardada\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('6d0qij9gpnvardf98r9iaethi1o6spdq','::1',1655580765,'__ci_last_regenerate|i:1655580765;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:18:\"Datos Actualizados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('75dueu16sv5acrveagl2jb059n3ph6d0','::1',1655573192,'__ci_last_regenerate|i:1655573192;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:19:\"Asistencia Guardada\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('7c17khaji7im2udntd5kmv6c3b4r42b9','::1',1655531090,'__ci_last_regenerate|i:1655531090;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:16:\"Datos Eliminados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('a3fdcid6muste05lka1iav2h4lh1a17r','::1',1655535884,'__ci_last_regenerate|i:1655535742;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:18:\"Datos Actualizados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('ddi9km7bc0j100rqmolv2e2d91aumhf0','::1',1655580767,'__ci_last_regenerate|i:1655580765;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:18:\"Datos Actualizados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('e2iq0u4nbm5dhfql3t7vp8euofvfbsv4','::1',1655532971,'__ci_last_regenerate|i:1655532971;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:18:\"Datos Actualizados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('ei8tmn68ft3i42ftk0sut380duatrres','::1',1655526873,'__ci_last_regenerate|i:1655526873;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:16:\"Datos Eliminados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('gh46ll6qen6gregp2068hht5k8qp3bg8','::1',1655528413,'__ci_last_regenerate|i:1655528413;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:18:\"Datos Actualizados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('h7e2vlph6trmfj31cq0j13297njp42g2','::1',1655528061,'__ci_last_regenerate|i:1655528061;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:23:\"Contraseña Actualizada\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('hfui15nkrqgukqlajrf6jt9lhunrikhm','::1',1655576821,'__ci_last_regenerate|i:1655576821;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:19:\"Asistencia Guardada\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('ho3m7qcqdhv1dt1vpmpbptpic1jb4s4a','::1',1655534646,'__ci_last_regenerate|i:1655534646;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:18:\"Datos Actualizados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('hs91lng0dpb1858c02ohq75513hiev84','::1',1655573588,'__ci_last_regenerate|i:1655573588;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:19:\"Asistencia Guardada\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('ibjs206jp969qjdoulstc47agkqm7fm4','::1',1655532180,'__ci_last_regenerate|i:1655532180;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:18:\"Datos Actualizados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('iot1gd7vrist7q5uv6teihr62048u43q','::1',1655578015,'__ci_last_regenerate|i:1655578015;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:12:\"Pago Exitoso\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('jrtvqfv97gsr5pdnr9dfq612dkbueu7l','::1',1655527547,'__ci_last_regenerate|i:1655527547;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:18:\"Datos Actualizados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('k9mbg4pmock3t1rrp2469i4lsf50vunk','::1',1655531396,'__ci_last_regenerate|i:1655531396;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:18:\"Datos Actualizados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('kfp7h9r1d0vt674rhlk4hfdb8s6tqioo','::1',1655534246,'__ci_last_regenerate|i:1655534246;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:18:\"Datos Actualizados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('m76jol7ddpm94nhki2suankt7de6jhnu','::1',1655529165,'__ci_last_regenerate|i:1655529165;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:16:\"Datos Eliminados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('nap1j116tlq24n931uj7h688c846lq3d','::1',1655533486,'__ci_last_regenerate|i:1655533486;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:18:\"Datos Actualizados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('nqrdpd6aa3n91411kpfdaf8qod6rh2ck','::1',1655533795,'__ci_last_regenerate|i:1655533795;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:18:\"Datos Actualizados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('o9a35ganc34rae4qdqurebv5abulfi1m','::1',1655527238,'__ci_last_regenerate|i:1655527238;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:16:\"Datos Eliminados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('ofh97v1h0putfqs81ni739kkohptmvbh','::1',1655531827,'__ci_last_regenerate|i:1655531827;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:18:\"Datos Actualizados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('oqvib5rfsds6gm8etep068m7n6u0tqrj','::1',1655532525,'__ci_last_regenerate|i:1655532525;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:18:\"Datos Actualizados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('p95vo9lhi3qobq01i0smuhft00j1362b','::1',1655525837,'__ci_last_regenerate|i:1655525837;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:16:\"Datos Eliminados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('q3661g1am66ssgcfr69jrcbiqvm9ain6','::1',1655577272,'__ci_last_regenerate|i:1655577272;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:34:\"Datos Añadidos Satisfactoriamente\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('q4vdaa38cjk9il52iq9tq1c83m275rgs','::1',1655577596,'__ci_last_regenerate|i:1655577596;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:34:\"Datos Añadidos Satisfactoriamente\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('q73g4m4tqp74g176tvhaor68gq1lp644','::1',1655576427,'__ci_last_regenerate|i:1655576427;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:19:\"Asistencia Guardada\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('qcqaupiejq079k38p8447ut05aqumish','::1',1655530768,'__ci_last_regenerate|i:1655530768;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:16:\"Datos Eliminados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('qfre01vtmpn815c82qq7m27hlbok48na','::1',1655580455,'__ci_last_regenerate|i:1655580455;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:18:\"Datos Actualizados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('rlp3o57ncco05gqhkd32pe75nt351fnb','::1',1655581573,'__ci_last_regenerate|i:1655581573;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:25:\"Calificación Actualizada\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('rsng5ehu7q6em3q9sokj3if3e4pttkps','::1',1655571638,'__ci_last_regenerate|i:1655571638;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:19:\"Asistencia Guardada\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('sllp7qtel2sst1h3epoeuui47p5tgub9','::1',1655529826,'__ci_last_regenerate|i:1655529826;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:16:\"Datos Eliminados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('t41h8k8cin6sk8vo0kmespcgbpb2lobp','::1',1655579994,'__ci_last_regenerate|i:1655579994;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:18:\"Datos Actualizados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('t4r3le0h954p2uu9se5j750j2qii2p26','::1',1655535742,'__ci_last_regenerate|i:1655535742;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:18:\"Datos Actualizados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('u87ivc9ajqh2ffgmqhcksqveccuen98a','::1',1655582775,'__ci_last_regenerate|i:1655582772;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:25:\"Calificación Actualizada\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('u8u0jsoj7eqfsd7l3ub0jibau9pk216v','::1',1655574977,'__ci_last_regenerate|i:1655574977;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:19:\"Asistencia Guardada\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('uahk1na30dd6nobp0r890priehdkgpu4','::1',1655582772,'__ci_last_regenerate|i:1655582772;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:25:\"Calificación Actualizada\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('uqavldnkhph0s1nv8bp689ulppir6qig','::1',1655578474,'__ci_last_regenerate|i:1655578474;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:12:\"Pago Exitoso\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('v54nnplbllgul2frafdqcutc7koo8bjl','::1',1655579611,'__ci_last_regenerate|i:1655579611;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:18:\"Datos Actualizados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}'),('vd3prtmejpnefbt8k1opds4jvcsbudbn','::1',1655571210,'__ci_last_regenerate|i:1655571210;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";nombre|N;login_type|s:5:\"admin\";flash_message|s:18:\"Datos Actualizados\";__ci_vars|a:1:{s:13:\"flash_message\";s:3:\"old\";}');
 /*!40000 ALTER TABLE `ci_sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -168,7 +229,7 @@ CREATE TABLE `clase` (
   `nombre_numerico` longtext COLLATE utf8_spanish2_ci NOT NULL,
   `profesor_id` int(11) NOT NULL,
   PRIMARY KEY (`clase_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -198,7 +259,7 @@ CREATE TABLE `clase_rutina` (
   `dia` longtext COLLATE utf8_spanish2_ci NOT NULL,
   `year` longtext COLLATE utf8_spanish2_ci NOT NULL,
   PRIMARY KEY (`clase_rutina_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -207,7 +268,7 @@ CREATE TABLE `clase_rutina` (
 
 LOCK TABLES `clase_rutina` WRITE;
 /*!40000 ALTER TABLE `clase_rutina` DISABLE KEYS */;
-INSERT INTO `clase_rutina` VALUES (5,1,1,4,'9:00 AM','10:00 AM','martes','2022-2023');
+INSERT INTO `clase_rutina` VALUES (5,1,1,4,'9:00 AM','10:00 AM','lunes','2022-2023');
 /*!40000 ALTER TABLE `clase_rutina` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -295,7 +356,7 @@ CREATE TABLE `estudiante` (
   `padres_id` int(11) NOT NULL,
   `autenticacion_key` longtext COLLATE utf8_spanish2_ci NOT NULL,
   PRIMARY KEY (`estudiante_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -304,33 +365,35 @@ CREATE TABLE `estudiante` (
 
 LOCK TABLES `estudiante` WRITE;
 /*!40000 ALTER TABLE `estudiante` DISABLE KEYS */;
-INSERT INTO `estudiante` VALUES (1,'','Rodri','02/06/1980','','Católico','++','Mz C Lt 48 SMP','996234567','rodri@gmail.com','40bd001563085fc35165329ea1ff5c5ecbdbbeef',4,'');
+INSERT INTO `estudiante` VALUES (2,'','Yarely Mendo','06/05/1990','femenino','Católico','++','Mz C Lt 48 SMP','996234567','yarely@gmail.com','5f6955d227a320c7f1f6c7da2a6d96a851a8118f',4,'');
 /*!40000 ALTER TABLE `estudiante` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `exam`
+-- Table structure for table `examen`
 --
 
-DROP TABLE IF EXISTS `exam`;
+DROP TABLE IF EXISTS `examen`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `exam` (
-  `exam_id` int(11) NOT NULL,
+CREATE TABLE `examen` (
+  `examen_id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` longtext COLLATE utf8_spanish2_ci NOT NULL,
   `date` longtext COLLATE utf8_spanish2_ci NOT NULL,
   `year` longtext COLLATE utf8_spanish2_ci NOT NULL,
-  `comentario` longtext COLLATE utf8_spanish2_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+  `comentario` longtext COLLATE utf8_spanish2_ci NOT NULL,
+  PRIMARY KEY (`examen_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `exam`
+-- Dumping data for table `examen`
 --
 
-LOCK TABLES `exam` WRITE;
-/*!40000 ALTER TABLE `exam` DISABLE KEYS */;
-/*!40000 ALTER TABLE `exam` ENABLE KEYS */;
+LOCK TABLES `examen` WRITE;
+/*!40000 ALTER TABLE `examen` DISABLE KEYS */;
+INSERT INTO `examen` VALUES (2,'Examen Mensual I','06/15/2022','2022-2023','Ex. Mensual I'),(3,'Examen Bimestral I','06/16/2022','2022-2023','Ex. Bimestral I');
+/*!40000 ALTER TABLE `examen` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -355,7 +418,7 @@ CREATE TABLE `factura` (
   `status` longtext COLLATE utf8_spanish2_ci NOT NULL COMMENT 'Pagado o no Pagado',
   `year` longtext COLLATE utf8_spanish2_ci NOT NULL,
   PRIMARY KEY (`factura_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -364,7 +427,7 @@ CREATE TABLE `factura` (
 
 LOCK TABLES `factura` WRITE;
 /*!40000 ALTER TABLE `factura` DISABLE KEYS */;
-INSERT INTO `factura` VALUES (1,1,'Pago Mensual','Pago Junio',200,'200','0',1659762000,'','','','pagado','2022-2023');
+INSERT INTO `factura` VALUES (2,2,'Pago Pension','Pago Pensión de Julio',250,'250','0',1655528400,'','','','pagado','2022-2023');
 /*!40000 ALTER TABLE `factura` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -379,7 +442,7 @@ CREATE TABLE `gastos_categoria` (
   `gastos_categoria_id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` longtext COLLATE utf8_spanish2_ci NOT NULL,
   PRIMARY KEY (`gastos_categoria_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -388,6 +451,7 @@ CREATE TABLE `gastos_categoria` (
 
 LOCK TABLES `gastos_categoria` WRITE;
 /*!40000 ALTER TABLE `gastos_categoria` DISABLE KEYS */;
+INSERT INTO `gastos_categoria` VALUES (1,'Sueldo Profesor'),(2,'Sueldo de Personal Limpieza');
 /*!40000 ALTER TABLE `gastos_categoria` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -401,12 +465,12 @@ DROP TABLE IF EXISTS `grado`;
 CREATE TABLE `grado` (
   `grado_id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` longtext COLLATE utf8_spanish2_ci NOT NULL,
-  `grado_point` longtext COLLATE utf8_spanish2_ci NOT NULL,
-  `mark_from` int(11) NOT NULL,
-  `mark_upto` int(11) NOT NULL,
+  `grado_punto` longtext COLLATE utf8_spanish2_ci NOT NULL,
+  `calificacion_desde` varchar(11) COLLATE utf8_spanish2_ci NOT NULL,
+  `calificacion_hasta` varchar(11) COLLATE utf8_spanish2_ci NOT NULL,
   `comentario` longtext COLLATE utf8_spanish2_ci NOT NULL,
   PRIMARY KEY (`grado_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -415,6 +479,7 @@ CREATE TABLE `grado` (
 
 LOCK TABLES `grado` WRITE;
 /*!40000 ALTER TABLE `grado` DISABLE KEYS */;
+INSERT INTO `grado` VALUES (1,'3 Años','AD','C','AD','Calificaciones Inicial de 3 años');
 /*!40000 ALTER TABLE `grado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -435,7 +500,7 @@ CREATE TABLE `inscribirse` (
   `date_added` longtext COLLATE utf8_spanish2_ci NOT NULL,
   `year` longtext COLLATE utf8_spanish2_ci NOT NULL,
   PRIMARY KEY (`inscribirse_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -444,7 +509,7 @@ CREATE TABLE `inscribirse` (
 
 LOCK TABLES `inscribirse` WRITE;
 /*!40000 ALTER TABLE `inscribirse` DISABLE KEYS */;
-INSERT INTO `inscribirse` VALUES (1,'b0999d7',1,1,4,1,'1654179684','2022-2023');
+INSERT INTO `inscribirse` VALUES (2,'3c59bce',2,1,1,2,'1655520508','2022-2023');
 /*!40000 ALTER TABLE `inscribirse` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -463,7 +528,7 @@ CREATE TABLE `language` (
   `portuguese` longtext COLLATE utf8_unicode_ci NOT NULL,
   `french` longtext COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`phrase_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=731 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=732 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -472,7 +537,7 @@ CREATE TABLE `language` (
 
 LOCK TABLES `language` WRITE;
 /*!40000 ALTER TABLE `language` DISABLE KEYS */;
-INSERT INTO `language` VALUES (393,'login','','','',''),(394,'forgot_your_password','','','',''),(395,'admin_dashboard','','','',''),(396,'running_session','','','',''),(397,'sms_settings','','','',''),(398,'system_settings','','','',''),(399,'dashboard','','','',''),(400,'student','','','',''),(401,'student_promotion','','','',''),(402,'parents','','','',''),(403,'teacher','','','',''),(404,'class','','','',''),(405,'manage_classes','','','',''),(406,'manage_sections','','','',''),(407,'teacher_suggestion','','','',''),(408,'subject','','','',''),(409,'class_routine','','','',''),(410,'daily_attendance','','','',''),(411,'daily_atendance','','','',''),(412,'attendance_report','','','',''),(413,'exam','','','',''),(414,'exam_list','','','',''),(415,'exam_grades','','','',''),(416,'manage_marks','','','',''),(417,'send_marks_by_sms','','','',''),(418,'tabulation_sheet','','','',''),(419,'library','','','',''),(420,'accounting','','','',''),(421,'create_student_payment','','','',''),(422,'student_payments','','','',''),(423,'expense','','','',''),(424,'expense_category','','','',''),(425,'noticeboard','','','',''),(426,'message','','','',''),(427,'settings','','','',''),(428,'general_settings','','','',''),(429,'language_settings','','','',''),(430,'my_profile','','','',''),(431,'delete','','','',''),(432,'cancel','','','',''),(433,'system_name','','','',''),(434,'system_title','','','',''),(435,'address','','','',''),(436,'phone','','','',''),(437,'paypal_email','','','',''),(438,'currency','','','',''),(439,'system_email','','','',''),(440,'select_running_session','','','',''),(441,'language','','','',''),(442,'save','','','',''),(443,'theme_settings','','','',''),(444,'update','','','',''),(445,'upload_logo','','','',''),(446,'photo','','','',''),(447,'upload','','','',''),(448,'earning_graph','','','',''),(449,'setting','','','',''),(450,'edit_profile','','','',''),(451,'profesor','','','',''),(452,'estudiante','','','',''),(453,'padres','','','',''),(454,'manage_profile','','','',''),(455,'name','','','',''),(456,'email','','','',''),(457,'update_profile','','','',''),(458,'change_password','','','',''),(459,'current_password','','','',''),(460,'value_required','','','',''),(461,'new_password','','','',''),(462,'confirm_new_password','','','',''),(463,'asistencia','','','',''),(464,'reset_password','','','',''),(465,'return_to_login_page','','','',''),(466,'data_updated','','','',''),(467,'theme_selected','','','',''),(468,'add_student','','','',''),(469,'Registar Estudiante','','','',''),(470,'INFORMACIÓN DE USUARIO','','','',''),(471,'CLASE','','','',''),(472,'add_estudiante','','','',''),(473,'transport','','','',''),(474,'dormitory','','','',''),(475,'student_information','','','',''),(476,'select_a_service','','','',''),(477,'not_selected','','','',''),(478,'disabled','','','',''),(479,'clickatell_username','','','',''),(480,'clickatell_password','','','',''),(481,'clickatell_api_id','','','',''),(482,'twilio_account','','','',''),(483,'authentication_token','','','',''),(484,'registered_phone_number','','','',''),(485,'manage_attendance_of_class','','','',''),(486,'select_class','','','',''),(487,'all_parents','','','',''),(488,'add_new_parent','','','',''),(489,'profession','','','',''),(490,'options','','','',''),(491,'add_teacher','','','',''),(492,'birthday','','','',''),(493,'gender','','','',''),(494,'select','','','',''),(495,'male','','','',''),(496,'female','','','',''),(497,'password','','','',''),(498,'manage_teacher','','','',''),(499,'add_new_teacher','','','',''),(500,'clase','','','',''),(501,'clase','','','',''),(502,'clase','','','',''),(503,'clase','','','',''),(504,'clase','','','',''),(505,'clase','','','',''),(506,'clase','','','',''),(507,'clase','','','',''),(508,'clase','','','',''),(509,'clase','','','',''),(510,'clase','','','',''),(511,'clase','','','',''),(512,'clase','','','',''),(513,'clase','','','',''),(514,'clase','','','',''),(515,'clase','','','',''),(516,'clase','','','',''),(517,'clase','','','',''),(518,'clase','','','',''),(519,'clase','','','',''),(520,'clase','','','',''),(521,'clase','','','',''),(522,'clase','','','',''),(523,'clase','','','',''),(524,'clase','','','',''),(525,'clase','','','',''),(526,'clase','','','',''),(527,'clase','','','',''),(528,'clase','','','',''),(529,'clase','','','',''),(530,'clase','','','',''),(531,'clase','','','',''),(532,'clase','','','',''),(533,'clase','','','',''),(534,'clase','','','',''),(535,'clase','','','',''),(536,'clase','','','',''),(537,'clase','','','',''),(538,'clase','','','',''),(539,'clase','','','',''),(540,'clase','','','',''),(541,'clase','','','',''),(542,'clase','','','',''),(543,'clase','','','',''),(544,'clase','','','',''),(545,'clase','','','',''),(546,'clase','','','',''),(547,'clase','','','',''),(548,'clase','','','',''),(549,'clase','','','',''),(550,'clase','','','',''),(551,'clase','','','',''),(552,'clase','','','',''),(553,'clase','','','',''),(554,'clase','','','',''),(555,'clase','','','',''),(556,'clase','','','',''),(557,'clase','','','',''),(558,'clase','','','',''),(559,'clase','','','',''),(560,'clase','','','',''),(561,'clase','','','',''),(562,'clase','','','',''),(563,'clase','','','',''),(564,'clase','','','',''),(565,'clase','','','',''),(566,'clase','','','',''),(567,'clase','','','',''),(568,'clase','','','',''),(569,'clase','','','',''),(570,'clase','','','',''),(571,'clase','','','',''),(572,'clase','','','',''),(573,'clase','','','',''),(574,'clase','','','',''),(575,'clase','','','',''),(576,'clase','','','',''),(577,'clase','','','',''),(578,'clase','','','',''),(579,'clase','','','',''),(580,'clase','','','',''),(581,'clase','','','',''),(582,'clase','','','',''),(583,'clase','','','',''),(584,'clase','','','',''),(585,'clase','','','',''),(586,'clase','','','',''),(587,'clase','','','',''),(588,'clase','','','',''),(589,'clase','','','',''),(590,'clase','','','',''),(591,'clase','','','',''),(592,'clase','','','',''),(593,'clase','','','',''),(594,'clase','','','',''),(595,'clase','','','',''),(596,'clase','','','',''),(597,'clase','','','',''),(598,'clase','','','',''),(599,'clase','','','',''),(600,'clase','','','',''),(601,'clase','','','',''),(602,'clase','','','',''),(603,'clase','','','',''),(604,'clase','','','',''),(605,'clase','','','',''),(606,'clase','','','',''),(607,'clase','','','',''),(608,'clase','','','',''),(609,'clase','','','',''),(610,'clase','','','',''),(611,'clase','','','',''),(612,'clase','','','',''),(613,'clase','','','',''),(614,'clase','','','',''),(615,'clase','','','',''),(616,'clase','','','',''),(617,'clase','','','',''),(618,'clase','','','',''),(619,'clase','','','',''),(620,'clase','','','',''),(621,'clase','','','',''),(622,'clase','','','',''),(623,'clase','','','',''),(624,'clase','','','',''),(625,'clase','','','',''),(626,'clase','','','',''),(627,'clase','','','',''),(628,'clase','','','',''),(629,'clase','','','',''),(630,'clase','','','',''),(631,'clase','','','',''),(632,'clase','','','',''),(633,'clase','','','',''),(634,'clase','','','',''),(635,'clase','','','',''),(636,'clase','','','',''),(637,'clase','','','',''),(638,'clase','','','',''),(639,'clase','','','',''),(640,'clase','','','',''),(641,'clase','','','',''),(642,'clase','','','',''),(643,'clase','','','',''),(644,'clase','','','',''),(645,'clase','','','',''),(646,'clase','','','',''),(647,'clase','','','',''),(648,'clase','','','',''),(649,'clase','','','',''),(650,'clase','','','',''),(651,'clase','','','',''),(652,'clase','','','',''),(653,'clase','','','',''),(654,'clase','','','',''),(655,'clase','','','',''),(656,'clase','','','',''),(657,'clase','','','',''),(658,'clase','','','',''),(659,'clase','','','',''),(660,'clase','','','',''),(661,'clase','','','',''),(662,'clase','','','',''),(663,'clase','','','',''),(664,'clase','','','',''),(665,'clase','','','',''),(666,'clase','','','',''),(667,'clase','','','',''),(668,'clase','','','',''),(669,'clase','','','',''),(670,'clase','','','',''),(671,'clase','','','',''),(672,'clase','','','',''),(673,'clase','','','',''),(674,'clase','','','',''),(675,'clase','','','',''),(676,'clase','','','',''),(677,'clase','','','',''),(678,'clase','','','',''),(679,'clase','','','',''),(680,'clase','','','',''),(681,'clase','','','',''),(682,'clase','','','',''),(683,'clase','','','',''),(684,'clase','','','',''),(685,'clase','','','',''),(686,'clase','','','',''),(687,'clase','','','',''),(688,'clase','','','',''),(689,'clase','','','',''),(690,'clase','','','',''),(691,'clase','','','',''),(692,'clase','','','',''),(693,'clase','','','',''),(694,'clase','','','',''),(695,'clase','','','',''),(696,'clase','','','',''),(697,'clase','','','',''),(698,'clase','','','',''),(699,'clase','','','',''),(700,'clase','','','',''),(701,'clase','','','',''),(702,'clase','','','',''),(703,'clase','','','',''),(704,'clase','','','',''),(705,'clase','','','',''),(706,'clase','','','',''),(707,'clase','','','',''),(708,'clase','','','',''),(709,'clase','','','',''),(710,'clase','','','',''),(711,'clase','','','',''),(712,'clase','','','',''),(713,'clase','','','',''),(714,'clase','','','',''),(715,'clase','','','',''),(716,'Datos Actualizados','','','',''),(717,'clase','','','',''),(718,'seccion','','','',''),(719,'clase','','','',''),(720,'clase','','','',''),(721,'clase','','','',''),(722,'clase','','','',''),(723,'clase','','','',''),(724,'clase','','','',''),(725,'clase','','','',''),(726,'clase','','','',''),(727,'Datos Añadidos Satisfactoriamente','','','',''),(728,'add_class_routine','','','',''),(729,'expenses','','','',''),(730,'cash','','','','');
+INSERT INTO `language` VALUES (393,'login','','','',''),(394,'forgot_your_password','','','',''),(395,'admin_dashboard','','','',''),(396,'running_session','','','',''),(397,'sms_settings','','','',''),(398,'system_settings','','','',''),(399,'dashboard','','','',''),(400,'student','','','',''),(401,'student_promotion','','','',''),(402,'parents','','','',''),(403,'teacher','','','',''),(404,'class','','','',''),(405,'manage_classes','','','',''),(406,'manage_sections','','','',''),(407,'teacher_suggestion','','','',''),(408,'subject','','','',''),(409,'class_routine','','','',''),(410,'daily_attendance','','','',''),(411,'daily_atendance','','','',''),(412,'attendance_report','','','',''),(413,'exam','','','',''),(414,'exam_list','','','',''),(415,'exam_grades','','','',''),(416,'manage_marks','','','',''),(417,'send_marks_by_sms','','','',''),(418,'tabulation_sheet','','','',''),(419,'library','','','',''),(420,'accounting','','','',''),(421,'create_student_payment','','','',''),(422,'student_payments','','','',''),(423,'expense','','','',''),(424,'expense_category','','','',''),(425,'noticeboard','','','',''),(426,'message','','','',''),(427,'settings','','','',''),(428,'general_settings','','','',''),(429,'language_settings','','','',''),(430,'my_profile','','','',''),(431,'delete','','','',''),(432,'cancel','','','',''),(433,'system_name','','','',''),(434,'system_title','','','',''),(435,'address','','','',''),(436,'phone','','','',''),(437,'paypal_email','','','',''),(438,'currency','','','',''),(439,'system_email','','','',''),(440,'select_running_session','','','',''),(441,'language','','','',''),(442,'save','','','',''),(443,'theme_settings','','','',''),(444,'update','','','',''),(445,'upload_logo','','','',''),(446,'photo','','','',''),(447,'upload','','','',''),(448,'earning_graph','','','',''),(449,'setting','','','',''),(450,'edit_profile','','','',''),(451,'profesor','','','',''),(452,'estudiante','','','',''),(453,'padres','','','',''),(454,'manage_profile','','','',''),(455,'name','','','',''),(456,'email','','','',''),(457,'update_profile','','','',''),(458,'change_password','','','',''),(459,'current_password','','','',''),(460,'value_required','','','',''),(461,'new_password','','','',''),(462,'confirm_new_password','','','',''),(463,'asistencia','','','',''),(464,'reset_password','','','',''),(465,'return_to_login_page','','','',''),(466,'data_updated','','','',''),(467,'theme_selected','','','',''),(468,'add_student','','','',''),(469,'Registar Estudiante','','','',''),(470,'INFORMACIÓN DE USUARIO','','','',''),(471,'CLASE','','','',''),(472,'add_estudiante','','','',''),(473,'transport','','','',''),(474,'dormitory','','','',''),(475,'student_information','','','',''),(476,'select_a_service','','','',''),(477,'not_selected','','','',''),(478,'disabled','','','',''),(479,'clickatell_username','','','',''),(480,'clickatell_password','','','',''),(481,'clickatell_api_id','','','',''),(482,'twilio_account','','','',''),(483,'authentication_token','','','',''),(484,'registered_phone_number','','','',''),(485,'manage_attendance_of_class','','','',''),(486,'select_class','','','',''),(487,'all_parents','','','',''),(488,'add_new_parent','','','',''),(489,'profession','','','',''),(490,'options','','','',''),(491,'add_teacher','','','',''),(492,'birthday','','','',''),(493,'gender','','','',''),(494,'select','','','',''),(495,'male','','','',''),(496,'female','','','',''),(497,'password','','','',''),(498,'manage_teacher','','','',''),(499,'add_new_teacher','','','',''),(500,'clase','','','',''),(501,'clase','','','',''),(502,'clase','','','',''),(503,'clase','','','',''),(504,'clase','','','',''),(505,'clase','','','',''),(506,'clase','','','',''),(507,'clase','','','',''),(508,'clase','','','',''),(509,'clase','','','',''),(510,'clase','','','',''),(511,'clase','','','',''),(512,'clase','','','',''),(513,'clase','','','',''),(514,'clase','','','',''),(515,'clase','','','',''),(516,'clase','','','',''),(517,'clase','','','',''),(518,'clase','','','',''),(519,'clase','','','',''),(520,'clase','','','',''),(521,'clase','','','',''),(522,'clase','','','',''),(523,'clase','','','',''),(524,'clase','','','',''),(525,'clase','','','',''),(526,'clase','','','',''),(527,'clase','','','',''),(528,'clase','','','',''),(529,'clase','','','',''),(530,'clase','','','',''),(531,'clase','','','',''),(532,'clase','','','',''),(533,'clase','','','',''),(534,'clase','','','',''),(535,'clase','','','',''),(536,'clase','','','',''),(537,'clase','','','',''),(538,'clase','','','',''),(539,'clase','','','',''),(540,'clase','','','',''),(541,'clase','','','',''),(542,'clase','','','',''),(543,'clase','','','',''),(544,'clase','','','',''),(545,'clase','','','',''),(546,'clase','','','',''),(547,'clase','','','',''),(548,'clase','','','',''),(549,'clase','','','',''),(550,'clase','','','',''),(551,'clase','','','',''),(552,'clase','','','',''),(553,'clase','','','',''),(554,'clase','','','',''),(555,'clase','','','',''),(556,'clase','','','',''),(557,'clase','','','',''),(558,'clase','','','',''),(559,'clase','','','',''),(560,'clase','','','',''),(561,'clase','','','',''),(562,'clase','','','',''),(563,'clase','','','',''),(564,'clase','','','',''),(565,'clase','','','',''),(566,'clase','','','',''),(567,'clase','','','',''),(568,'clase','','','',''),(569,'clase','','','',''),(570,'clase','','','',''),(571,'clase','','','',''),(572,'clase','','','',''),(573,'clase','','','',''),(574,'clase','','','',''),(575,'clase','','','',''),(576,'clase','','','',''),(577,'clase','','','',''),(578,'clase','','','',''),(579,'clase','','','',''),(580,'clase','','','',''),(581,'clase','','','',''),(582,'clase','','','',''),(583,'clase','','','',''),(584,'clase','','','',''),(585,'clase','','','',''),(586,'clase','','','',''),(587,'clase','','','',''),(588,'clase','','','',''),(589,'clase','','','',''),(590,'clase','','','',''),(591,'clase','','','',''),(592,'clase','','','',''),(593,'clase','','','',''),(594,'clase','','','',''),(595,'clase','','','',''),(596,'clase','','','',''),(597,'clase','','','',''),(598,'clase','','','',''),(599,'clase','','','',''),(600,'clase','','','',''),(601,'clase','','','',''),(602,'clase','','','',''),(603,'clase','','','',''),(604,'clase','','','',''),(605,'clase','','','',''),(606,'clase','','','',''),(607,'clase','','','',''),(608,'clase','','','',''),(609,'clase','','','',''),(610,'clase','','','',''),(611,'clase','','','',''),(612,'clase','','','',''),(613,'clase','','','',''),(614,'clase','','','',''),(615,'clase','','','',''),(616,'clase','','','',''),(617,'clase','','','',''),(618,'clase','','','',''),(619,'clase','','','',''),(620,'clase','','','',''),(621,'clase','','','',''),(622,'clase','','','',''),(623,'clase','','','',''),(624,'clase','','','',''),(625,'clase','','','',''),(626,'clase','','','',''),(627,'clase','','','',''),(628,'clase','','','',''),(629,'clase','','','',''),(630,'clase','','','',''),(631,'clase','','','',''),(632,'clase','','','',''),(633,'clase','','','',''),(634,'clase','','','',''),(635,'clase','','','',''),(636,'clase','','','',''),(637,'clase','','','',''),(638,'clase','','','',''),(639,'clase','','','',''),(640,'clase','','','',''),(641,'clase','','','',''),(642,'clase','','','',''),(643,'clase','','','',''),(644,'clase','','','',''),(645,'clase','','','',''),(646,'clase','','','',''),(647,'clase','','','',''),(648,'clase','','','',''),(649,'clase','','','',''),(650,'clase','','','',''),(651,'clase','','','',''),(652,'clase','','','',''),(653,'clase','','','',''),(654,'clase','','','',''),(655,'clase','','','',''),(656,'clase','','','',''),(657,'clase','','','',''),(658,'clase','','','',''),(659,'clase','','','',''),(660,'clase','','','',''),(661,'clase','','','',''),(662,'clase','','','',''),(663,'clase','','','',''),(664,'clase','','','',''),(665,'clase','','','',''),(666,'clase','','','',''),(667,'clase','','','',''),(668,'clase','','','',''),(669,'clase','','','',''),(670,'clase','','','',''),(671,'clase','','','',''),(672,'clase','','','',''),(673,'clase','','','',''),(674,'clase','','','',''),(675,'clase','','','',''),(676,'clase','','','',''),(677,'clase','','','',''),(678,'clase','','','',''),(679,'clase','','','',''),(680,'clase','','','',''),(681,'clase','','','',''),(682,'clase','','','',''),(683,'clase','','','',''),(684,'clase','','','',''),(685,'clase','','','',''),(686,'clase','','','',''),(687,'clase','','','',''),(688,'clase','','','',''),(689,'clase','','','',''),(690,'clase','','','',''),(691,'clase','','','',''),(692,'clase','','','',''),(693,'clase','','','',''),(694,'clase','','','',''),(695,'clase','','','',''),(696,'clase','','','',''),(697,'clase','','','',''),(698,'clase','','','',''),(699,'clase','','','',''),(700,'clase','','','',''),(701,'clase','','','',''),(702,'clase','','','',''),(703,'clase','','','',''),(704,'clase','','','',''),(705,'clase','','','',''),(706,'clase','','','',''),(707,'clase','','','',''),(708,'clase','','','',''),(709,'clase','','','',''),(710,'clase','','','',''),(711,'clase','','','',''),(712,'clase','','','',''),(713,'clase','','','',''),(714,'clase','','','',''),(715,'clase','','','',''),(716,'Datos Actualizados','','','',''),(717,'clase','','','',''),(718,'seccion','','','',''),(719,'clase','','','',''),(720,'clase','','','',''),(721,'clase','','','',''),(722,'clase','','','',''),(723,'clase','','','',''),(724,'clase','','','',''),(725,'clase','','','',''),(726,'clase','','','',''),(727,'Datos Añadidos Satisfactoriamente','','','',''),(728,'add_class_routine','','','',''),(729,'expenses','','','',''),(730,'cash','','','',''),(731,'account_updated','','','','');
 /*!40000 ALTER TABLE `language` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -557,37 +622,6 @@ LOCK TABLES `mensaje_thread` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `nota`
---
-
-DROP TABLE IF EXISTS `nota`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `nota` (
-  `mark_id` int(11) NOT NULL AUTO_INCREMENT,
-  `estudiante_id` int(11) NOT NULL,
-  `asunto_id` int(11) NOT NULL,
-  `clase_id` int(11) NOT NULL,
-  `seccion_id` int(11) NOT NULL,
-  `exam_id` int(11) NOT NULL,
-  `nota_obtenida` int(11) NOT NULL DEFAULT 0,
-  `nota_total` int(11) NOT NULL DEFAULT 100,
-  `comentario` longtext COLLATE utf8_spanish2_ci NOT NULL,
-  `year` longtext COLLATE utf8_spanish2_ci NOT NULL,
-  PRIMARY KEY (`mark_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `nota`
---
-
-LOCK TABLES `nota` WRITE;
-/*!40000 ALTER TABLE `nota` DISABLE KEYS */;
-/*!40000 ALTER TABLE `nota` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `padres`
 --
 
@@ -604,7 +638,7 @@ CREATE TABLE `padres` (
   `profesion` longtext COLLATE utf8_spanish2_ci NOT NULL,
   `autenticacion_key` longtext COLLATE utf8_spanish2_ci NOT NULL,
   PRIMARY KEY (`padres_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -637,7 +671,7 @@ CREATE TABLE `pago` (
   `timestamp` longtext COLLATE utf8_spanish2_ci NOT NULL,
   `year` longtext COLLATE utf8_spanish2_ci NOT NULL,
   PRIMARY KEY (`pago_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -646,7 +680,7 @@ CREATE TABLE `pago` (
 
 LOCK TABLES `pago` WRITE;
 /*!40000 ALTER TABLE `pago` DISABLE KEYS */;
-INSERT INTO `pago` VALUES (1,0,'Pago Mensual','ingreso',1,1,'1','Pago Junio','150','1659762000','2022-2023'),(2,0,'Pago Mensual','ingreso',1,1,'1','Pago Junio','50','1654837200','2022-2023');
+INSERT INTO `pago` VALUES (1,0,'Pago Mensual','ingreso',1,1,'1','Pago Junio','150','1659762000','2022-2023'),(2,0,'Pago Mensual','ingreso',1,1,'1','Pago Junio','50','1654837200','2022-2023'),(3,1,'Sueldo del Profesor','gasto',0,0,'1','Pago Sueldo Omar','1500','1655169720','2022-2023'),(4,0,'Pago Pensión','ingreso',2,2,'1','Pago Pensión Julio','200','1655528400','2022-2023'),(5,0,'Pago Pensión','ingreso',2,2,'1','Pago Pensión Julio','50','1654491600','2022-2023');
 /*!40000 ALTER TABLE `pago` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -670,7 +704,7 @@ CREATE TABLE `profesor` (
   `password` longtext COLLATE utf8_spanish2_ci NOT NULL,
   `autenticacion_key` longtext COLLATE utf8_spanish2_ci NOT NULL,
   PRIMARY KEY (`profesor_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -697,7 +731,7 @@ CREATE TABLE `seccion` (
   `clase_id` int(11) NOT NULL,
   `profesor_id` int(11) NOT NULL,
   PRIMARY KEY (`seccion_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -706,7 +740,7 @@ CREATE TABLE `seccion` (
 
 LOCK TABLES `seccion` WRITE;
 /*!40000 ALTER TABLE `seccion` DISABLE KEYS */;
-INSERT INTO `seccion` VALUES (1,'A','',1,0),(2,'A','',2,0),(3,'A','',3,0),(4,'Personal Social','Ps',1,2),(5,'RM','RM',3,2),(6,'RV','RV',1,2),(7,'A','',4,0),(8,'A','',5,0),(9,'A','',6,0);
+INSERT INTO `seccion` VALUES (1,'A','',1,0),(2,'A','',2,0),(3,'A','',3,0),(5,'RM','RM',3,2),(7,'A','',4,0),(8,'A','',5,0),(9,'A','',6,0),(10,'A','',7,0),(11,'B','B',1,6);
 /*!40000 ALTER TABLE `seccion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -749,7 +783,7 @@ CREATE TABLE `tema` (
   `profesor_id` int(11) DEFAULT NULL,
   `year` longtext COLLATE utf8_spanish2_ci NOT NULL,
   PRIMARY KEY (`tema_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -758,7 +792,7 @@ CREATE TABLE `tema` (
 
 LOCK TABLES `tema` WRITE;
 /*!40000 ALTER TABLE `tema` DISABLE KEYS */;
-INSERT INTO `tema` VALUES (4,'Horario 3 Años',1,3,'2022-2023');
+INSERT INTO `tema` VALUES (4,'Computación',1,6,'2022-2023'),(5,'Personal Social',1,3,'2022-2023');
 /*!40000 ALTER TABLE `tema` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -771,4 +805,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-11 18:23:29
+-- Dump completed on 2022-06-18 15:09:19

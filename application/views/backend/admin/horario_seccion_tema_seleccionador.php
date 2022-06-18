@@ -1,7 +1,7 @@
 <?php
-$query = $this->db->get_where( 'seccion', array( 'clase_id' => $class_id ) );
+$query = $this->db->get_where( 'seccion', array( 'clase_id' => $clase_id ) );
 if ( $query->num_rows() > 0 ):
-	$sections = $query->result_array();
+	$secciones = $query->result_array();
 ?>
 
 <div class="form-group">
@@ -11,7 +11,7 @@ if ( $query->num_rows() > 0 ):
 	<div class="col-sm-5">
 		<select name="seccion_id" data-plugin-selectTwo data-minimum-results-for-search="Infinity" data-width="100%" required class="form-control populate">
 			<?php
-			foreach ( $sections as $row ):
+			foreach ( $secciones as $row ):
 				?>
 			<option value="<?php echo $row['seccion_id'];?>"><?php echo $row['nombre'];?></option>
 			<?php endforeach;?>
@@ -26,8 +26,8 @@ if ( $query->num_rows() > 0 ):
 	<div class="col-sm-5">
 		<select name="tema_id" data-plugin-selectTwo data-minimum-results-for-search="Infinity" data-width="100%" required class="form-control populate">
 			<?php
-			$subjects = $this->db->get_where( 'tema', array( 'clase_id' => $class_id ) )->result_array();
-			foreach ( $subjects as $row ):
+			$temas = $this->db->get_where( 'tema', array( 'clase_id' => $clase_id ) )->result_array();
+			foreach ( $temas as $row ):
 				?>
 			<option value="<?php echo $row['tema_id'];?>"><?php echo $row['nombre'];?></option>
 			<?php endforeach;?>
