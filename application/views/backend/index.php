@@ -12,7 +12,7 @@
   ?>
 	
 <!doctype html>
-<html class="fixed<?php if ($skin_colour == 'dark') {echo ' dark';} else {  if ($sidebar_colour == 'sidebar-light') echo ' sidebar-light'; if ($header_colour == 'header-dark') echo ' header-dark'; } if ($sidebar_size != 'sidebar-left-md') echo ' ' . $sidebar_size; if($page_name == 'student_bulk_add' || $page_name == 'attendance_report_view' || $page_name == 'message' || $page_name == 'estudiante') echo ' sidebar-left-collapsed';?>">
+<html class="fixed<?php if ($skin_colour == 'dark') {echo ' dark';} else {  if ($sidebar_colour == 'sidebar-light') echo ' sidebar-light'; if ($header_colour == 'header-dark') echo ' header-dark'; } if ($sidebar_size != 'sidebar-left-md') echo ' ' . $sidebar_size; if($page_name == 'student_bulk_add' || $page_name == 'ver_asistencia_reporte' || $page_name == 'mensaje' || $page_name == 'estudiante') echo ' sidebar-left-collapsed';?>">
 	
 	<head>
 

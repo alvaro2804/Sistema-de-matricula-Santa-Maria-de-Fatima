@@ -31,16 +31,16 @@
 				</a>
 			</li>
 
-			<!-- PROMOCIÓN DEL ESTUDIANTE -->
-			<li class="<?php if ( $page_name == 'student_promotion') echo 'nav-active'; ?> ">
-				<a href="<?php echo base_url(); ?>index.php?admin/#">
+			<!-- PROMOVER AL ESTUDIANTE -->
+			<li class="<?php if ( $page_name == 'promover_estudiante') echo 'nav-active'; ?> ">
+				<a href="<?php echo base_url(); ?>index.php?admin/promover_estudiante">
 					 <i class="fa fa-random"></i>
 					<span>Promover Estudiante</span>
 				</a>
 			</li>
 
 			<!-- PADRES -->
-			<li class="<?php if ($page_name == 'parent') echo 'nav-active'; ?> ">
+			<li class="<?php if ($page_name == 'padres') echo 'nav-active'; ?> ">
 				<a href="<?php echo base_url(); ?>index.php?admin/padres">
 					<i class="fa fa-user"></i>
 					<span>Padres</span>
@@ -107,8 +107,8 @@
 			</li>
 
 		   <!-- PLAN DE ESTUDIOS-->
-			<li class="<?php if ($page_name == 'subject') echo 'nav-active'; ?> ">
-				 <a href="<?php echo base_url(); ?>index.php?admin/#">
+			<li class="<?php if ($page_name == 'plan_estudio') echo 'nav-active'; ?> ">
+				 <a href="<?php echo base_url(); ?>index.php?admin/plan_estudio">
 					  <i class="fa fa-book"></i>
 					 <span>Plan de Estudios</span>
 				 </a>
@@ -116,7 +116,7 @@
 
 			<!-- HORARIOS -->
 			<li class="nav-parent <?php if ($page_name == 'tema' ||
-									$page_name == 'tema' || $page_name == 'tema' || $page_name == 'horario') 
+											 $page_name == 'horario') 
 										echo 'nav-expanded nav-active'; ?> ">
 				<a href="#">
 				<i class="fa fa-clock-o"></i>
@@ -124,13 +124,13 @@
 				</a>
 				<ul class="nav nav-children">
 
-						<li class="<?php if (($page_name == 'tema' || $page_name == 'ver_asistencia')) echo 'nav-active'; ?>">
+						<li class="<?php if ($page_name == 'tema') echo 'nav-active'; ?>">
 							<a href="<?php echo base_url(); ?>index.php?admin/tema">
 								<span><i class="fa fa-circle-o"></i>Asignar Horario</span>
 							</a>
 						</li>
 
-						<li class="<?php if (( $page_name == 'horario' || $page_name == 'horario')) echo 'nav-active'; ?>">
+						<li class="<?php if ( $page_name == 'horario') echo 'nav-active'; ?>">
 							<a href="<?php echo base_url(); ?>index.php?admin/horario">
 								<span><i class="fa fa-circle-o"></i> Horario</span>
 							</a>
@@ -251,16 +251,16 @@
 			</li>
 
 			<!-- ANUNCIOS -->
-			<li class="<?php if ($page_name == 'noticeboard') echo 'nav-active'; ?> ">
-				<a href="<?php echo base_url(); ?>index.php?admin/noticeboard">
+			<li class="<?php if ($page_name == 'anuncio') echo 'nav-active'; ?> ">
+				<a href="<?php echo base_url(); ?>index.php?admin/anuncio">
 					<i class="fa fa-file-text-o"></i>
 					<span>Anuncios</span>
 				</a>
 			</li>
 
 			<!-- MENSAJES -->
-			<li class="<?php if ($page_name == 'message') echo 'nav-active'; ?> ">
-				<a href="<?php echo base_url(); ?>index.php?admin/message">
+			<li class="<?php if ($page_name == 'mensaje') echo 'nav-active'; ?> ">
+				<a href="<?php echo base_url(); ?>index.php?admin/mensaje">
 					<i class="fa fa-envelope-o"></i>
 					<span>Mensajes</span>
 				</a>

@@ -58,7 +58,7 @@
 			</ul>
 			<div class="tab-content">
 				<div id="home" class="tab-pane active">
-					<table class="table table-bordered table-striped mb-none" id="datatable-tabletools" >
+					<table class="table table-bordered table-striped mb-none" id="render-data" >
 						<thead>
 							<tr>
 								<th width="80">
@@ -158,7 +158,7 @@
                 ?>
 
 				<div id="<?php echo $row['seccion_id'];?>" class="tab-pane">
-					<table class="table table-bordered table-striped table-condensed mb-none">
+					<table class="table table-bordered table-striped table-condensed mb-none" id="render-data2">
 						<thead>
 							<tr>
 								<th width="80">
@@ -259,4 +259,26 @@
 	function class_section( clase_id ) {
 		window.location.href = '<?php echo base_url(); ?>index.php?admin/estudiante/' + clase_id;
 	}
+</script>
+<script type="text/javascript">
+
+jQuery(document).ready(function() {
+jQuery('#render-data,#render-data2').DataTable({
+
+rowReorder: {
+selector: 'td:nth-child(2)'
+},
+responsive: true,
+
+"paging": true,
+"processing": true,
+
+dom: 'lBfrtip',
+buttons: [
+'excel', 'csv', 'pdf', 'print', 'copy',
+],
+"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+} );
+} );
+        
 </script>

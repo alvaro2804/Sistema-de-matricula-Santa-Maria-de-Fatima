@@ -4,6 +4,8 @@
  * (c) 2016 Adam Shaw
  */
 
+
+
 (function(factory) {
 	if (typeof define === 'function' && define.amd) {
 		define([ 'jquery', 'moment' ], factory);

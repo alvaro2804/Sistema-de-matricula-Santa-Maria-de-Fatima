@@ -118,7 +118,7 @@
                                                 $calificacion_obtenida = $this->crud_model->get_calificacion_obtenida( $row2['examen_id'] , $clase_id , $tema['tema_id'] , $row1['estudiante_id']);
                                                 echo $calificacion_obtenida;
                                             ?>,
-                                            "mark_highest": 
+                                            
                                             <?php
                                                 $highest_mark = $this->crud_model->get_calificacion_alta( $row2['examen_id'] , $clase_id , $tema['tema_id'] );
                                                 echo $highest_mark;
@@ -134,7 +134,7 @@
                                     "stackType": "3d",
                                     "unit": "%",
                                     "position": "left",
-                                    "title": "Obtained Mark vs Highest Mark"
+                                    
                                 }],
                                 "startDuration": 1,
                                 "graphs": [{
@@ -152,7 +152,7 @@
                                     "title": "2005",
                                     "type": "column",
                                     "fillColors":"#34495e",
-                                    "valueField": "mark_highest"
+                                   
                                 }],
                                 "plotAreaFillAlphas": 0.1,
                                 "depth3D": 20,

@@ -23,13 +23,13 @@ class Login extends CI_Controller {
         if ($this->session->userdata('admin_login') == 1)
             redirect(base_url() . 'index.php?admin/dashboard', 'refresh');
 
-        if ($this->session->userdata('teacher_login') == 1)
+        if ($this->session->userdata('profesor_login') == 1)
             redirect(base_url() . 'index.php?profesor/dashboard', 'refresh');
 
-        if ($this->session->userdata('student_login') == 1)
+        if ($this->session->userdata('estudiante_login') == 1)
             redirect(base_url() . 'index.php?estudiante/dashboard', 'refresh');
 
-        if ($this->session->userdata('parent_login') == 1)
+        if ($this->session->userdata('padres_login') == 1)
             redirect(base_url() . 'index.php?padres/dashboard', 'refresh');
 
         $this->load->view('backend/login');
@@ -60,19 +60,54 @@ class Login extends CI_Controller {
         $credential = array('email' => $email, 'password' => $password);
 
 
-        // credenciales
+        // CREDENCIALES PARA ADMIN
         $query = $this->db->get_where('admin', $credential);
         if ($query->num_rows() > 0) {
             $row = $query->row();
             $this->session->set_userdata('admin_login', '1');
             $this->session->set_userdata('admin_id', $row->admin_id);
             $this->session->set_userdata('login_user_id', $row->admin_id);
-            $this->session->set_userdata('nombre', $row->nombre);
+            //$this->session->set_userdata('nombre', $row->nombre);
+            $this->session->set_userdata('name', $row->name);
             $this->session->set_userdata('login_type', 'admin');
             return 'success';
         }
 
+// CREDENCIALES PROFESOR
+$query = $this->db->get_where('profesor', $credential);
+if ($query->num_rows() > 0) {
+    $row = $query->row();
+    $this->session->set_userdata('profesor_login', '1');
+    $this->session->set_userdata('profesor_id', $row->profesor_id);
+    $this->session->set_userdata('login_user_id', $row->profesor_id);
+    $this->session->set_userdata('name', $row->nombre);
+    $this->session->set_userdata('login_type', 'profesor');
+    return 'success';
+}
 
+// CREDENCIALES ESTUDIANTTE
+$query = $this->db->get_where('estudiante', $credential);
+if ($query->num_rows() > 0) {
+    $row = $query->row();
+    $this->session->set_userdata('estudiante_login', '1');
+    $this->session->set_userdata('estudiante_id', $row->estudiante_id);
+    $this->session->set_userdata('login_user_id', $row->estudiante_id);
+    $this->session->set_userdata('name', $row->nombre);
+    $this->session->set_userdata('login_type', 'estudiante');
+    return 'success';
+}
+
+// CREDENCIALES PARA PADRES
+$query = $this->db->get_where('padres', $credential);
+if ($query->num_rows() > 0) {
+    $row = $query->row();
+    $this->session->set_userdata('padres_login', '1');
+    $this->session->set_userdata('padres_id', $row->padres_id);
+    $this->session->set_userdata('login_user_id', $row->padres_id);
+    $this->session->set_userdata('name', $row->nombre);
+    $this->session->set_userdata('login_type', 'padres');
+    return 'success';
+}
         
 
         return 'invalid';

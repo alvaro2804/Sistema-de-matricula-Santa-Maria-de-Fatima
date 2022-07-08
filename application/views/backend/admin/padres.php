@@ -9,7 +9,7 @@
 	</header>
 
 	<div class="panel-body">
-		<table class="table table-bordered table-striped table-condensed mb-none" id="datatable-tabletools">
+		<table class="table table-bordered table-striped table-condensed mb-none" id="render-data">
 			<thead>
 				<tr>
 					<th>#</th>
@@ -85,3 +85,25 @@
 
 	</div>
 </section>
+<script type="text/javascript">
+
+jQuery(document).ready(function() {
+jQuery('#render-data').DataTable({
+
+rowReorder: {
+selector: 'td:nth-child(2)'
+},
+responsive: true,
+
+"paging": true,
+"processing": true,
+
+dom: 'lBfrtip',
+buttons: [
+'excel', 'csv', 'pdf', 'print', 'copy',
+],
+"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+} );
+} );
+        
+</script>

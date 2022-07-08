@@ -168,4 +168,129 @@ function get_system_settings() {
     return $query->result_array();
 }
 
+
+
+////////MENSAJE PRIVADO//////
+function send_new_private_message() {
+    $mensaje    = $this->input->post('mensaje');
+    $timestamp  = strtotime(date("Y-m-d H:i:s"));
+
+    $receptor   = $this->input->post('receptor');
+    $remitente     = $this->session->userdata('login_type') . '-' . $this->session->userdata('login_user_id');
+
+    //check if the thread between those 2 users exists, if not create new thread
+    $num1 = $this->db->get_where('mensaje_thread', array('remitente' => $remitente, 'receptor' => $receptor))->num_rows();
+    $num2 = $this->db->get_where('mensaje_thread', array('remitente' => $receptor, 'receptor' => $remitente))->num_rows();
+
+    if ($num1 == 0 && $num2 == 0) {
+        $mensaje_thread_code                        = substr(md5(rand(100000000, 20000000000)), 0, 15);
+        $data_message_thread['mensaje_thread_code'] = $mensaje_thread_code;
+        $data_message_thread['remitente']              = $remitente;
+        $data_message_thread['receptor']            = $receptor;
+        $this->db->insert('mensaje_thread', $data_message_thread);
+    }
+    if ($num1 > 0)
+        $mensaje_thread_code = $this->db->get_where('mensaje_thread', array('remitente' => $remitente, 'receptor' => $receptor))->row()->mensaje_thread_code;
+    if ($num2 > 0)
+        $mensaje_thread_code = $this->db->get_where('mensaje_thread', array('remitente' => $receptor, 'receptor' => $remitente))->row()->mensaje_thread_code;
+
+
+    $data_message['mensaje_thread_code']    = $mensaje_thread_code;
+    $data_message['mensaje']                = $mensaje;
+    $data_message['remitente']                 = $remitente;
+    $data_message['timestamp']              = $timestamp;
+    $this->db->insert('mensaje', $data_message);
+
+    // notify email to email receptor
+    //$this->email_model->notify_email('new_message_notification', $this->db->insert_id());
+
+    return $mensaje_thread_code;
+}
+
+function send_reply_message($mensaje_thread_code) {
+    $mensaje    = $this->input->post('mensaje');
+    $timestamp  = strtotime(date("Y-m-d H:i:s"));
+    $remitente     = $this->session->userdata('login_type') . '-' . $this->session->userdata('login_user_id');
+
+
+    $data_message['mensaje_thread_code']    = $mensaje_thread_code;
+    $data_message['mensaje']                = $mensaje;
+    $data_message['remitente']                 = $remitente;
+    $data_message['timestamp']              = $timestamp;
+    $this->db->insert('mensaje', $data_message);
+
+    // notify email to email receptor
+    //$this->email_model->notify_email('new_message_notification', $this->db->insert_id());
+}
+
+function mark_thread_messages_read($mensaje_thread_code) {
+    // mark read only the oponnent messages of this thread, not currently logged in user's sent messages
+    $usuario_actual = $this->session->userdata('login_type') . '-' . $this->session->userdata('login_user_id');
+    $this->db->where('remitente !=', $usuario_actual);
+    $this->db->where('mensaje_thread_code', $mensaje_thread_code);
+    $this->db->update('mensaje', array('leer_status' => 1));
+}
+
+function count_unread_message_of_thread($mensaje_thread_code) {
+    $nro_mensaje_no_leido = 0;
+    $usuario_actual = $this->session->userdata('login_type') . '-' . $this->session->userdata('login_user_id');
+    $mensajes = $this->db->get_where('mensaje', array('mensaje_thread_code' => $mensaje_thread_code))->result_array();
+    foreach ($mensajes as $row) {
+        if ($row['remitente'] != $usuario_actual && $row['leer_status'] == '0')
+            $nro_mensaje_no_leido++;
+    }
+    return $nro_mensaje_no_leido;
+}
+
+ ////////MATERIAL DE ESTUDIO//////////
+ function guardar_material_estudio_info()
+ {
+     $data['timestamp']         = strtotime($this->input->post('timestamp'));
+     $data['titulo'] 		       = $this->input->post('titulo');
+     $data['descripcion']       = $this->input->post('descripcion');
+     $data['titulo_nombre'] 	       = $_FILES["titulo_nombre"]["name"];
+     $data['file_tipo']     	   = $this->input->post('file_tipo');
+     $data['clase_id'] 	       = $this->input->post('clase_id');
+     $data['tema_id']         = $this->input->post('tema_id');
+     $this->db->insert('documento',$data);
+     
+     $documento_id            = $this->db->insert_id();
+     move_uploaded_file($_FILES["titulo_nombre"]["tmp_name"], "uploads/documentos/" . $_FILES["titulo_nombre"]["name"]);
+ }
+ 
+ function seleccionar_material_estudio_info()
+ {
+     $this->db->order_by("timestamp", "desc");
+     return $this->db->get('documento')->result_array(); 
+ }
+ 
+ function seleccionar_material_estudio_info_para_estudiante()
+ {
+     $estudiante_id = $this->session->userdata('estudiante_id');
+     $clase_id   = $this->db->get_where('inscribirse', array(
+         'estudiante_id' => $estudiante_id,
+             'year' => $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description
+         ))->row()->clase_id;
+     $this->db->order_by("timestamp", "desc");
+     return $this->db->get_where('documento', array('clase_id' => $clase_id))->result_array();
+ }
+ 
+ function actualizar_material_estudio_info($documento_id)
+ {
+     $data['timestamp']      = strtotime($this->input->post('timestamp'));
+     $data['titulo'] 		= $this->input->post('titulo');
+     $data['descripcion']    = $this->input->post('descripcion');
+     $data['clase_id'] 	= $this->input->post('clase_id');
+     $data['tema_id']     = $this->input->post('tema_id');
+     $this->db->where('documento_id',$documento_id);
+     $this->db->update('documento',$data);
+ }
+ 
+ function eleminar_material_estudio_info($documento_id)
+ {
+     $this->db->where('documento_id',$documento_id);
+     $this->db->delete('documento');
+ }
+
+
 }
