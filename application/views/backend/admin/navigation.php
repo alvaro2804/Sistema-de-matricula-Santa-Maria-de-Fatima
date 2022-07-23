@@ -24,7 +24,11 @@
 			</li>
 
 			<!-- ESTUDIANTE -->
-			<li class="<?php if ($page_name == 'estudiante' || $page_name == 'estudiante_hoja_cali' || $page_name == 'estudiante_masiva_add' || $page_name == 'estudiante_add' ) echo 'nav-active'; ?> ">
+			<li class="<?php if ($page_name == 'estudiante' || 
+						$page_name == 'estudiante_hoja_cali' || 
+						$page_name == 'estudiante_masiva_add' || 
+						$page_name == 'estudiante_add' ) 
+						echo 'nav-active'; ?> ">
 				<a href="<?php echo base_url(); ?>index.php?admin/estudiante">
 					 <i class="fa fa-slideshare"></i>
 					<span>Estudiante</span>
@@ -98,11 +102,7 @@
 							<span><i class="fa fa-circle-o"></i>Administrador del Sistema</span>
 						</a>
 					</li>
-					<li class="<?php if ($page_name == '#') echo 'nav-active'; ?> ">
-						<a href="<?php echo base_url(); ?>index.php?admin/#">
-							<span><i class="fa fa-circle-o"></i> Usuario</span>
-						</a>
-					</li>
+
 				</ul>
 			</li>
 
@@ -115,12 +115,16 @@
 			</li>
 
 			<!-- HORARIOS -->
-			<li class="nav-parent <?php if ($page_name == 'tema' ||
-											 $page_name == 'horario') 
+			
+			<li class="nav-parent <?php if ($page_name == 'tema' || 
+											 $page_name == 'horario' || 
+											 $page_name == 'horario_add'
+											  
+											 ) 
 										echo 'nav-expanded nav-active'; ?> ">
 				<a href="#">
-				<i class="fa fa-clock-o"></i>
-					Horarios</span>
+				<i class="fa fa-clock-o" arial-hidden="true"></i>
+					<span>Horarios</span>
 				</a>
 				<ul class="nav nav-children">
 
@@ -130,7 +134,7 @@
 							</a>
 						</li>
 
-						<li class="<?php if ( $page_name == 'horario') echo 'nav-active'; ?>">
+						<li class="<?php if ( $page_name == 'horario' || $page_name == 'horario_add') echo 'nav-active'; ?>">
 							<a href="<?php echo base_url(); ?>index.php?admin/horario">
 								<span><i class="fa fa-circle-o"></i> Horario</span>
 							</a>
@@ -138,14 +142,13 @@
 
 				</ul>
 			</li>
-
 			<!-- ASISTENCIA DIARIA -->
 			<li class="nav-parent <?php if ($page_name == 'asistencia' ||
 									$page_name == 'ver_asistencia' || $page_name == 'asistencia_reporte' || $page_name == 'ver_asistencia_reporte') 
 										echo 'nav-expanded nav-active'; ?> ">
 				<a href="#">
-					<i class="fa fa-line-chart"></i>
-					Asistencia Diaria</span>
+					<i class="fa fa-line-chart" aria-hidden="true"></i>
+					<span>Asistencia Diaria</span>
 				</a>
 				<ul class="nav nav-children">
 
@@ -289,7 +292,7 @@
 						</a>
 					</li>
 					<li class="<?php if ($page_name == 'manage_language') echo 'nav-active'; ?> ">
-						<a href="<?php echo base_url(); ?>index.php?admin/manage_language">
+						<a href="<?php echo base_url(); ?>index.php?admin/#">
 							<span><i class="fa fa-circle-o"></i> <?php echo get_phrase('language_settings'); ?></span>
 						</a>
 					</li>
